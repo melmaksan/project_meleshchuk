@@ -1,8 +1,6 @@
 package entity;
 
-import java.util.Objects;
-
-public class OrderServices {
+public class OrderToService {
 
     private long id;
     private long orderId;
@@ -49,35 +47,35 @@ public class OrderServices {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OrderServices that = (OrderServices) o;
+        OrderToService that = (OrderToService) o;
         return id == that.id;
     }
 
     private static class Builder {
 
-        private final OrderServices orderServices;
+        private final OrderToService orderToService;
 
         public Builder() {
-            orderServices = new OrderServices();
+            orderToService = new OrderToService();
         }
 
         public Builder addId(long id) {
-            orderServices.setId(id);
+            orderToService.setId(id);
             return this;
         }
 
         public Builder addOrderIdId(long orderId) {
-            orderServices.setOrderId(orderId);
+            orderToService.setOrderId(orderId);
             return this;
         }
 
         public Builder addServiceId(long serviceId) {
-            orderServices.setServiceId(serviceId);
+            orderToService.setServiceId(serviceId);
             return this;
         }
 
-        public OrderServices build() {
-            return orderServices;
+        public OrderToService build() {
+            return orderToService;
         }
     }
 }

@@ -13,11 +13,11 @@ public class Order {
     private final static int DEFAULT_PAYMENT_STATUS_ID = PaymentStatus.PaymentIdentifier.UNPAID_STATUS.getId();
 
     private long id;
-    private User user;
     private OrderStatus orderStatus;
     private PaymentStatus paymentStatus;
     private LocalDate orderTime;
     private List<Service> services;
+    private List<User> users;
 
     public static Builder newBuilder() {
         return new Builder();
@@ -29,14 +29,6 @@ public class Order {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public OrderStatus getOrderStatus() {
@@ -71,6 +63,14 @@ public class Order {
         this.services = services;
     }
 
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
     public boolean isBooked() {
         return orderStatus.getId() == OrderStatus.StatusIdentifier.BOOKED_STATUS.getId();
     }
@@ -103,7 +103,6 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "id=" + id +
-                ", user=" + user +
                 ", orderStatus=" + orderStatus +
                 ", paymentStatus=" + paymentStatus +
                 ", orderTime=" + orderTime +
@@ -133,11 +132,6 @@ public class Order {
             return this;
         }
 
-        public Builder addUser(User user) {
-            order.setUser(user);
-            return this;
-        }
-
         public Builder addOrderStatus(OrderStatus orderStatus) {
             order.setOrderStatus(orderStatus);
             return this;
@@ -155,6 +149,11 @@ public class Order {
 
         public Builder addServices(List<Service> services) {
             order.setServices(services);
+            return this;
+        }
+
+        public Builder addUsers(List<User> users) {
+            order.setUsers(users);
             return this;
         }
 

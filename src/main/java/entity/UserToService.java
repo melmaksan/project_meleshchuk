@@ -1,8 +1,6 @@
 package entity;
 
-import java.util.Objects;
-
-public class UserServices {
+public class UserToService {
 
     private long id;
     private long userId;
@@ -49,35 +47,35 @@ public class UserServices {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserServices that = (UserServices) o;
+        UserToService that = (UserToService) o;
         return id == that.id;
     }
 
     private static class Builder {
 
-        private final UserServices userServices;
+        private final UserToService userToService;
 
         public Builder() {
-            userServices = new UserServices();
+            userToService = new UserToService();
         }
 
         public Builder addId(long id) {
-            userServices.setId(id);
+            userToService.setId(id);
             return this;
         }
 
         public Builder addUserId(long userId) {
-            userServices.setUserId(userId);
+            userToService.setUserId(userId);
             return this;
         }
 
         public Builder addServiceId(long serviceId) {
-            userServices.setServiceId(serviceId);
+            userToService.setServiceId(serviceId);
             return this;
         }
 
-        public UserServices build() {
-            return userServices;
+        public UserToService build() {
+            return userToService;
         }
     }
 }
