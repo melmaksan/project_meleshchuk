@@ -2,7 +2,6 @@ package entity;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 
 public class Order {
 
@@ -119,7 +118,7 @@ public class Order {
     }
 
 
-    private static class Builder {
+    public static class Builder {
 
         private final Order order;
 

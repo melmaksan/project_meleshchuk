@@ -82,7 +82,7 @@ public class Service {
         return id == service.id;
     }
 
-    private static class Builder {
+    public static class Builder {
 
         private final Service service;
 

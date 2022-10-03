@@ -51,7 +51,7 @@ public class UserToService {
         return id == that.id;
     }
 
-    private static class Builder {
+    public static class Builder {
 
         private final UserToService userToService;
 

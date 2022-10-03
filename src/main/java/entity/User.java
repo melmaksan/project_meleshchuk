@@ -1,7 +1,6 @@
 package entity;
 
 import java.util.List;
-import java.util.Objects;
 
 public class User {
 
@@ -15,7 +14,7 @@ public class User {
     private String password;
     private String email;
     private String phoneNumber;
-    private float rate;
+    private float rating;
     private Role role;
     private List<Service> services;
     private List<Order> orders;
@@ -80,12 +79,12 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public float getRate() {
-        return rate;
+    public float getRating() {
+        return rating;
     }
 
-    public void setRate(float rate) {
-        this.rate = rate;
+    public void setRating(float rating) {
+        this.rating = rating;
     }
 
     public Role getRole() {
@@ -153,7 +152,7 @@ public class User {
     }
 
 
-    private static class Builder {
+    public static class Builder {
 
         private final User user;
 
@@ -196,8 +195,8 @@ public class User {
             return this;
         }
 
-        public Builder addRate(float rate) {
-            user.setRate(rate);
+        public Builder addRating(float rating) {
+            user.setRating(rating);
             return this;
         }
 

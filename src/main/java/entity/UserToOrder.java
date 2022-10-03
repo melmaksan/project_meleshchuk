@@ -53,7 +53,7 @@ public class UserToOrder {
         return id == that.id;
     }
 
-    private static class Builder {
+    public static class Builder {
 
         private final UserToOrder userToOrder;
 

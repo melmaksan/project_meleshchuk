@@ -51,7 +51,7 @@ public class OrderToService {
         return id == that.id;
     }
 
-    private static class Builder {
+     public static class Builder {
 
         private final OrderToService orderToService;
 
