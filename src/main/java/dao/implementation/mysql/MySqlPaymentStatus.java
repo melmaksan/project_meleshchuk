@@ -1,13 +1,15 @@
 package dao.implementation.mysql;
 
 import dao.abstraction.PaymentStatusDao;
+import dao.datasource.PooledConnection;
 import dao.implementation.mysql.converter.DtoConverter;
-import dao.implementation.mysql.converter.OrderStatusDtoConverter;
 import dao.implementation.mysql.converter.PaymentStatusDtoConverter;
-import entity.OrderStatus;
 import entity.PaymentStatus;
+import entity.Role;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -19,8 +21,8 @@ public class MySqlPaymentStatus implements PaymentStatusDao {
                     "FROM payment_status ";
 
     private final static String INSERT =
-            "INSERT INTO payment_status (name) " +
-                    "VALUES(?) ";
+            "INSERT INTO payment_status (id, name) " +
+                    "VALUES(?, ?) ";
 
     private final static String UPDATE =
             "UPDATE payment_status SET name = ? ";
@@ -57,8 +59,8 @@ public class MySqlPaymentStatus implements PaymentStatusDao {
     @Override
     public PaymentStatus insert(PaymentStatus paymentStatus) {
         Objects.requireNonNull(paymentStatus);
-        int id = defaultDao.executeInsertWithGeneratedPrimaryKey(INSERT, paymentStatus.getName());
-        paymentStatus.setId(id);
+        defaultDao.executeInsert(INSERT, paymentStatus.getId(), paymentStatus.getName());
+        //paymentStatus.setId(id);
         return paymentStatus;
     }
 
@@ -76,5 +78,58 @@ public class MySqlPaymentStatus implements PaymentStatusDao {
     @Override
     public Optional<PaymentStatus> findByName(String name) {
         return defaultDao.findOne(SELECT_ALL + WHERE_NAME, name);
+    }
+
+    private void printAll(List<PaymentStatus> list) {
+        System.out.println("Find all:");
+        for (PaymentStatus type : list) {
+            System.out.println(type);
+        }
+    }
+
+    public static void main(String[] args) {
+        DataSource dataSource = PooledConnection.getInstance();
+        MySqlPaymentStatus mySqlPaymentStatus;
+
+        try {
+            mySqlPaymentStatus = new MySqlPaymentStatus(dataSource.getConnection());
+
+            System.out.println("PaymentStatus TEST");
+
+            mySqlPaymentStatus.printAll(mySqlPaymentStatus.findAll());
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Insert test:");
+            PaymentStatus ps = mySqlPaymentStatus.insert(new PaymentStatus(13, "WHO"));
+            mySqlPaymentStatus.printAll(mySqlPaymentStatus.findAll());
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Find one with id :");
+            System.out.println(mySqlPaymentStatus.findById(13));
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Find one by name :");
+            System.out.println(mySqlPaymentStatus.findByName("WHO"));
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Update:");
+            ps.setName("I am");
+            mySqlPaymentStatus.update(ps);
+            mySqlPaymentStatus.printAll(mySqlPaymentStatus.findAll());
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Delete:");
+            mySqlPaymentStatus.delete(ps.getId());
+            mySqlPaymentStatus.printAll(mySqlPaymentStatus.findAll());
+
+
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
     }
 }

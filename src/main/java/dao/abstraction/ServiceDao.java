@@ -13,7 +13,7 @@ public interface ServiceDao extends GenericDao<Service, Long> {
      * @param service service to increase
      * @param price   price of increasing
      */
-    void changeCost(Service service, BigDecimal price);
+    void changePrice(Service service, BigDecimal price);
 
     /**
      * Retrieve services from database identified by name.

@@ -1,12 +1,15 @@
 package dao.implementation.mysql;
 
 import dao.abstraction.UserDao;
+import dao.datasource.PooledConnection;
 import dao.implementation.mysql.converter.DtoConverter;
 import dao.implementation.mysql.converter.UserDtoConverter;
+import entity.Role;
 import entity.User;
 
-import java.math.BigDecimal;
+import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -15,19 +18,22 @@ public class MySqlUser implements UserDao {
 
     private static final String SELECT_ALL =
             "SELECT user.id AS user_id, user.first_name, user.last_name, user.login, user.password, " +
-                    "user.email, user.phone_num, user.role_id, role.name AS role_name" +
-                    "FROM user" +
-                    "JOIN role ON user.role_id = role.id";
+                    "user.email, user.phone_num, user.rate, user.role_id, role.name AS role_name " +
+                    "FROM user " +
+                    "JOIN role ON user.role_id = role.id ";
 
     private static final String SELECT_SPECIALIST =
             "SELECT user.id AS user_id, user.first_name, user.last_name, user.rate " +
-                    "FROM user";
+                    "FROM user ";
 
     private static final String SELECT_USER =
             "SELECT user.id AS user_id, user.first_name, user.last_name, user.email " +
-                    "FROM user";
+                    "FROM user " +
+                    "JOIN role ON user.role_id = role.id ";
 
     private static final String WHERE_ID = "WHERE user.id = ? ";
+
+    private static final String ROLE_ID = "AND user.role_id = ? ";
 
     private static final String WHERE_LOGIN = "WHERE user.login = ? ";
 
@@ -44,7 +50,7 @@ public class MySqlUser implements UserDao {
 
     private static final String UPDATE =
             "UPDATE user SET first_name = ?, last_name = ?, login = ?, " +
-                    "password = ?, email = ?, phone_num = ? rate = ?, role_id = ? ";
+                    "password = ?, email = ?, phone_num = ? ";
 
     private static final String UPDATE_PASSWORD = "UPDATE user SET password = ? ";
 
@@ -93,8 +99,7 @@ public class MySqlUser implements UserDao {
         Objects.requireNonNull(user);
         defaultDao.executeUpdate(UPDATE + WHERE_ID, user.getFirstName(),
                 user.getLastName(), user.getLogin(), user.getPassword(),
-                user.getEmail(), user.getPhoneNumber(), user.getRating(),
-                user.getRole().getId());
+                user.getEmail(), user.getPhoneNumber());
     }
 
     @Override
@@ -112,12 +117,12 @@ public class MySqlUser implements UserDao {
         return defaultDao.findOne(SELECT_ALL + WHERE_USER_NAME, firstName, lastName);
     }
 
-    public Optional<User> findUserByName(String firstName, String lastName) {
-        return defaultDao.findOne(SELECT_USER + WHERE_USER_NAME, firstName, lastName);
+    public Optional<User> findUserByName(String firstName, String lastName, int roleId) {
+        return defaultDao.findOne(SELECT_ALL + WHERE_USER_NAME + ROLE_ID, firstName, lastName, roleId);
     }
 
-    public Optional<User> findSpecialistByName(String firstName, String lastName) {
-        return defaultDao.findOne(SELECT_SPECIALIST + WHERE_USER_NAME, firstName, lastName);
+    public Optional<User> findSpecialistByName(String firstName, String lastName, int roleId) {
+        return defaultDao.findOne(SELECT_ALL + WHERE_USER_NAME + ROLE_ID, firstName, lastName, roleId);
     }
 
     @Override
@@ -127,12 +132,12 @@ public class MySqlUser implements UserDao {
 
     @Override
     public List<User> ascByRating() {
-        return defaultDao.findAll(SELECT_SPECIALIST + ASC_BY_RATING);
+        return defaultDao.findAll(SELECT_ALL + ASC_BY_RATING);
     }
 
     @Override
     public List<User> descByRating() {
-        return defaultDao.findAll(SELECT_SPECIALIST + DESC_BY_RATING);
+        return defaultDao.findAll(SELECT_ALL + DESC_BY_RATING);
     }
 
     @Override
@@ -145,8 +150,87 @@ public class MySqlUser implements UserDao {
         defaultDao.executeUpdate(UPDATE_PASSWORD + WHERE_ID, password, user.getId());
     }
 
-    public void changeRating(User user, float rate) {
+    public void updateRating(User user, float rate) {
         Objects.requireNonNull(user);
         defaultDao.executeUpdate(UPDATE_RATING + WHERE_ID, rate, user.getId());
+    }
+
+    private void printAll(List<User> list) {
+        System.out.println("Find all:");
+        for (User type : list) {
+            System.out.println(type);
+        }
+    }
+
+    public static void main(String[] args) {
+        DataSource dataSource = PooledConnection.getInstance();
+        MySqlUser mySqlUser;
+//        MySqlRole mySqlRole;
+
+        try {
+            mySqlUser = new MySqlUser(dataSource.getConnection());
+//            mySqlRole = new MySqlRole(dataSource.getConnection());
+
+            System.out.println("User TEST");
+
+            mySqlUser.printAll(mySqlUser.findAll());
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Insert test:");
+            User user = mySqlUser.insert(User.newBuilder().addFirstName("AA").addLastName("BB")
+                    .addLogin("CC").addPassword("DD").addEmail("EE").addPhoneNumber("9379992")
+                    .addDefaultRole().build());
+            mySqlUser.printAll(mySqlUser.findAll());
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Find with id 1:");
+            System.out.println(mySqlUser.findById(4L));
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Find one by login:");
+            System.out.println(mySqlUser.findByLogin("CC"));
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Find one by name:");
+            System.out.println(mySqlUser.findByName("AA", "BB"));
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Find user:");
+            System.out.println(mySqlUser.findUserByName("AA", "BB", Role.RoleIdentifier.USER_ROLE.getId()));
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Num of rows: ");
+            System.out.println(mySqlUser.getNumberOfRows());
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Change password:");
+            mySqlUser.changePassword(user, "qwerty");
+            mySqlUser.printAll(mySqlUser.findAll());
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Update rate:");
+            mySqlUser.updateRating(user, 4f);
+            mySqlUser.printAll(mySqlUser.findAll());
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Delete:");
+            mySqlUser.delete(user.getId());
+            mySqlUser.printAll(mySqlUser.findAll());
+
+
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+
+
     }
 }

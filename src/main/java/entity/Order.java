@@ -1,6 +1,7 @@
 package entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Order {
@@ -14,7 +15,7 @@ public class Order {
     private long id;
     private OrderStatus orderStatus;
     private PaymentStatus paymentStatus;
-    private LocalDate orderTime;
+    private LocalDateTime orderTime;
     private List<Service> services;
     private List<User> users;
 
@@ -46,11 +47,11 @@ public class Order {
         this.paymentStatus = paymentStatus;
     }
 
-    public LocalDate getOrderTime() {
+    public LocalDateTime getOrderTime() {
         return orderTime;
     }
 
-    public void setOrderTime(LocalDate orderTime) {
+    public void setOrderTime(LocalDateTime orderTime) {
         this.orderTime = orderTime;
     }
 
@@ -105,7 +106,6 @@ public class Order {
                 ", orderStatus=" + orderStatus +
                 ", paymentStatus=" + paymentStatus +
                 ", orderTime=" + orderTime +
-                ", services=" + services +
                 '}';
     }
 
@@ -141,7 +141,7 @@ public class Order {
             return this;
         }
 
-        public Builder addOrderTime(LocalDate orderTime) {
+        public Builder addOrderTime(LocalDateTime orderTime) {
             order.setOrderTime(orderTime);
             return this;
         }

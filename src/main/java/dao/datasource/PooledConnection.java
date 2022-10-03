@@ -13,8 +13,16 @@ public class PooledConnection {
     private static final String DB_USER = "user";
     private static final String DB_PASSWORD = "password";
 
-    public static DataSource getInstance() {
-        return Singleton.INSTANCE;
+    private static DataSource INSTANCE;
+
+    public static synchronized DataSource getInstance() {
+        if(INSTANCE == null) {
+            INSTANCE = initDataSource();
+        }
+        return INSTANCE;
+    }
+
+    private PooledConnection() {
     }
 
     private static DataSource initDataSource() {
@@ -27,7 +35,7 @@ public class PooledConnection {
         return dataSource;
     }
 
-    private static class Singleton {
-        private static final DataSource INSTANCE = initDataSource();
-    }
+//    private static class Singleton {
+//        private static final DataSource INSTANCE = initDataSource();
+//    }
 }

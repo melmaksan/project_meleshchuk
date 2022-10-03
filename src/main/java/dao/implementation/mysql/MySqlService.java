@@ -1,12 +1,15 @@
 package dao.implementation.mysql;
 
 import dao.abstraction.ServiceDao;
+import dao.datasource.PooledConnection;
 import dao.implementation.mysql.converter.DtoConverter;
 import dao.implementation.mysql.converter.ServiceDtoConverter;
 import entity.Service;
 
+import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -98,7 +101,7 @@ public class MySqlService implements ServiceDao {
     }
 
     @Override
-    public void changeCost(Service service, BigDecimal price) {
+    public void changePrice(Service service, BigDecimal price) {
         Objects.requireNonNull(service);
         defaultDao.executeUpdate(CHANGE_PRICE + WHERE_ID, price,
                 service.getId());
@@ -131,5 +134,71 @@ public class MySqlService implements ServiceDao {
     @Override
     public int getNumberOfRows() {
         return defaultDao.getNumberOfRows(NUMBER_OF_ROWS);
+    }
+
+    private void printAll(List<Service> list) {
+        System.out.println("Find all:");
+        for (Service type : list) {
+            System.out.println(type);
+        }
+    }
+
+    public static void main(String[] args) {
+        DataSource dataSource = PooledConnection.getInstance();
+        MySqlService mySqlService;
+
+        try {
+            mySqlService = new MySqlService(dataSource.getConnection());
+
+            System.out.println("Service TEST");
+
+            mySqlService.printAll(mySqlService.findAll());
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Insert test:");
+            Service service1 = mySqlService.insert(Service.newBuilder()
+                    .addServiceName("QWERTY").addDescription("something")
+                    .addPrice(BigDecimal.TEN).build());
+            mySqlService.printAll(mySqlService.findAll());
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Find one with id :");
+            System.out.println(mySqlService.findById((long) 1));
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Find one by title:");
+            System.out.println(mySqlService.findByService("QWERTY"));
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Change cost:");
+            mySqlService.changePrice(service1, BigDecimal.ONE);
+            mySqlService.printAll(mySqlService.findAll());
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Num of rows: ");
+            System.out.println(mySqlService.getNumberOfRows());
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Update:");
+            service1.setTitle("12345");
+            mySqlService.update(service1);
+            mySqlService.printAll(mySqlService.findAll());
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Delete:");
+            mySqlService.delete(service1.getId());
+            mySqlService.printAll(mySqlService.findAll());
+
+
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
     }
 }

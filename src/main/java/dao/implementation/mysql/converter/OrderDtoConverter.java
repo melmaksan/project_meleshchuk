@@ -12,8 +12,6 @@ public class OrderDtoConverter implements DtoConverter<Order> {
 
     private final static String ID_FIELD = "id";
     private final static String ORDER_TIME = "time";
-    private final static String ORDER_USERS = "order_users";
-    private final static String ORDER_SERVICES = "order_services";
     private final DtoConverter<OrderStatus> statusConverter;
     private final DtoConverter<PaymentStatus> paymentStatusDtoConverter;
 
@@ -32,11 +30,9 @@ public class OrderDtoConverter implements DtoConverter<Order> {
         PaymentStatus paymentStatus = paymentStatusDtoConverter.convertToObject(resultSet);
         return Order.newBuilder()
                 .addId(resultSet.getLong(ID_FIELD))
-                .addOrderTime(resultSet.getTimestamp(ORDER_TIME).toLocalDateTime().toLocalDate())
+                .addOrderTime(resultSet.getTimestamp(ORDER_TIME).toLocalDateTime())
                 .addOrderStatus(orderStatus)
                 .addPaymentStatus(paymentStatus)
-                .addUsers(getUsers(resultSet.getString(ORDER_USERS)))
-                .addServices(getServices(resultSet.getString(ORDER_SERVICES)))
                 .build();
     }
 

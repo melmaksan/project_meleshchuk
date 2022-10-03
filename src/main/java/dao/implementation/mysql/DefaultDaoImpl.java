@@ -119,9 +119,9 @@ public class DefaultDaoImpl<T> {
             setParamsToStatement(statement, params);
             statement.executeUpdate();
             return getGeneratedPrimaryKey(statement);
-        } catch (SQLException e) {
-            logger.error(e);
-            throw new DaoException("", e);
+        } catch (SQLException ex) {
+            logger.error(ex);
+            throw new DaoException("Can't insert data with generated PK", ex);
         }
     }
 
@@ -135,9 +135,9 @@ public class DefaultDaoImpl<T> {
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             setParamsToStatement(statement, params);
             statement.executeUpdate();
-        } catch (SQLException e) {
-            logger.error(e);
-            throw new DaoException("", e);
+        } catch (SQLException ex) {
+            logger.error(ex);
+            throw new DaoException("Can't insert data", ex);
         }
     }
 

@@ -21,19 +21,17 @@ public abstract class DaoFactory {
     private static DaoFactory instance;
 
     public static synchronized DaoFactory getInstance() {
-
         if (instance == null) {
             ResourceBundle bundle = ResourceBundle.getBundle(DB_BUNDLE);
             String className = bundle.getString(DB_CLASS);
             try {
                 instance = (DaoFactory) Class.forName(className).
                         getConstructor().newInstance();
-            } catch (Exception e) {
-                logger.error(ERROR_OBTAIN_INSTANCE, e);
-                throw new DaoException(ERROR_OBTAIN_INSTANCE, e);
+            } catch (Exception ex) {
+                logger.error(ERROR_OBTAIN_INSTANCE, ex);
+                throw new DaoException(ERROR_OBTAIN_INSTANCE, ex);
             }
         }
-
         return instance;
     }
 

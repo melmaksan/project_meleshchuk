@@ -1,14 +1,17 @@
 package dao.implementation.mysql;
 
 import dao.abstraction.OrderDao;
+import dao.datasource.PooledConnection;
 import dao.implementation.mysql.converter.DtoConverter;
 import dao.implementation.mysql.converter.OrderDtoConverter;
 import dao.implementation.mysql.converter.OrderToServiceDtoConverter;
-import entity.Order;
-import entity.OrderToService;
+import entity.*;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -26,7 +29,7 @@ public class MySqlOrder implements OrderDao {
             "WHERE orders.id = ? ";
 
     private static final String INSERT =
-            "INSERT into orders (time, status_id, payment_status_id," +
+            "INSERT into orders (time, status_id, payment_status_id)" +
                     "VALUES(?, ?, ?) ";
     private static final String UPDATE =
             "UPDATE orders SET time = ?, status_id = ?, payment_status_id = ? ";
@@ -87,20 +90,20 @@ public class MySqlOrder implements OrderDao {
     }
 
     @Override
-    public void changeBookingTime(Order order, LocalDate localDate) {
+    public void changeBookingTime(Order order, LocalDateTime localDateTime) {
         Objects.requireNonNull(order);
-        defaultDao.executeUpdate(CHANGE_TIME + WHERE_ID, localDate, order.getId());
+        defaultDao.executeUpdate(CHANGE_TIME + WHERE_ID, localDateTime, order.getId());
 
     }
 
     @Override
-    public void updateOrderStatus(Order order, long orderStatus) {
+    public void updateOrderStatus(Order order, int orderStatus) {
         Objects.requireNonNull(order);
         defaultDao.executeUpdate(UPDATE_STATUS + WHERE_ID, orderStatus, order.getId());
     }
 
     @Override
-    public void updatePaymentStatus(Order order, long paymentStatus) {
+    public void updatePaymentStatus(Order order, int paymentStatus) {
         Objects.requireNonNull(order);
         defaultDao.executeUpdate(UPDATE_PAYMENT_STATUS + WHERE_ID, paymentStatus, order.getId());
     }
@@ -108,5 +111,71 @@ public class MySqlOrder implements OrderDao {
     @Override
     public int getNumberOfRows() {
         return defaultDao.getNumberOfRows(NUMBER_OF_ROWS);
+    }
+
+    private void printAll(List<Order> list) {
+        System.out.println("Find all:");
+        for (Order type : list) {
+            System.out.println(type);
+        }
+    }
+
+    public static void main(String[] args) {
+        DataSource dataSource = PooledConnection.getInstance();
+        MySqlOrder mySqlOrder;
+//        MySqlOrderStatus mySqlOrderStatus;
+//        MySqlPaymentStatus mySqlPaymentStatus;
+
+        try {
+            mySqlOrder = new MySqlOrder(dataSource.getConnection());
+//            mySqlOrderStatus = new MySqlOrderStatus(dataSource.getConnection());
+//            mySqlPaymentStatus = new MySqlPaymentStatus(dataSource.getConnection());
+
+            System.out.println("Order TEST");
+
+            mySqlOrder.printAll(mySqlOrder.findAll());
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Insert test:");
+            Order order = mySqlOrder.insert(Order.newBuilder().addOrderTime(LocalDateTime.now())
+                    .addDefaultStatus().addDefaultPaymentStatus().build());
+            mySqlOrder.printAll(mySqlOrder.findAll());
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Find one with id 1:");
+            System.out.println(mySqlOrder.findById((long) 13));
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Change day:");
+            mySqlOrder.changeBookingTime(order, LocalDateTime.of(2022, 8, 26, 13, 45));
+            mySqlOrder.printAll(mySqlOrder.findAll());
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Change status:");
+            mySqlOrder.updateOrderStatus(order, OrderStatus.StatusIdentifier.DONE_STATUS.getId());
+            mySqlOrder.printAll(mySqlOrder.findAll());
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Change status:");
+            mySqlOrder.updatePaymentStatus(order, PaymentStatus.PaymentIdentifier.PAID_STATUS.getId());
+            mySqlOrder.printAll(mySqlOrder.findAll());
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Delete:");
+            mySqlOrder.delete(order.getId());
+            mySqlOrder.printAll(mySqlOrder.findAll());
+
+
+
+
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
     }
 }

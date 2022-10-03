@@ -46,7 +46,6 @@ public class MySqlUserToOrder implements UserToOrderDao {
         this.defaultDao = new DefaultDaoImpl<>(connection, converter);
     }
 
-
     @Override
     public Optional<UserToOrder> findById(Long id) {
         return Optional.empty();

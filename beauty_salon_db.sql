@@ -39,17 +39,16 @@ CREATE TABLE IF NOT EXISTS `beauty_salon_db`.`user` (
   `password` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `phone_num` VARCHAR(45) NOT NULL,
-  `rate` FLOAT(1,1) NULL,
+  `rate` FLOAT NULL,
   `role_id` TINYINT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `login_UNIQUE` (`login` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
-  UNIQUE INDEX `phone_num_UNIQUE` (`phone_num` ASC) VISIBLE,
   INDEX `fk_user_role1_idx` (`role_id` ASC) VISIBLE,
   CONSTRAINT `fk_user_role1`
     FOREIGN KEY (`role_id`)
     REFERENCES `beauty_salon_db`.`role` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -74,7 +73,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `beauty_salon_db`.`status` ;
 
 CREATE TABLE IF NOT EXISTS `beauty_salon_db`.`status` (
-  `id` TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` TINYINT UNSIGNED NOT NULL,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`));
 
@@ -85,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `beauty_salon_db`.`status` (
 DROP TABLE IF EXISTS `beauty_salon_db`.`payment_status` ;
 
 CREATE TABLE IF NOT EXISTS `beauty_salon_db`.`payment_status` (
-  `id` TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` TINYINT UNSIGNED NOT NULL,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`));
 
@@ -106,12 +105,12 @@ CREATE TABLE IF NOT EXISTS `beauty_salon_db`.`orders` (
   CONSTRAINT `fk_orders_status1`
     FOREIGN KEY (`status_id`)
     REFERENCES `beauty_salon_db`.`status` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_orders_payment_status1`
     FOREIGN KEY (`payment_status_id`)
     REFERENCES `beauty_salon_db`.`payment_status` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -197,12 +196,12 @@ CREATE TABLE IF NOT EXISTS `beauty_salon_db`.`respond` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `respond` MEDIUMTEXT NOT NULL,
   `user_id` BIGINT UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`, `user_id`),
+  PRIMARY KEY (`id`),
   INDEX `fk_respond_user1_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_respond_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `beauty_salon_db`.`user` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION);
 
 

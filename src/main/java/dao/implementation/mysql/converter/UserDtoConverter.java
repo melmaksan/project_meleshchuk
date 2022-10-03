@@ -21,8 +21,6 @@ public class UserDtoConverter implements DtoConverter<User> {
     private final static String EMAIL = "email";
     private final static String PHONE = "phone_num";
     private final static String RATING = "rate";
-    private final static String USER_ORDERS = "user_orders";
-    private final static String USER_SERVICES = "user_services";
     private final DtoConverter<Role> roleConverter;
 
     public UserDtoConverter() {
@@ -46,8 +44,6 @@ public class UserDtoConverter implements DtoConverter<User> {
                 .addPhoneNumber(resultSet.getString(PHONE))
                 .addRating(resultSet.getFloat(RATING))
                 .addRole(role)
-                .addOrders(getOrders(resultSet.getString(USER_ORDERS)))
-                .addServices(getServices(resultSet.getString(USER_SERVICES)))
                 .build();
     }
 

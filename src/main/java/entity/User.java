@@ -137,9 +137,8 @@ public class User {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
+                ", rating=" + rating +
                 ", role=" + role +
-                ", services=" + services +
-                ", orders=" + orders +
                 '}';
     }
 
@@ -207,6 +206,11 @@ public class User {
 
         public Builder addDefaultRole() {
             user.setDefaultRole();
+            return this;
+        }
+
+        public Builder addDefaultRate() {
+            user.setRating(0);
             return this;
         }
 
