@@ -1,11 +1,15 @@
 package dao.implementation.mysql;
 
 import dao.abstraction.OrderToServiceDao;
+import dao.datasource.PooledConnection;
 import dao.implementation.mysql.converter.DtoConverter;
 import dao.implementation.mysql.converter.OrderToServiceDtoConverter;
+import entity.Order;
 import entity.OrderToService;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -14,9 +18,8 @@ public class MySqlOrderToService implements OrderToServiceDao {
 
     private final static String SELECT_ALL =
             "SELECT orders_to_service.orders_id, " +
-                    "orders_to_service.service_id, service.title " +
-                    "FROM service " +
-                    "JOIN orders_to_service ON orders_to_service.service_id = service.id ";
+                    "orders_to_service.service_id " +
+                    "FROM service ";
 
     private final static String WHERE_ORDER_SERVICES =
             "WHERE orders_id = ? AND service_id = ? ";
@@ -36,9 +39,11 @@ public class MySqlOrderToService implements OrderToServiceDao {
     private final static String DELETE =
             "DELETE FROM orders_to_service ";
 
-    private static final String EXIST_BY_ORDER =
-            "SELECT orders_to_service.service_id FROM included_package " +
-                    "WHERE orders_to_service.orders_id = ? ";
+    private static final String EXIST_BY_SERVICE =
+            "SELECT orders_to_service.orders_id " +
+                    "FROM orders_to_service " +
+                    "JOIN orders ON orders_to_service.orders_id = orders.id " +
+                    "WHERE orders_to_service.service_id = ? AND orders.status_id = ? ";
 
     private final DefaultDaoImpl<OrderToService> defaultDao;
 
@@ -81,8 +86,8 @@ public class MySqlOrderToService implements OrderToServiceDao {
     }
 
     @Override
-    public boolean exist(Long id) {
-        return defaultDao.exist(EXIST_BY_ORDER, id);
+    public boolean existByService(long serviceId, int orderStatus) {
+        return defaultDao.exist(EXIST_BY_SERVICE, serviceId, orderStatus);
     }
 
     @Override
@@ -93,5 +98,35 @@ public class MySqlOrderToService implements OrderToServiceDao {
     @Override
     public List<OrderToService> findAllByService(long serviceId) {
         return defaultDao.findAll(SELECT_ALL + WHERE_SERVICE, serviceId);
+    }
+
+    private void printAll(List<OrderToService> list) {
+        System.out.println("Find all:");
+        for (OrderToService type : list) {
+            System.out.println(type);
+        }
+    }
+
+    public static void main(String[] args) {
+        DataSource dataSource = PooledConnection.getInstance();
+        MySqlOrderToService mySqlOrderToService;
+
+        try {
+            mySqlOrderToService = new MySqlOrderToService(dataSource.getConnection());
+
+            System.out.println("Order TEST");
+
+            mySqlOrderToService.printAll(mySqlOrderToService.findAll());
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Find one with id 1:");
+            System.out.println(mySqlOrderToService.existByService(3, 1));
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
     }
 }

@@ -37,18 +37,16 @@ CREATE TABLE IF NOT EXISTS `beauty_salon_db`.`user` (
   `last_name` VARCHAR(45) NOT NULL,
   `login` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
-  `email` VARCHAR(45) NOT NULL,
   `phone_num` VARCHAR(45) NOT NULL,
   `rate` FLOAT NULL,
   `role_id` TINYINT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `login_UNIQUE` (`login` ASC) VISIBLE,
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
   INDEX `fk_user_role1_idx` (`role_id` ASC) VISIBLE,
   CONSTRAINT `fk_user_role1`
     FOREIGN KEY (`role_id`)
     REFERENCES `beauty_salon_db`.`role` (`id`)
-    ON DELETE CASCADE
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -62,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `beauty_salon_db`.`service` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(255) NOT NULL,
   `description` MEDIUMTEXT NULL DEFAULT NULL,
-  `price` DECIMAL(5,2) NOT NULL,
+  `price` DECIMAL(9,2) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -105,12 +103,12 @@ CREATE TABLE IF NOT EXISTS `beauty_salon_db`.`orders` (
   CONSTRAINT `fk_orders_status1`
     FOREIGN KEY (`status_id`)
     REFERENCES `beauty_salon_db`.`status` (`id`)
-    ON DELETE CASCADE
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_orders_payment_status1`
     FOREIGN KEY (`payment_status_id`)
     REFERENCES `beauty_salon_db`.`payment_status` (`id`)
-    ON DELETE CASCADE
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -129,12 +127,12 @@ CREATE TABLE IF NOT EXISTS `beauty_salon_db`.`user_to_service` (
   CONSTRAINT `fk_user_has_service_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `beauty_salon_db`.`user` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_has_service_service1`
     FOREIGN KEY (`service_id`)
     REFERENCES `beauty_salon_db`.`service` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -153,12 +151,12 @@ CREATE TABLE IF NOT EXISTS `beauty_salon_db`.`orders_to_service` (
   CONSTRAINT `fk_orders_has_service_orders1`
     FOREIGN KEY (`orders_id`)
     REFERENCES `beauty_salon_db`.`orders` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_orders_has_service_service1`
     FOREIGN KEY (`service_id`)
     REFERENCES `beauty_salon_db`.`service` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -177,12 +175,12 @@ CREATE TABLE IF NOT EXISTS `beauty_salon_db`.`user_to_orders` (
   CONSTRAINT `fk_user_has_orders_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `beauty_salon_db`.`user` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_has_orders_orders1`
     FOREIGN KEY (`orders_id`)
     REFERENCES `beauty_salon_db`.`orders` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -201,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `beauty_salon_db`.`respond` (
   CONSTRAINT `fk_respond_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `beauty_salon_db`.`user` (`id`)
-    ON DELETE CASCADE
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
 

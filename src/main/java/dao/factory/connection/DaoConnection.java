@@ -23,5 +23,5 @@ public interface DaoConnection extends AutoCloseable {
     Object getNativeConnection();
 
     @Override
-    void close() throws Exception;
+    void close();
 }

@@ -14,11 +14,17 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * Intermediate layer between command layer and dao layer. Implements operations of finding,
+ * creating, deleting entities. Account dao layer.
+ *
+ */
+
 public class MySqlUser implements UserDao {
 
     private static final String SELECT_ALL =
             "SELECT user.id AS user_id, user.first_name, user.last_name, user.login, user.password, " +
-                    "user.email, user.phone_num, user.rate, user.role_id, role.name AS role_name " +
+                    "user.phone_num, user.rate, user.role_id, role.name AS role_name " +
                     "FROM user " +
                     "JOIN role ON user.role_id = role.id ";
 
@@ -46,11 +52,11 @@ public class MySqlUser implements UserDao {
 
     private static final String INSERT =
             "INSERT into user (first_name, last_name, login, password, " +
-                    "email, phone_num, rate, role_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?) ";
+                    "phone_num, rate, role_id) VALUES(?, ?, ?, ?, ?, ?, ?) ";
 
     private static final String UPDATE =
             "UPDATE user SET first_name = ?, last_name = ?, login = ?, " +
-                    "password = ?, email = ?, phone_num = ? ";
+                    "password = ?, phone_num = ? ";
 
     private static final String UPDATE_PASSWORD = "UPDATE user SET password = ? ";
 
@@ -88,7 +94,7 @@ public class MySqlUser implements UserDao {
         Objects.requireNonNull(user);
         int id = defaultDao.executeInsertWithGeneratedPrimaryKey(INSERT,
                 user.getFirstName(), user.getLastName(), user.getLogin(),
-                user.getPassword(), user.getEmail(), user.getPhoneNumber(),
+                user.getPassword(), user.getPhoneNumber(),
                 user.getRating(), user.getRole().getId());
         user.setId(id);
         return user;
@@ -99,7 +105,7 @@ public class MySqlUser implements UserDao {
         Objects.requireNonNull(user);
         defaultDao.executeUpdate(UPDATE + WHERE_ID, user.getFirstName(),
                 user.getLastName(), user.getLogin(), user.getPassword(),
-                user.getEmail(), user.getPhoneNumber());
+                user.getPhoneNumber(), user.getId());
     }
 
     @Override
@@ -179,7 +185,7 @@ public class MySqlUser implements UserDao {
 
             System.out.println("Insert test:");
             User user = mySqlUser.insert(User.newBuilder().addFirstName("AA").addLastName("BB")
-                    .addLogin("CC").addPassword("DD").addEmail("EE").addPhoneNumber("9379992")
+                    .addLogin("CC").addPassword("DD").addPhoneNumber("9379992")
                     .addDefaultRole().build());
             mySqlUser.printAll(mySqlUser.findAll());
 

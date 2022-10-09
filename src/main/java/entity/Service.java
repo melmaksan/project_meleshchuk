@@ -71,6 +71,7 @@ public class Service {
                 ", title='" + title +
                 ", description='" + description +
                 ", cost=" + price +
+                ", user=" + users +
                 '}';
     }
 

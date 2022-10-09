@@ -18,7 +18,6 @@ public class UserDtoConverter implements DtoConverter<User> {
     private final static String LAST_NAME = "last_name";
     private final static String LOGIN = "login";
     private final static String PASSWORD = "password";
-    private final static String EMAIL = "email";
     private final static String PHONE = "phone_num";
     private final static String RATING = "rate";
     private final DtoConverter<Role> roleConverter;
@@ -40,7 +39,6 @@ public class UserDtoConverter implements DtoConverter<User> {
                 .addLastName(resultSet.getString(LAST_NAME))
                 .addLogin(resultSet.getString(LOGIN))
                 .addPassword(resultSet.getString(PASSWORD))
-                .addEmail(resultSet.getString(EMAIL))
                 .addPhoneNumber(resultSet.getString(PHONE))
                 .addRating(resultSet.getFloat(RATING))
                 .addRole(role)

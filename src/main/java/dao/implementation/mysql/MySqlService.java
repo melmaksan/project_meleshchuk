@@ -18,9 +18,11 @@ public class MySqlService implements ServiceDao {
 
     private static final String SELECT_ALL =
             "SELECT service.id AS service_id , service.title AS service_title, " +
-                    "service.description AS service_description, " +
-                    "service.price AS service_price " +
-                    "FROM service ";
+                    "service.description AS service_description, service.price AS service_price, " +
+                    "user.first_name AS spec_name " +
+                    "FROM service " +
+                    "JOIN user_to_service ON user_to_service.service_id = service.id " +
+                    "JOIN user ON user_to_service.user_id = user.id ";
 
     private static final String WHERE_ID =
             "WHERE service.id = ? ";
@@ -154,13 +156,13 @@ public class MySqlService implements ServiceDao {
 
             mySqlService.printAll(mySqlService.findAll());
 
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("Insert test:");
-            Service service1 = mySqlService.insert(Service.newBuilder()
-                    .addServiceName("QWERTY").addDescription("something")
-                    .addPrice(BigDecimal.TEN).build());
-            mySqlService.printAll(mySqlService.findAll());
+//            System.out.println("~~~~~~~~~~~~");
+//
+//            System.out.println("Insert test:");
+//            Service service1 = mySqlService.insert(Service.newBuilder()
+//                    .addServiceName("QWERTY").addDescription("something")
+//                    .addPrice(BigDecimal.TEN).build());
+//            mySqlService.printAll(mySqlService.findAll());
 
             System.out.println("~~~~~~~~~~~~");
 
@@ -174,9 +176,9 @@ public class MySqlService implements ServiceDao {
 
             System.out.println("~~~~~~~~~~~~");
 
-            System.out.println("Change cost:");
-            mySqlService.changePrice(service1, BigDecimal.ONE);
-            mySqlService.printAll(mySqlService.findAll());
+//            System.out.println("Change cost:");
+//            mySqlService.changePrice(service1, BigDecimal.ONE);
+//            mySqlService.printAll(mySqlService.findAll());
 
             System.out.println("~~~~~~~~~~~~");
 
@@ -185,15 +187,15 @@ public class MySqlService implements ServiceDao {
 
             System.out.println("~~~~~~~~~~~~");
 
-            System.out.println("Update:");
-            service1.setTitle("12345");
-            mySqlService.update(service1);
-            mySqlService.printAll(mySqlService.findAll());
+//            System.out.println("Update:");
+//            service1.setTitle("12345");
+//            mySqlService.update(service1);
+//            mySqlService.printAll(mySqlService.findAll());
 
             System.out.println("~~~~~~~~~~~~");
 
             System.out.println("Delete:");
-            mySqlService.delete(service1.getId());
+            mySqlService.delete(1L);
             mySqlService.printAll(mySqlService.findAll());
 
 

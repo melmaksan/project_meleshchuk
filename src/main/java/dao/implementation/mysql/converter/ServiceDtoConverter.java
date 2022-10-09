@@ -16,6 +16,7 @@ public class ServiceDtoConverter implements DtoConverter<Service> {
     private final static String SERVICE_NAME = "service_title";
     private final static String SERVICE_DESCRIPTION = "service_description";
     private final static String PRICE = "service_price";
+    private final static String USERS = "spec_name";
 
     @Override
     public Service convertToObject(ResultSet resultSet) throws SQLException {
@@ -24,12 +25,13 @@ public class ServiceDtoConverter implements DtoConverter<Service> {
                 .addServiceName(resultSet.getString(SERVICE_NAME))
                 .addDescription(resultSet.getString(SERVICE_DESCRIPTION))
                 .addPrice(resultSet.getBigDecimal(PRICE))
+                .addUsers(getSpecialists(resultSet.getString(USERS)))
                 .build();
     }
 
     private List<User> getSpecialists(String concatSpecialists) {
         return Stream.of(concatSpecialists.split(",")).map(split ->
-                User.newBuilder().addFirstName(split).addLastName(split).build()).collect(Collectors.toList());
+                User.newBuilder().addFirstName(split).build()).collect(Collectors.toList());
     }
 
     private List<Order> getOrders(String concatOrders) {

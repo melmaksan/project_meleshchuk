@@ -13,13 +13,13 @@ public class PooledConnection {
     private static final String DB_USER = "user";
     private static final String DB_PASSWORD = "password";
 
-    private static DataSource INSTANCE;
+    private static DataSource instance;
 
     public static synchronized DataSource getInstance() {
-        if(INSTANCE == null) {
-            INSTANCE = initDataSource();
+        if(instance == null) {
+            instance = initDataSource();
         }
-        return INSTANCE;
+        return instance;
     }
 
     private PooledConnection() {

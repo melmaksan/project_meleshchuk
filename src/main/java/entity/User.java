@@ -12,7 +12,6 @@ public class User {
     private String lastName;
     private String login;
     private String password;
-    private String email;
     private String phoneNumber;
     private float rating;
     private Role role;
@@ -61,14 +60,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPhoneNumber() {
@@ -135,7 +126,6 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", rating=" + rating +
                 ", role=" + role +
@@ -181,11 +171,6 @@ public class User {
 
         public Builder addPassword(String password) {
             user.setPassword(password);
-            return this;
-        }
-
-        public Builder addEmail(String email) {
-            user.setEmail(email);
             return this;
         }
 
