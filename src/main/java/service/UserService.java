@@ -82,10 +82,8 @@ public class UserService {
             UserDao userDao = daoFactory.getUserDao(connection);
             Optional<User> user = userDao.findByLogin(login);
 
-            return user
-                    .filter(u -> PasswordStorage.checkSecurePassword(
-                            password, u.getPassword()))
-                    .isPresent();
+            return user.filter(u -> PasswordStorage.checkSecurePassword(password,
+                    u.getPassword())).isPresent();
         }
     }
 

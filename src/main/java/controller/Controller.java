@@ -20,8 +20,8 @@ public class Controller extends HttpServlet {
     private ControllerHelper controllerHelper;
 
     @Override
-    public void init() throws ServletException {
-        super.init();
+    public void init() {
+//        super.init();
         controllerHelper = ControllerHelper.getInstance();
         getServletContext().setAttribute(SUPPORTED_LOCALES,
                 SupportedLocale.getSupportedLanguages());

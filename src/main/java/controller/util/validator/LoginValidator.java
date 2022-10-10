@@ -8,7 +8,7 @@ public class LoginValidator extends RegexValidator {
     /**
      * Regex used to perform validation of data.
      */
-    private static final String EMAIL_REGEX = "^[\\w_-\\.]+@([\\w-]+\\.)+[\\w-]{2,6}$";
+    private static final String EMAIL_REGEX = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,6}$";
 
     public LoginValidator() {
         super(EMAIL_REGEX, MAX_LENGTH, INVALID_EMAIL_KEY);

@@ -14,9 +14,9 @@ public class Util {
     /**
      * Add next page to redirect
      */
-    public static void redirectTo(HttpServletRequest request,
-                                  HttpServletResponse response,
-                                  String pageToRedirect) throws IOException {
+    public static void redirectTo(HttpServletRequest request, HttpServletResponse response,
+                                  String pageToRedirect)
+            throws IOException {
         response.sendRedirect(request.getContextPath() +
                 request.getServletPath() + pageToRedirect);
     }
@@ -37,8 +37,7 @@ public class Util {
      * @param <T> type of field for validation
      */
     public static <T> void validateField(Validator<T> validator,
-                                         T field,
-                                         List<String> errors) {
+                                         T field, List<String> errors) {
         if (!validator.isValid(field)) {
             errors.add(validator.getErrorKey());
         }
