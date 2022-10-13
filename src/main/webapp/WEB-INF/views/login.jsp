@@ -6,30 +6,39 @@
 <fmt:setBundle basename="i18n.lang"/>
 
 <html>
-<body class="text-center">
-    <main class="form-signing">
-        <c:if test="${not empty requestScope.errors}">
-            <div class="alert alert-danger">
-                <c:forEach items="${requestScope.errors}" var="error">
-                    <strong><fmt:message key="error"/></strong> <fmt:message key="${error}"/><br>
-                </c:forEach>
-            </div>
-        </c:if>
-        <form class="form-signing" method="post">
-            <input type="hidden" name="command" value="login.post"/>
-            <div class="form-floating">
-                <input  class="form-control" name="login" id="login" placeholder="<fmt:message key="enter.login"/>"
-                        value="<c:out value="${requestScope.user.login}" />" required autofocus>
-                <label for="login"><fmt:message key="enter.login"/></label>
-            </div>
+<head>
+    <jsp:include page="/WEB-INF/views/includes/head.jsp"/>
+    <title>Login Page</title></head>
+<body>
+<jsp:include page="/WEB-INF/views/includes/navbar.jsp"/>
 
-            <div class="form-floating">
-                <input type="password" class="form-control" name="password" id="password" placeholder="<fmt:message key="enter.password"/>" required>
-                <label for="password"><fmt:message key="enter.password"/></label>
-            </div>
+<div class="container">
+    <div class="card w-50 mx-auto my-5">
+        <div class="card-header text-center">User Login</div>
+        <div class="card-body">
+            <form class=form-group" method="post">
 
-            <button class="w-100 btn btn-lg btn-primary" type="submit"><fmt:message key="login" /></button>
-        </form>
-    </main>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" class="form-control" name="login" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" name="password" placeholder="***********"
+                           required>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<jsp:include page="/WEB-INF/views/includes/footer.jsp"/>
 </body>
 </html>

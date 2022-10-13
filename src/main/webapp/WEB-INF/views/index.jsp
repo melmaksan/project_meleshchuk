@@ -6,12 +6,12 @@
 <fmt:setBundle basename="i18n.lang"/>
 
 <html>
+<head>
+    <jsp:include page="/WEB-INF/views/includes/head.jsp"/>
+    <title>Beauty Salon</title>
+</head>
 <body>
-<div class="jumbotron">
-    <div class="container">
-        <h1>Beauty Salon</h1>
-    </div>
-</div>
+<jsp:include page="/WEB-INF/views/includes/navbar.jsp"/>
 
 <div class="container">
     <div class="row">
@@ -29,5 +29,7 @@
 
     <hr>
 </div>
+
+<jsp:include page="/WEB-INF/views/includes/footer.jsp"/>
 </body>
 </html>

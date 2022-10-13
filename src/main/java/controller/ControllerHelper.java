@@ -6,6 +6,9 @@ import controller.command.ICommand;
 import controller.command.authorization.GetLoginCommand;
 import controller.command.authorization.LogoutCommand;
 import controller.command.authorization.PostLoginCommand;
+import controller.command.user.GetOrdersCommand;
+import controller.command.user.GetRespondCommand;
+import controller.command.user.GetServiceCommand;
 import controller.util.constants.Views;
 
 import java.util.HashMap;
@@ -43,6 +46,10 @@ public class ControllerHelper {
                 new PostLoginCommand());
         commands.put(buildKey(bundle.getString("logout.path"), "logout"),
                 new LogoutCommand());
+        commands.put(buildKey(bundle.getString("service.path"), null),
+                new GetServiceCommand());
+        commands.put(buildKey(bundle.getString("orders.path"), "user.orders"),
+                new GetOrdersCommand());
     }
 
     public ICommand getCommand(String path, String command) {

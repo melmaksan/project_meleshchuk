@@ -38,7 +38,7 @@ public class OrderService {
     private OrderService() {
     }
 
-    public List<Order> findAllService() {
+    public List<Order> findAllOrders() {
         try (DaoConnection connection = daoFactory.getConnection()) {
             OrderDao orderDao = daoFactory.getOrderDao(connection);
             List<Order> orders = orderDao.findAll();
@@ -92,7 +92,7 @@ public class OrderService {
         }
     }
 
-    public void createService(Order order) {
+    public void createOrder(Order order) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.startSerializableTransaction();
             OrderDao orderDao = daoFactory.getOrderDao(connection);

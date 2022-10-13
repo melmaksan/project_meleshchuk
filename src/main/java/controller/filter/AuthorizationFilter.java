@@ -67,7 +67,7 @@ public class AuthorizationFilter implements Filter {
     private boolean isUserRoleInvalidForRequestedPage(HttpServletRequest request, User user) {
         return (isUserPage(request) && user.getRole().getId() != USER_ROLE_ID) ||
                 (isAdminPage(request) && user.getRole().getId() != ADMIN_ROLE_ID) ||
-                 (isASpecialistPage(request) && user.getRole().getId() != SPEC_ROLE_ID);
+                 (isSpecialistPage(request) && user.getRole().getId() != SPEC_ROLE_ID);
     }
 
     private boolean isUserPage(HttpServletRequest request) {
@@ -80,7 +80,7 @@ public class AuthorizationFilter implements Filter {
                         bundle.getString(ADMIN_PREFIX));
     }
 
-    private boolean isASpecialistPage(HttpServletRequest request) {
+    private boolean isSpecialistPage(HttpServletRequest request) {
         return request.getRequestURI().startsWith(bundle.getString(SITE_PREFIX) +
                 bundle.getString(SPEC_PREFIX));
     }

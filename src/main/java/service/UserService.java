@@ -8,20 +8,30 @@ import dao.abstraction.UserDao;
 import dao.factory.DaoFactory;
 import dao.factory.connection.DaoConnection;
 import dao.util.PasswordStorage;
+import entity.Order;
+import entity.Service;
 import entity.User;
+import entity.UserToOrder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import static dao.util.Constants.USER_ALREADY_EXISTS;
+import static dao.util.Constants.*;
 
 public class UserService {
 
+    private static final UserToOrderService userToOrderService = ServiceFactory.getUserToOrderService();
+    private static final OrderService orderService = ServiceFactory.getOrderService();
     private final DaoFactory daoFactory = DaoFactory.getInstance();
     private static UserService instance;
+
+    private static final Logger logger = LogManager.getLogger(UserService.class);
 
     public static synchronized UserService getInstance() {
         if(instance == null) {
@@ -61,7 +71,7 @@ public class UserService {
         }
     }
 
-    public void createUser(User user) {
+    public void creatingUser(User user) {
         Objects.requireNonNull(user);
 
         if (user.getRole() == null) {
@@ -95,13 +105,13 @@ public class UserService {
     }
 
 
-    public List<String> createUser(String firstName, String lastName, String login,
-                                   String password, String phone) {
+    public List<String> creatingUser(String firstName, String lastName, String login,
+                                     String password, String phone) {
         User userDto = getDataFromRequestCreating(firstName, lastName, login,
                 password, phone);
         List<String> errors = validateData(userDto);
         if (errors.isEmpty()) {
-            createUser(userDto);
+            creatingUser(userDto);
         }
         return errors;
     }
@@ -157,6 +167,17 @@ public class UserService {
         request.setAttribute("currentPage", page);
     }
 
-
+    public List<Order> getOrders(User user) {
+        List<Order> orders = new ArrayList<>();
+        List<UserToOrder> userToOrders = userToOrderService.findAllOrdersByUser(user.getId());
+        for (UserToOrder userToOrder : userToOrders) {
+            try {
+                orders.add((orderService.findOrderById(userToOrder.getOrderId())).orElse(null));
+            } catch (RuntimeException ex) {
+                logger.error("There are no orders here!", ex);
+            }
+        }
+        return orders;
+    }
 
 }
