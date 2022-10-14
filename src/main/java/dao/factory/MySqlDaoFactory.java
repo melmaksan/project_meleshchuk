@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class MySqlDaoFactory extends DaoFactory {
 
     private final static String NULLABLE_CONNECTION =
-            "Null pointer connection!";
+            "No connection!";
 
     private final static String WRONG_TYPE_CONNECTION =
             "Wrong type connection!";

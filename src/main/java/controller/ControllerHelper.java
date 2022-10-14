@@ -6,6 +6,7 @@ import controller.command.ICommand;
 import controller.command.authorization.GetLoginCommand;
 import controller.command.authorization.LogoutCommand;
 import controller.command.authorization.PostLoginCommand;
+import controller.command.authorization.PostRegistrationCommand;
 import controller.command.user.GetOrdersCommand;
 import controller.command.user.GetRespondCommand;
 import controller.command.user.GetServiceCommand;
@@ -50,6 +51,8 @@ public class ControllerHelper {
                 new GetServiceCommand());
         commands.put(buildKey(bundle.getString("orders.path"), "user.orders"),
                 new GetOrdersCommand());
+        commands.put(buildKey(bundle.getString("signup.path"), "signup"),
+                new PostRegistrationCommand());
     }
 
     public ICommand getCommand(String path, String command) {

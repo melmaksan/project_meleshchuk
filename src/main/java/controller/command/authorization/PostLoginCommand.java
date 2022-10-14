@@ -2,7 +2,6 @@ package controller.command.authorization;
 
 import controller.command.ICommand;
 import controller.util.Util;
-import controller.util.constants.Attributes;
 import controller.util.constants.Views;
 import controller.util.validator.LoginValidator;
 import controller.util.validator.PasswordValidator;
@@ -18,20 +17,19 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
 
+import static controller.util.constants.Attributes.*;
+
 public class PostLoginCommand implements ICommand {
 
     private final static Logger logger =
             LogManager.getLogger(PostLoginCommand.class);
 
-    private final static String LOGIN_PARAM = "login";
-    private final static String PASSWORD_PARAM = "password";
     private final static String INVALID_CREDENTIALS =
             "invalid.credentials";
     private final static String ACTIVE_ACCOUNT_IS_EXIST =
             "active.user.exist";
     private static final ResourceBundle bundle = ResourceBundle.
             getBundle(Views.PAGES_BUNDLE);
-
     private final UserService userService = ServiceFactory.getUserService();
 
     @Override
@@ -100,7 +98,7 @@ public class PostLoginCommand implements ICommand {
         List<String> errors = new ArrayList<>();
         @SuppressWarnings("unchecked")
         Map<String, User> activeUserList = (Map<String, User>) session
-                .getServletContext().getAttribute(Attributes.USER_LIST);
+                .getServletContext().getAttribute(USER_LIST);
         if (activeUserList.get(user.getLogin()) != null)
             errors.add(ACTIVE_ACCOUNT_IS_EXIST);
         return errors;
@@ -112,19 +110,19 @@ public class PostLoginCommand implements ICommand {
     }
 
     private void addUserToSession(HttpSession session, User user) {
-        session.setAttribute(Attributes.USER, user);
+        session.setAttribute(USER, user);
     }
 
     private void addUserToContext(HttpSession session, User user) {
         @SuppressWarnings("unchecked")
         Map<String, User> activeUserList = (Map<String, User>) session.
-                getServletContext().getAttribute(Attributes.USER_LIST);
+                getServletContext().getAttribute(USER_LIST);
         activeUserList.put(user.getLogin(), user);
     }
 
     private void addInvalidDataToRequest(HttpServletRequest request,
                                          User user, List<String> errors) {
-        request.setAttribute(Attributes.USER, user);
-        request.setAttribute(Attributes.ERRORS, errors);
+        request.setAttribute(USER, user);
+        request.setAttribute(ERRORS, errors);
     }
 }

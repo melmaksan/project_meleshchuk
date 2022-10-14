@@ -17,12 +17,12 @@
                 <a class="nav-link" href="${pageContext.request.contextPath}/site/home"
                    role="button"><fmt:message key="home"/></a>
             </li>
-
+            <c:if test="${not empty sessionScope.user}">
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/site/orders"
                        role="button"><fmt:message key="user.orders"/></a>
                 </li>
-
+            </c:if>
         </ul>
         <ul class="navbar-nav ms-auto mb-2 mb-md-0">
             <c:if test="${empty sessionScope.user}">

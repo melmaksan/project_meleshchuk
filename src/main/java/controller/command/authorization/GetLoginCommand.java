@@ -2,7 +2,6 @@ package controller.command.authorization;
 
 import controller.command.ICommand;
 import controller.util.Util;
-import controller.util.constants.Views;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,8 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
-
-import static controller.util.constants.Views.LOGIN_VIEW;
+import static controller.util.constants.Views.*;
 
 public class GetLoginCommand implements ICommand {
 
@@ -23,7 +21,7 @@ public class GetLoginCommand implements ICommand {
             throws IOException {
         if(Util.isAlreadyLoggedIn(request.getSession())) {
             Util.redirectTo(request, response, ResourceBundle
-                    .getBundle(Views.PAGES_BUNDLE)
+                    .getBundle(PAGES_BUNDLE)
                     .getString("home.path"));
             return REDIRECTED;
         }

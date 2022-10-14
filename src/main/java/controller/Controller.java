@@ -1,10 +1,13 @@
 package controller;
 
 import controller.command.ICommand;
+import controller.command.authorization.GetLoginCommand;
 import controller.i18n.SupportedLocale;
 import controller.util.constants.Attributes;
 import controller.util.constants.Views;
 import entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,10 +21,12 @@ public class Controller extends HttpServlet {
 
     private final static String SUPPORTED_LOCALES = "supportedLocales";
     private ControllerHelper controllerHelper;
+    private static final Logger logger = LogManager.getLogger(Controller.class);
 
     @Override
-    public void init() {
-//        super.init();
+    public void init() throws ServletException {
+        super.init();
+        logger.info("Controller.init");
         controllerHelper = ControllerHelper.getInstance();
         getServletContext().setAttribute(SUPPORTED_LOCALES,
                 SupportedLocale.getSupportedLanguages());
@@ -34,6 +39,7 @@ public class Controller extends HttpServlet {
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response)
             throws ServletException, IOException {
+        logger.info("Controller.doGet");
         processRequest(request, response);
     }
 
@@ -41,6 +47,7 @@ public class Controller extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response)
             throws ServletException, IOException {
+        logger.info("Controller.doPost");
         processRequest(request, response);
     }
 
@@ -50,14 +57,20 @@ public class Controller extends HttpServlet {
         ICommand command = controllerHelper.getCommand(
                 getPath(request), request.getParameter("command"));
 
+        logger.info("command ==>   \n" + command);
+
         String path = command.execute(request, response);
+
+        logger.info("path ==>   " + path);
         if (!path.equals(ICommand.REDIRECTED)) {
+            logger.info("i am before forward");
             request.getRequestDispatcher(path).forward(request, response);
         }
     }
 
     private String getPath(HttpServletRequest request) {
         String uri = request.getRequestURI();
+        logger.info("uri ==>   " + uri);
         return uri.replaceAll(request.getContextPath() + ResourceBundle.
                 getBundle(Views.PAGES_BUNDLE).
                 getString("site.prefix"), "");

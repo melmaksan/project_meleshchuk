@@ -9,14 +9,12 @@ import dao.factory.DaoFactory;
 import dao.factory.connection.DaoConnection;
 import dao.util.PasswordStorage;
 import entity.Order;
-import entity.Service;
 import entity.User;
 import entity.UserToOrder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -71,19 +69,19 @@ public class UserService {
         }
     }
 
-    public void creatingUser(User user) {
+    public void createUser(User user) {
         Objects.requireNonNull(user);
-
         if (user.getRole() == null) {
             user.setDefaultRole();
         }
-
         String hash = PasswordStorage.getSecurePassword(user.getPassword());
         user.setPassword(hash);
 
         try (DaoConnection connection = daoFactory.getConnection()) {
+            connection.startSerializableTransaction();
             UserDao userDao = daoFactory.getUserDao(connection);
             userDao.insert(user);
+            connection.commit();
         }
     }
 
@@ -104,14 +102,23 @@ public class UserService {
         }
     }
 
-
     public List<String> creatingUser(String firstName, String lastName, String login,
                                      String password, String phone) {
         User userDto = getDataFromRequestCreating(firstName, lastName, login,
                 password, phone);
         List<String> errors = validateData(userDto);
+        errors.addAll(checkUserUniqueness(login));
         if (errors.isEmpty()) {
-            creatingUser(userDto);
+            createUser(userDto);
+        }
+        return errors;
+    }
+
+    private List<String> checkUserUniqueness(String login) {
+        List<String> errors = new ArrayList<>();
+        Optional<User> userOptional = findByLogin(login);
+        if(userOptional.isPresent()) {
+            errors.add("This login has already booked");
         }
         return errors;
     }

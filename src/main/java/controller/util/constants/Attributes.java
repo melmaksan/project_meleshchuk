@@ -15,5 +15,14 @@ public class Attributes {
     public static final String SPEC_PREFIX = "specialist.prefix";
     public static final String HOME_PATH = "home.path";
     public static final String LOGIN_PATH = "login.path";
+    public static final String SIGNUP_PATH = "signup.path";
+
+
+
+    public final static String FIRST_NAME = "first_name";
+    public final static String LAST_NAME = "last_name";
+    public final static String LOGIN_PARAM = "login";
+    public final static String PASSWORD_PARAM = "password";
+    public final static String PHONE = "phone_num";
 
 }

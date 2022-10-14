@@ -55,7 +55,8 @@
   <filter-mapping>
     <filter-name>AuthorizationFilter</filter-name>
     <url-pattern>/site/user/*</url-pattern>
-    <url-pattern>/site/manager/*</url-pattern>
+    <url-pattern>/site/admin/*</url-pattern>
+    <url-pattern>/site/specialist/*</url-pattern>
   </filter-mapping>
 
   <filter-mapping>

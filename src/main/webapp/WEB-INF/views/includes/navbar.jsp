@@ -17,7 +17,7 @@
                 <a class="nav-link" href="${pageContext.request.contextPath}/site/home"
                    role="button"><fmt:message key="home"/></a>
             </li>
-            <c:if test="${empty sessionScope.user}">
+            <c:if test="${not empty sessionScope.user}">
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/site/orders"
                        role="button"><fmt:message key="user.orders"/></a>
