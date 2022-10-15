@@ -1,9 +1,8 @@
 package controller.command.authorization;
 
 import controller.command.ICommand;
-import controller.util.constants.Attributes;
+import controller.util.Util;
 import controller.util.constants.Views;
-import entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.ServiceFactory;
@@ -14,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import static controller.util.constants.Attributes.*;
 
@@ -25,15 +25,18 @@ public class PostRegistrationCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse
             response) throws ServletException, IOException {
-        List<String> errors = userService.creatingUser(
+        logger.info("i am in post register");
+        List<String> errors = userService.createUser(
                 request.getParameter(FIRST_NAME),
                 request.getParameter(LAST_NAME),
                 request.getParameter(LOGIN_PARAM),
                 request.getParameter(PASSWORD_PARAM),
                 request.getParameter(PHONE));
         if (errors.isEmpty()) {
-            logger.info("LOGIN WITHOUT ERRORS!");
-            return Views.LOGIN_VIEW;
+            logger.info("SING UP WITHOUT ERRORS!");
+            Util.redirectTo(request, response, ResourceBundle.
+                    getBundle(Views.PAGES_BUNDLE).getString("login.path"));
+            return REDIRECTED;
         }
         logger.info("LOGIN HAS ERRORS!");
         addInvalidDataToRequest(request, errors);
@@ -43,5 +46,4 @@ public class PostRegistrationCommand implements ICommand {
     private void addInvalidDataToRequest(HttpServletRequest request, List<String> errors) {
         request.setAttribute(ERRORS, errors);
     }
-
 }

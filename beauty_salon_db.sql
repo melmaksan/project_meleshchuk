@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `beauty_salon_db`.`user` (
   `first_name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
   `login` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(65) NOT NULL,
   `phone_num` VARCHAR(45) NOT NULL,
   `rate` FLOAT NULL,
   `role_id` TINYINT UNSIGNED NOT NULL,

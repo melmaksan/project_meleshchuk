@@ -7,7 +7,7 @@ import controller.util.validator.PhoneValidator;
 import dao.abstraction.UserDao;
 import dao.factory.DaoFactory;
 import dao.factory.connection.DaoConnection;
-import dao.util.PasswordStorage;
+import controller.util.passhash.PasswordStorage;
 import entity.Order;
 import entity.User;
 import entity.UserToOrder;
@@ -20,14 +20,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import static dao.util.Constants.*;
-
 public class UserService {
 
     private static final UserToOrderService userToOrderService = ServiceFactory.getUserToOrderService();
     private static final OrderService orderService = ServiceFactory.getOrderService();
     private final DaoFactory daoFactory = DaoFactory.getInstance();
     private static UserService instance;
+    private static final String USER_ALREADY_EXISTS = "user.exists";
 
     private static final Logger logger = LogManager.getLogger(UserService.class);
 
@@ -69,7 +68,7 @@ public class UserService {
         }
     }
 
-    public void createUser(User user) {
+    public void creatingUser(User user) {
         Objects.requireNonNull(user);
         if (user.getRole() == null) {
             user.setDefaultRole();
@@ -102,14 +101,14 @@ public class UserService {
         }
     }
 
-    public List<String> creatingUser(String firstName, String lastName, String login,
-                                     String password, String phone) {
+    public List<String> createUser(String firstName, String lastName, String login,
+                                   String password, String phone) {
         User userDto = getDataFromRequestCreating(firstName, lastName, login,
                 password, phone);
         List<String> errors = validateData(userDto);
         errors.addAll(checkUserUniqueness(login));
         if (errors.isEmpty()) {
-            createUser(userDto);
+            creatingUser(userDto);
         }
         return errors;
     }

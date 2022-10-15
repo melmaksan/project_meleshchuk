@@ -60,7 +60,6 @@ public class MySqlPaymentStatus implements PaymentStatusDao {
     public PaymentStatus insert(PaymentStatus paymentStatus) {
         Objects.requireNonNull(paymentStatus);
         defaultDao.executeInsert(INSERT, paymentStatus.getId(), paymentStatus.getName());
-        //paymentStatus.setId(id);
         return paymentStatus;
     }
 

@@ -17,7 +17,7 @@ public class LogoutCommand implements ICommand {
             throws ServletException, IOException {
         request.getSession().invalidate();
         Util.redirectTo(request, response, ResourceBundle.
-                getBundle(Views.PAGES_BUNDLE).getString("login.path"));
+                getBundle(Views.PAGES_BUNDLE).getString("home.path"));
         return REDIRECTED;
     }
 }

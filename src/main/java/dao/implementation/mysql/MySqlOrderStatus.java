@@ -63,7 +63,6 @@ public class MySqlOrderStatus implements OrderStatusDao {
     public OrderStatus insert(OrderStatus orderStatus) {
         Objects.requireNonNull(orderStatus);
         defaultDao.executeInsert(INSERT, orderStatus.getId(), orderStatus.getName());
-        //orderStatus.setId(id);
         return orderStatus;
     }
 

@@ -14,9 +14,10 @@
 
 <div class="container">
     <div class="card w-50 mx-auto my-5">
-        <div class="card-header text-center">Sing In</div>
+        <div class="card-header text-center font-weight-bold">Sing In</div>
         <div class="card-body">
             <form class=form-group" method="post">
+                <input type="hidden" name="command" value="login.post"/>
 
                 <div class="form-group">
                     <label>Email Address</label>
@@ -29,17 +30,22 @@
                            required>
                 </div>
 
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox"> Remember me
+                    </label>
+                </div>
+
                 <div class="row justify-content-between">
                     <div class="col">
                         <button type="submit" class="btn btn-primary m">Login</button>
                     </div>
-                    <div class="col text-center align-text-bottom">
-                        <a  href="${pageContext.request.contextPath}/site/registration">
+                    <div class="col text-right align-self-end">
+                        <a href="${pageContext.request.contextPath}/site/registration">
                             Don`t have account? Create new
                         </a>
                     </div>
                 </div>
-
 
             </form>
         </div>

@@ -7,7 +7,7 @@
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
     <div class="navbar-brand">
-        <span><img src="${pageContext.request.contextPath}/images/BS_image.png" height="50" alt="BS Logo"></span>
+        <span><img src="${pageContext.request.contextPath}/images/logo.png" height="50" alt="BS Logo"></span>
 
     </div>
 

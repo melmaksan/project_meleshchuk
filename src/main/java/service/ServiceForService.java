@@ -15,15 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static dao.util.Constants.*;
-
 public class ServiceForService {
+
 
     private static final OrderToServiceService orderToServiceService = ServiceFactory.getOrderToServiceService();
     private static final UserToServiceService userToService = ServiceFactory.getUserToServiceService();
     private static final UserService userService = ServiceFactory.getUserService();
     private final DaoFactory daoFactory = DaoFactory.getInstance();
     private static ServiceForService instance;
+    private static final String SERVICE_IS_IN_ORDER = "service.added.to.order";
 
     private static final Logger logger = LogManager.getLogger(ServiceForService.class);
 

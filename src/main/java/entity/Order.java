@@ -1,16 +1,16 @@
 package entity;
 
-import java.time.LocalDate;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Order {
+public class Order implements Serializable {
 
-    private final static String DEFAULT_STATUS = OrderStatus.StatusIdentifier.BOOKED_STATUS.name();
-    private final static int DEFAULT_STATUS_ID = OrderStatus.StatusIdentifier.BOOKED_STATUS.getId();
+    private static final String DEFAULT_STATUS = OrderStatus.StatusIdentifier.BOOKED_STATUS.name();
+    private static final int DEFAULT_STATUS_ID = OrderStatus.StatusIdentifier.BOOKED_STATUS.getId();
 
-    private final static String DEFAULT_PAYMENT_STATUS = PaymentStatus.PaymentIdentifier.UNPAID_STATUS.name();
-    private final static int DEFAULT_PAYMENT_STATUS_ID = PaymentStatus.PaymentIdentifier.UNPAID_STATUS.getId();
+    private static final String DEFAULT_PAYMENT_STATUS = PaymentStatus.PaymentIdentifier.UNPAID_STATUS.name();
+    private static final int DEFAULT_PAYMENT_STATUS_ID = PaymentStatus.PaymentIdentifier.UNPAID_STATUS.getId();
 
     private long id;
     private OrderStatus orderStatus;

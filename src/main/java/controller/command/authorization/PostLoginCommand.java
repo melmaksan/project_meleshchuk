@@ -21,12 +21,12 @@ import static controller.util.constants.Attributes.*;
 
 public class PostLoginCommand implements ICommand {
 
-    private final static Logger logger =
+    private static final Logger logger =
             LogManager.getLogger(PostLoginCommand.class);
 
-    private final static String INVALID_CREDENTIALS =
+    private static final String INVALID_CREDENTIALS =
             "invalid.credentials";
-    private final static String ACTIVE_ACCOUNT_IS_EXIST =
+    private static final String ACTIVE_ACCOUNT_IS_EXIST =
             "active.user.exist";
     private static final ResourceBundle bundle = ResourceBundle.
             getBundle(Views.PAGES_BUNDLE);

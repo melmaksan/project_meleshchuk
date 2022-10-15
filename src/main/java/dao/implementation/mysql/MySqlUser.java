@@ -185,7 +185,7 @@ public class MySqlUser implements UserDao {
 
             System.out.println("Insert test:");
             User user = mySqlUser.insert(User.newBuilder().addFirstName("AA").addLastName("BB")
-                    .addLogin("CC").addPassword("DD").addPhoneNumber("9379992")
+                    .addLogin("CC").addPassword("AAAAAAAAAAA").addPhoneNumber("9379992")
                     .addDefaultRole().build());
             mySqlUser.printAll(mySqlUser.findAll());
 

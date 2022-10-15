@@ -1,4 +1,4 @@
-package dao.util;
+package controller.util.passhash;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -32,7 +32,9 @@ public class PasswordStorage {
     }
 
     public static void main(String[] args) {
-        System.out.println(PasswordStorage.getSecurePassword("admin123"));
+        System.out.println(PasswordStorage.getSecurePassword("qwerty12345"));
     }
+
+    String s = "f6ee94ecb014f74f887b9dcc52daecf73ab3e3333320cadd98bcb59d895c52f5";
 
 }

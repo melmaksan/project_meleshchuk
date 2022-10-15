@@ -1,11 +1,12 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
 
-    private final static String DEFAULT_ROLE = Role.RoleIdentifier.USER_ROLE.name();
-    private final static int DEFAULT_ROLE_ID = Role.RoleIdentifier.USER_ROLE.getId();
+    private static final String DEFAULT_ROLE = Role.RoleIdentifier.USER_ROLE.name();
+    private static final int DEFAULT_ROLE_ID = Role.RoleIdentifier.USER_ROLE.getId();
 
     private long id;
     private String firstName;

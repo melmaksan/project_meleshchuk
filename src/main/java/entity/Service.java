@@ -1,9 +1,10 @@
 package entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class Service {
+public class Service implements Serializable {
 
     private long id;
     private String title;

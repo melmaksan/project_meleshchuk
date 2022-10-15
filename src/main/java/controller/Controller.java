@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Controller extends HttpServlet {
 
-    private final static String SUPPORTED_LOCALES = "supportedLocales";
+    private static final String SUPPORTED_LOCALES = "supportedLocales";
     private ControllerHelper controllerHelper;
     private static final Logger logger = LogManager.getLogger(Controller.class);
 

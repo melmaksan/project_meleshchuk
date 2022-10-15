@@ -30,7 +30,7 @@ public abstract class Designation {
 
     @Override
     public String toString() {
-        return "Designation{" +
+        return "{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

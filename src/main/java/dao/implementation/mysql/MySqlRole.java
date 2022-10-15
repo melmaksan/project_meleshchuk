@@ -59,9 +59,8 @@ public class MySqlRole implements RoleDao {
     @Override
     public Role insert(Role role) {
         Objects.requireNonNull(role);
-        defaultDao.executeInsertWithGeneratedPrimaryKey(INSERT,
+        defaultDao.executeInsert(INSERT,
                 role.getId(), role.getName());
-        //role.setId(id);
         return role;
     }
 
@@ -102,30 +101,40 @@ public class MySqlRole implements RoleDao {
             System.out.println("~~~~~~~~~~~~");
 
             System.out.println("Insert test:");
-            Role account1 = mySqlRoleDao.insert(new Role(4, "TEST"));
+            Role role1 = mySqlRoleDao.insert(new Role(
+                    Role.RoleIdentifier.USER_ROLE.getId(),
+                    Role.RoleIdentifier.USER_ROLE.name()));
+            Role role2 = mySqlRoleDao.insert(new Role(
+                    Role.RoleIdentifier.ADMIN_ROLE.getId(),
+                    Role.RoleIdentifier.ADMIN_ROLE.name()));
+            Role role3 = mySqlRoleDao.insert(new Role(
+                    Role.RoleIdentifier.SPECIALIST_ROLE.getId(),
+                    Role.RoleIdentifier.SPECIALIST_ROLE.name()));
             mySqlRoleDao.printAll(mySqlRoleDao.findAll());
 
             System.out.println("~~~~~~~~~~~~");
 
-            System.out.println("Find one with id 4:");
-            System.out.println(mySqlRoleDao.findById(4));
+            System.out.println("Find one with id 1:");
+            System.out.println(mySqlRoleDao.findById(1));
 
             System.out.println("~~~~~~~~~~~~");
 
-            System.out.println("Find one by name TEST:");
-            System.out.println(mySqlRoleDao.findByName("TEST"));
+            System.out.println("Find one by role:");
+            System.out.println(mySqlRoleDao.findByName("ADMIN_ROLE"));
 
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("Update:");
-            account1.setName("TEST@222");
-            mySqlRoleDao.update(account1);
-            mySqlRoleDao.printAll(mySqlRoleDao.findAll());
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("Delete:");
-            mySqlRoleDao.delete(account1.getId());
+//            System.out.println("~~~~~~~~~~~~");
+//
+//            System.out.println("Update:");
+//            role3.setName("TEST@222");
+//            mySqlRoleDao.update(role3);
+//            mySqlRoleDao.printAll(mySqlRoleDao.findAll());
+//
+//            System.out.println("~~~~~~~~~~~~");
+//
+//            System.out.println("Delete:");
+//            mySqlRoleDao.delete(role1.getId());
+//            mySqlRoleDao.delete(role2.getId());
+//            mySqlRoleDao.delete(role3.getId());
             mySqlRoleDao.printAll(mySqlRoleDao.findAll());
 
         } catch (SQLException  ex) {

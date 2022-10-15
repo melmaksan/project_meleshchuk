@@ -3,10 +3,7 @@ package controller;
 import controller.command.DefaultCommand;
 import controller.command.HomeCommand;
 import controller.command.ICommand;
-import controller.command.authorization.GetLoginCommand;
-import controller.command.authorization.LogoutCommand;
-import controller.command.authorization.PostLoginCommand;
-import controller.command.authorization.PostRegistrationCommand;
+import controller.command.authorization.*;
 import controller.command.user.GetOrdersCommand;
 import controller.command.user.GetRespondCommand;
 import controller.command.user.GetServiceCommand;
@@ -47,11 +44,13 @@ public class ControllerHelper {
                 new PostLoginCommand());
         commands.put(buildKey(bundle.getString("logout.path"), "logout"),
                 new LogoutCommand());
-        commands.put(buildKey(bundle.getString("service.path"), null),
-                new GetServiceCommand());
-        commands.put(buildKey(bundle.getString("orders.path"), "user.orders"),
-                new GetOrdersCommand());
-        commands.put(buildKey(bundle.getString("signup.path"), "signup"),
+//        commands.put(buildKey(bundle.getString("service.path"), null),
+//                new GetServiceCommand());
+//        commands.put(buildKey(bundle.getString("orders.path"), "user.orders"),
+//                new GetOrdersCommand());
+        commands.put(buildKey(bundle.getString("signup.path"), null),
+                new GetRegistrationCommand());
+        commands.put(buildKey(bundle.getString("signup.path"), "register.post"),
                 new PostRegistrationCommand());
     }
 
