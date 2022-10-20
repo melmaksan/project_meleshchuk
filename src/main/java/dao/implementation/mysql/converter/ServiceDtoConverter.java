@@ -1,8 +1,6 @@
 package dao.implementation.mysql.converter;
 
-import entity.Order;
-import entity.Service;
-import entity.User;
+import entity.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +14,8 @@ public class ServiceDtoConverter implements DtoConverter<Service> {
     private final static String SERVICE_NAME = "service_title";
     private final static String SERVICE_DESCRIPTION = "service_description";
     private final static String PRICE = "service_price";
-    private final static String USERS = "spec_name";
+    private final static String IMAGE = "image";
+
 
     @Override
     public Service convertToObject(ResultSet resultSet) throws SQLException {
@@ -25,17 +24,7 @@ public class ServiceDtoConverter implements DtoConverter<Service> {
                 .addServiceName(resultSet.getString(SERVICE_NAME))
                 .addDescription(resultSet.getString(SERVICE_DESCRIPTION))
                 .addPrice(resultSet.getBigDecimal(PRICE))
-                .addUsers(getSpecialists(resultSet.getString(USERS)))
+                .addImage(resultSet.getString(IMAGE))
                 .build();
-    }
-
-    private List<User> getSpecialists(String concatSpecialists) {
-        return Stream.of(concatSpecialists.split(",")).map(split ->
-                User.newBuilder().addFirstName(split).build()).collect(Collectors.toList());
-    }
-
-    private List<Order> getOrders(String concatOrders) {
-        return Stream.of(concatOrders.split(",")).map(split ->
-                Order.newBuilder().addId(Integer.parseInt(split)).build()).collect(Collectors.toList());
     }
 }

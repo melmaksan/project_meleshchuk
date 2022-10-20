@@ -19,7 +19,7 @@ public class MySqlOrderToService implements OrderToServiceDao {
     private final static String SELECT_ALL =
             "SELECT orders_to_service.orders_id, " +
                     "orders_to_service.service_id " +
-                    "FROM service ";
+                    "FROM orders_to_service ";
 
     private final static String WHERE_ORDER_SERVICES =
             "WHERE orders_id = ? AND service_id = ? ";
@@ -121,7 +121,16 @@ public class MySqlOrderToService implements OrderToServiceDao {
             System.out.println("~~~~~~~~~~~~");
 
             System.out.println("Find one with id 1:");
-            System.out.println(mySqlOrderToService.existByService(3, 1));
+            System.out.println(mySqlOrderToService.existByService(2, 1));
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println(mySqlOrderToService.findAllByOrder(3));
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println(mySqlOrderToService.findAllByService(3));
+
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

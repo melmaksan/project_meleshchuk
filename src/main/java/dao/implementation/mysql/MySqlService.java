@@ -18,14 +18,14 @@ public class MySqlService implements ServiceDao {
 
     private static final String SELECT_ALL =
             "SELECT service.id AS service_id , service.title AS service_title, " +
-                    "service.description AS service_description, service.price AS service_price, " +
-                    "user.first_name AS spec_name " +
-                    "FROM service " +
-                    "JOIN user_to_service ON user_to_service.service_id = service.id " +
-                    "JOIN user ON user_to_service.user_id = user.id ";
+                    "service.description AS service_description, service.price AS " +
+                    "service_price, service.image " +
+                    "FROM service ";
 
     private static final String WHERE_ID =
             "WHERE service.id = ? ";
+
+    private static final String PAGINATION = "limit ? offset ? ";
 
     private static final String GROUP_BY =
             "GROUP BY service.id ";
@@ -42,15 +42,15 @@ public class MySqlService implements ServiceDao {
     private static final String DESC_BY_TITLE =
             "ORDER BY service_title DESC ";
 
-    private static final String WHERE_SERVICE_NAME =
-            "WHERE service.title = ? ";
+    private static final String WHERE_SERVICE_DESCRIPTION =
+            "WHERE service.description = ? ";
 
     private static final String INSERT =
-            "INSERT into service (title, description, price)" +
-                    "VALUES(?, ?, ?) ";
+            "INSERT into service (title, description, price, image)" +
+                    "VALUES(?, ?, ?, ?) ";
 
     private static final String UPDATE =
-            "UPDATE service SET title = ?, description = ?, price = ? ";
+            "UPDATE service SET title = ?, description = ?, price = ?, image = ? ";
 
     private static final String CHANGE_PRICE =
             "UPDATE service SET price =  ? ";
@@ -85,7 +85,7 @@ public class MySqlService implements ServiceDao {
     public Service insert(Service service) {
         Objects.requireNonNull(service);
         int id = defaultDao.executeInsertWithGeneratedPrimaryKey(INSERT,
-                service.getTitle(), service.getDescription(), service.getPrice());
+                service.getTitle(), service.getDescription(), service.getPrice(), service.getImage());
         service.setId(id);
         return service;
     }
@@ -94,7 +94,7 @@ public class MySqlService implements ServiceDao {
     public void update(Service service) {
         Objects.requireNonNull(service);
         defaultDao.executeUpdate(UPDATE + WHERE_ID, service.getTitle(),
-                service.getDescription(), service.getPrice(), service.getId());
+                service.getDescription(), service.getPrice(), service.getImage(), service.getId());
     }
 
     @Override
@@ -110,9 +110,9 @@ public class MySqlService implements ServiceDao {
     }
 
     @Override
-    public List<Service> findByService(String title) {
-        return defaultDao.findAll(SELECT_ALL + WHERE_SERVICE_NAME +
-                GROUP_BY, title);
+    public List<Service> filterByServiceDescription(String description) {
+        return defaultDao.findAll(SELECT_ALL + WHERE_SERVICE_DESCRIPTION +
+                GROUP_BY, description);
     }
 
     @Override
@@ -125,10 +125,12 @@ public class MySqlService implements ServiceDao {
         return defaultDao.findAll(SELECT_ALL + DESC_BY_PRICE);
     }
 
+    @Override
     public List<Service> ascByTitleService() {
         return defaultDao.findAll(SELECT_ALL + ASC_BY_TITLE);
     }
 
+    @Override
     public List<Service> descByTitleService() {
         return defaultDao.findAll(SELECT_ALL + DESC_BY_TITLE);
     }
@@ -136,6 +138,11 @@ public class MySqlService implements ServiceDao {
     @Override
     public int getNumberOfRows() {
         return defaultDao.getNumberOfRows(NUMBER_OF_ROWS);
+    }
+
+    @Override
+    public List<Service> findAll(int limit, int offset) {
+        return defaultDao.findAll(SELECT_ALL + PAGINATION, limit, offset);
     }
 
     private void printAll(List<Service> list) {
@@ -172,7 +179,7 @@ public class MySqlService implements ServiceDao {
             System.out.println("~~~~~~~~~~~~");
 
             System.out.println("Find one by title:");
-            System.out.println(mySqlService.findByService("QWERTY"));
+            System.out.println(mySqlService.filterByServiceDescription("Woman Haircut"));
 
             System.out.println("~~~~~~~~~~~~");
 
@@ -192,11 +199,11 @@ public class MySqlService implements ServiceDao {
 //            mySqlService.update(service1);
 //            mySqlService.printAll(mySqlService.findAll());
 
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("Delete:");
-            mySqlService.delete(1L);
-            mySqlService.printAll(mySqlService.findAll());
+//            System.out.println("~~~~~~~~~~~~");
+//
+//            System.out.println("Delete:");
+//            mySqlService.delete(1L);
+//            mySqlService.printAll(mySqlService.findAll());
 
 
         } catch (SQLException throwable) {

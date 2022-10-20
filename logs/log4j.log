@@ -1,0 +1,7 @@
+[ERROR] 2022-10-17 00:17:15.263 [main] DefaultDaoImpl - java.sql.SQLException: Column 'role_name' not found.
+[ERROR] 2022-10-18 00:31:27.564 [main] DefaultDaoImpl - java.sql.SQLSyntaxErrorException: Unknown table 'service' in field list
+[ERROR] 2022-10-18 22:02:21.833 [main] DefaultDaoImpl - java.sql.SQLException: Column 'role_name' not found.
+[ERROR] 2022-10-18 22:04:42.983 [main] DefaultDaoImpl - java.sql.SQLException: Column 'role_name' not found.
+[ERROR] 2022-10-20 17:57:44.592 [main] DefaultDaoImpl - java.sql.SQLException: Column 'orders_id' not found.
+[ERROR] 2022-10-20 18:01:01.535 [main] DefaultDaoImpl - java.sql.SQLException: Column 'orders_id' not found.
+[ERROR] 2022-10-20 19:02:04.978 [main] DefaultDaoImpl - java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= 3' at line 1

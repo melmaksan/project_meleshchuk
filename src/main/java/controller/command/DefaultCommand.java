@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
+import static controller.util.constants.Views.PAGES_BUNDLE;
+
 public class DefaultCommand implements ICommand {
 
     private static final Logger logger = LogManager.getLogger(DefaultCommand.class);
@@ -19,7 +21,7 @@ public class DefaultCommand implements ICommand {
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Util.redirectTo(request, response, ResourceBundle
-                .getBundle(Views.PAGES_BUNDLE)
+                .getBundle(PAGES_BUNDLE)
                 .getString("home.path"));
         logger.info("i am DefaultCommand");
         return REDIRECTED;

@@ -1,6 +1,8 @@
 package entity;
 
-public class UserToService {
+import java.io.Serializable;
+
+public class UserToService implements Serializable {
 
     private long id;
     private long userId;

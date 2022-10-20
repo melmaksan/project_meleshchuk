@@ -36,12 +36,12 @@ public class AuthorizationFilter implements Filter {
                          FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
 
-        if (request.getSession().getAttribute(Attributes.USER) == null) {
-            Util.redirectTo(request, (HttpServletResponse) servletResponse,
-                    bundle.getString(LOGIN_PATH));
-            logInfoAboutAccessDenied(request.getRequestURI());
-            return;
-        }
+//        if (request.getSession().getAttribute(Attributes.USER) == null) {
+//            Util.redirectTo(request, (HttpServletResponse) servletResponse,
+//                    bundle.getString(LOGIN_PATH));
+//            logInfoAboutAccessDenied(request.getRequestURI());
+//            return;
+//        }
 
         User user = (User) request.getSession().getAttribute(Attributes.USER);
 

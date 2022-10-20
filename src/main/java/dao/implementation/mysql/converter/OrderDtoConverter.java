@@ -4,6 +4,11 @@ import entity.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -30,19 +35,16 @@ public class OrderDtoConverter implements DtoConverter<Order> {
         PaymentStatus paymentStatus = paymentStatusDtoConverter.convertToObject(resultSet);
         return Order.newBuilder()
                 .addId(resultSet.getLong(ID_FIELD))
-                .addOrderTime(resultSet.getTimestamp(ORDER_TIME).toLocalDateTime())
+                .addOrderTime(convertTime(resultSet.getTimestamp(ORDER_TIME)))
                 .addOrderStatus(orderStatus)
                 .addPaymentStatus(paymentStatus)
                 .build();
     }
 
-    private List<User> getUsers(String concatUsers) {
-        return Stream.of(concatUsers.split(",")).map(split ->
-                User.newBuilder().addFirstName(split).addLastName(split).build()).collect(Collectors.toList());
-    }
-
-    private List<Service> getServices(String concatServices) {
-        return Stream.of(concatServices.split(",")).map(split ->
-                Service.newBuilder().addServiceName(split).build()).collect(Collectors.toList());
+    private LocalDateTime convertTime(Timestamp timestamp) {
+        LocalDateTime localDateTime = timestamp.toLocalDateTime();
+        ZonedDateTime zonedUTC = localDateTime.atZone(ZoneId.of("UTC"));
+        ZonedDateTime zonedIST = zonedUTC.withZoneSameInstant(ZoneId.of("GMT-3"));
+        return zonedIST.toLocalDateTime();
     }
 }

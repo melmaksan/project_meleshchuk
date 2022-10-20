@@ -1,6 +1,8 @@
 package entity;
 
-public class OrderToService {
+import java.io.Serializable;
+
+public class OrderToService implements Serializable {
 
     private long id;
     private long orderId;
@@ -36,9 +38,8 @@ public class OrderToService {
 
     @Override
     public String toString() {
-        return "OrderServices{" +
-                "id=" + id +
-                ", orderId=" + orderId +
+        return "OrderToService{" +
+                "orderId=" + orderId +
                 ", serviceId=" + serviceId +
                 '}';
     }
@@ -64,7 +65,7 @@ public class OrderToService {
             return this;
         }
 
-        public Builder addOrderIdId(long orderId) {
+        public Builder addOrderId(long orderId) {
             orderToService.setOrderId(orderId);
             return this;
         }

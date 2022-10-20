@@ -44,5 +44,17 @@ public interface UserDao extends GenericDao<User, Long> {
      */
     List<User> descByRating();
 
+    List<User> findAllSpecialists();
+
+    List<User> findAllUsers();
+
+    void changePassword(User user, String password);
+
+    void updateRating(User user, float rate);
+
+    List<User> ascByName();
+
+    List<User> descByName();
+
     int getNumberOfRows();
 }

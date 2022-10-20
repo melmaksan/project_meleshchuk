@@ -21,7 +21,7 @@ public interface ServiceDao extends GenericDao<Service, Long> {
      * @param title identifier of service
      * @return list, which contains services with certain name
      */
-    List<Service> findByService(String title);
+    List<Service> filterByServiceDescription(String title);
 
     /**
      * Retrieve services from database sorted by price.
@@ -36,6 +36,17 @@ public interface ServiceDao extends GenericDao<Service, Long> {
      * @return list, which contains sorted services
      */
     List<Service> descByPriceService();
+
+    /**
+     * Retrieves object data from database.
+     *
+     * @return list of objects which represent one row in database.
+     */
+    List<Service> findAll(int limit, int offset);
+
+    List<Service> ascByTitleService();
+
+    List<Service> descByTitleService();
 
     int getNumberOfRows();
 }

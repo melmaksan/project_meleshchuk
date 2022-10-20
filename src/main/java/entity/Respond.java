@@ -1,8 +1,9 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Respond {
+public class Respond implements Serializable {
 
     private long id;
     private String respond;

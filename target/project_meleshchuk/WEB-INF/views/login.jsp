@@ -30,13 +30,13 @@
                            required>
                 </div>
 
-                <div class="form-group form-check">
+                <div class="form-check py-1">
                     <label class="form-check-label">
                         <input class="form-check-input" type="checkbox"> Remember me
                     </label>
                 </div>
 
-                <div class="row justify-content-between">
+                <div class="row justify-content-between py-1">
                     <div class="col">
                         <button type="submit" class="btn btn-primary m">Login</button>
                     </div>

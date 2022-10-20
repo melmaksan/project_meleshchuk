@@ -1,6 +1,8 @@
 package entity;
 
-public class Role extends Designation {
+import java.io.Serializable;
+
+public class Role extends Designation implements Serializable {
 
     public Role(int id, String name) {
         super(id, name);

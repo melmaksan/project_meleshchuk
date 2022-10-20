@@ -1,11 +1,16 @@
 package dao.implementation.mysql;
 
 import dao.abstraction.UserToOrderDao;
+import dao.datasource.PooledConnection;
 import dao.implementation.mysql.converter.DtoConverter;
 import dao.implementation.mysql.converter.UserToOrderDtoConverter;
+import entity.OrderToService;
+import entity.Role;
 import entity.UserToOrder;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -15,11 +20,14 @@ public class MySqlUserToOrder implements UserToOrderDao {
     private final static String SELECT_ALL =
             "SELECT user_to_orders.user_id, user.first_name, " +
                     "user.last_name, user_to_orders.orders_id " +
-                    "FROM user" +
+                    "FROM user " +
                     "JOIN user_to_orders ON user_to_orders.user_id = user.id ";
 
     private final static String WHERE_USER_ORDERS =
             "WHERE user_id = ? AND orders_id = ? ";
+
+    private final static String WHERE_USER_IS_SPECIALIST =
+            "WHERE orders_id = ? AND user.role_id = ? ";
 
     private final static String WHERE_USER =
             "WHERE user_id = ? ";
@@ -84,5 +92,48 @@ public class MySqlUserToOrder implements UserToOrderDao {
     @Override
     public List<UserToOrder> findAllByOrder(long orderId) {
         return defaultDao.findAll(SELECT_ALL + WHERE_ORDER, orderId);
+    }
+
+    @Override
+    public List<UserToOrder> findSpecialistByOrder(long orderId) {
+        return defaultDao.findAll(SELECT_ALL + WHERE_USER_IS_SPECIALIST, orderId,
+                Role.RoleIdentifier.SPECIALIST_ROLE.getId());
+    }
+
+    private void printAll(List<UserToOrder> list) {
+        System.out.println("Find all:");
+        for (UserToOrder type : list) {
+            System.out.println(type);
+        }
+    }
+
+    public static void main(String[] args) {
+        DataSource dataSource = PooledConnection.getInstance();
+        MySqlUserToOrder mySqlUserToOrder;
+
+        try {
+            mySqlUserToOrder = new MySqlUserToOrder(dataSource.getConnection());
+
+            System.out.println("Order TEST");
+
+            mySqlUserToOrder.printAll(mySqlUserToOrder.findAll());
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("find spec: ");
+            System.out.println(mySqlUserToOrder.findSpecialistByOrder(4));
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println(mySqlUserToOrder.findAllByOrder(2));
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println(mySqlUserToOrder.findAllByUser(10));
+
+
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
     }
 }

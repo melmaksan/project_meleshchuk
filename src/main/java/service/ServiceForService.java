@@ -10,13 +10,15 @@ import entity.UserToService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ServiceForService {
-
 
     private static final OrderToServiceService orderToServiceService = ServiceFactory.getOrderToServiceService();
     private static final UserToServiceService userToService = ServiceFactory.getUserToServiceService();
@@ -37,6 +39,8 @@ public class ServiceForService {
     private ServiceForService() {
     }
 
+
+
     public List<Service> findAllService() {
         try (DaoConnection connection = daoFactory.getConnection()) {
             ServiceDao serviceDao = daoFactory.getServiceDao(connection);
@@ -54,7 +58,7 @@ public class ServiceForService {
         List<UserToService> userToServiceList = userToService.findAllUsersByService(service.getId());
         for (UserToService userToService : userToServiceList) {
             try {
-                users.add((userService.findUserById(userToService.getUserId())).orElse(null));
+                users.add((userService.findUserForOtherEntity(userToService.getUserId())).orElse(null));
             } catch (RuntimeException ex){
                 logger.error("There are no users here!", ex);
             }
@@ -62,24 +66,86 @@ public class ServiceForService {
         return users;
     }
 
-    public Optional<Service> findServiceById(long serviceId) {
+    public Service findServiceById(long serviceId) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             ServiceDao serviceDao = daoFactory.getServiceDao(connection);
-            return serviceDao.findById(serviceId);
+            Service service = null;
+            try {
+                service = serviceDao.findById(serviceId).orElseThrow(NoSuchFieldException::new);
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            }
+            List<User> users = getUsers(Objects.requireNonNull(service));
+            service.setUsers(users);
+            return service;
         }
     }
 
     public List<Service> ascByPriceService() {
         try (DaoConnection connection = daoFactory.getConnection()) {
             ServiceDao serviceDao = daoFactory.getServiceDao(connection);
-            return serviceDao.ascByPriceService();
+            List<Service> services = serviceDao.ascByPriceService();
+            for (Service service : services) {
+                List<User> users = getUsers(service);
+                service.setUsers(users);
+            }
+            return services;
         }
     }
 
     public List<Service> descByPriceService() {
         try (DaoConnection connection = daoFactory.getConnection()) {
             ServiceDao serviceDao = daoFactory.getServiceDao(connection);
-            return serviceDao.descByPriceService();
+            List<Service> services = serviceDao.descByPriceService();
+            for (Service service : services) {
+                List<User> users = getUsers(service);
+                service.setUsers(users);
+            }
+            return services;
+        }
+    }
+
+    public List<Service> ascByTitleService() {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            ServiceDao serviceDao = daoFactory.getServiceDao(connection);
+            List<Service> services = serviceDao.ascByTitleService();
+            for (Service service : services) {
+                List<User> users = getUsers(service);
+                service.setUsers(users);
+            }
+            return services;
+        }
+    }
+
+    public List<Service> descByTitleService() {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            ServiceDao serviceDao = daoFactory.getServiceDao(connection);
+            List<Service> services = serviceDao.descByTitleService();
+            for (Service service : services) {
+                List<User> users = getUsers(service);
+                service.setUsers(users);
+            }
+            return services;
+        }
+    }
+
+    public List<String> getUniqueServiceTypes(List<Service> serviceList) {
+            List<String> list = new ArrayList<>();
+            for (Service service : serviceList) {
+                list.add(service.getDescription());
+            }
+            return list.stream().distinct().collect(Collectors.toList());
+    }
+
+    public List<Service> filterByServiceType(String type) {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            ServiceDao serviceDao = daoFactory.getServiceDao(connection);
+            List<Service> services = serviceDao.filterByServiceDescription(type);
+            for (Service service : services) {
+                List<User> users = getUsers(service);
+                service.setUsers(users);
+            }
+            return services;
         }
     }
 
@@ -128,10 +194,17 @@ public class ServiceForService {
         return errors;
     }
 
-    public int getNumberOfRows() {
+    public List<Service> findAll(int limit, int offset) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             ServiceDao serviceDao = daoFactory.getServiceDao(connection);
-            return serviceDao.getNumberOfRows();
+            return serviceDao.findAll(limit, offset);
+        }
+    }
+
+    public Optional<Service> findServiceForOtherEntity(Long id) {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            ServiceDao serviceDao = daoFactory.getServiceDao(connection);
+            return serviceDao.findById(id);
         }
     }
 }

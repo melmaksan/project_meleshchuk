@@ -10,6 +10,7 @@ public class Service implements Serializable {
     private String title;
     private String description;
     private BigDecimal price;
+    private String image;
     private List<User> users;
     private List<Order> orders;
 
@@ -65,14 +66,22 @@ public class Service implements Serializable {
         this.orders = orders;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
         return "Service{" +
-                "ServiceNumber=" + id +
-                ", title='" + title +
-                ", description='" + description +
-                ", cost=" + price +
-                ", user=" + users +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", image='" + image + '\'' +
                 '}';
     }
 
@@ -119,6 +128,11 @@ public class Service implements Serializable {
 
         public Builder addOrders(List<Order> orders) {
             service.setOrders(orders);
+            return this;
+        }
+
+        public Builder addImage(String image) {
+            service.setImage(image);
             return this;
         }
 

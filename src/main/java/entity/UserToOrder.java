@@ -1,8 +1,9 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class UserToOrder {
+public class UserToOrder implements Serializable {
 
     private long id;
     private long userId;
@@ -39,8 +40,7 @@ public class UserToOrder {
     @Override
     public String toString() {
         return "UserToOrder{" +
-                "id=" + id +
-                ", userId=" + userId +
+                "userId=" + userId +
                 ", orderId=" + orderId +
                 '}';
     }

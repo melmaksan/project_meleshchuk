@@ -1,6 +1,5 @@
 package controller.command;
 
-import controller.util.constants.Attributes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.ServiceFactory;
@@ -11,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
+import static controller.util.constants.Attributes.*;
 import static controller.util.constants.Views.*;
 
 public class HomeCommand implements ICommand {
@@ -21,8 +22,9 @@ public class HomeCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute(Attributes.SERVICES,services.findAllService());
-        logger.info("i go home");
+        logger.info("home command");
+        request.setAttribute(SERVICES_UNIQUE_TYPE, services.getUniqueServiceTypes(services.findAllService()));
+        request.setAttribute(SERVICES,services.findAllService());
         return HOME_VIEW;
     }
 

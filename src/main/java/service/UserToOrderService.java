@@ -31,6 +31,13 @@ public class UserToOrderService {
         }
     }
 
+    public List<UserToOrder> findSpecialistByOrder(long orderId) {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            UserToOrderDao userToOrderDao = daoFactory.getUserToOrderDao(connection);
+            return userToOrderDao.findSpecialistByOrder(orderId);
+        }
+    }
+
     public List<UserToOrder> findAllOrdersByUser(long userId) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             UserToOrderDao userToOrderDao = daoFactory.getUserToOrderDao(connection);

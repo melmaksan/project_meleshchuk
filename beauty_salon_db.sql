@@ -61,6 +61,7 @@ CREATE TABLE IF NOT EXISTS `beauty_salon_db`.`service` (
   `title` VARCHAR(255) NOT NULL,
   `description` MEDIUMTEXT NULL DEFAULT NULL,
   `price` DECIMAL(9,2) NOT NULL,
+  `image` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -201,6 +202,54 @@ CREATE TABLE IF NOT EXISTS `beauty_salon_db`.`respond` (
     REFERENCES `beauty_salon_db`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
+
+INSERT into role (id, name) VALUES(1, 'USER_ROLE');
+INSERT into role (id, name) VALUES(2, 'ADMIN_ROLE');
+INSERT into role (id, name) VALUES(3, 'SPECIALIST_ROLE');
+INSERT into status (id, name) VALUES(1, 'BOOKED_STATUS');
+INSERT into status (id, name) VALUES(2, 'DONE_STATUS');
+INSERT into status (id, name) VALUES(3, 'CANCELED_STATUS');
+INSERT into payment_status (id, name) VALUES(1, 'UNPAID_STATUS');
+INSERT into payment_status (id, name) VALUES(2, 'PAID_STATUS');
+INSERT into user (id, first_name, last_name, login, password, phone_num, role_id) VALUES(1, 'Max', 'Admin', 'admin@mma.com', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', '+380449379992', 2);
+INSERT into user (id, first_name, last_name, login, password, phone_num, role_id) VALUES(2, 'Alex', 'Jones', 'alex.spec@mma.com', '92984524c562dcc97f4939ba3c903d3e7aa880e3cf1060557de8175b2dab53e8', '+380449379992', 3);
+INSERT into user (id, first_name, last_name, login, password, phone_num, role_id) VALUES(3, 'Yulia', 'Gerasimova', 'yulia.spec@mma.com', '92984524c562dcc97f4939ba3c903d3e7aa880e3cf1060557de8175b2dab53e8', '+380449379992', 3);
+INSERT into user (id, first_name, last_name, login, password, phone_num, role_id) VALUES(4, 'Anna', 'Yakovenko', 'anna.spec@mma.com', '92984524c562dcc97f4939ba3c903d3e7aa880e3cf1060557de8175b2dab53e8', '+380449379992', 3);
+INSERT into user (id, first_name, last_name, login, password, phone_num, role_id) VALUES(5, 'Iryna', 'Tydnyuk', 'iryna.spec@mma.com', '92984524c562dcc97f4939ba3c903d3e7aa880e3cf1060557de8175b2dab53e8', '+380449379992', 3);
+INSERT into user (id, first_name, last_name, login, password, phone_num, role_id) VALUES(6, 'Regina', 'Romanova', 'regina.spec@mma.com', '92984524c562dcc97f4939ba3c903d3e7aa880e3cf1060557de8175b2dab53e8', '+380449379992', 3);
+INSERT into user (id, first_name, last_name, login, password, phone_num, role_id) VALUES(7, 'Nataliya', 'Novitska', 'nataliya.spec@mma.com', '92984524c562dcc97f4939ba3c903d3e7aa880e3cf1060557de8175b2dab53e8', '+380449379992', 3);
+INSERT into user (first_name, last_name, login, password, phone_num, role_id) VALUES('Sergiy', 'Sternenko', 'sergiy.user@mma.com', 'e606e38b0d8c19b24cf0ee3808183162ea7cd63ff7912dbb22b5e803286b4446', '+380445566789', 1);
+INSERT into user (first_name, last_name, login, password, phone_num, role_id) VALUES('Kolya', 'Petroshchuk', 'kolya.user@mma.com', 'e606e38b0d8c19b24cf0ee3808183162ea7cd63ff7912dbb22b5e803286b4446', '+380445566789', 1);
+INSERT into user (first_name, last_name, login, password, phone_num, role_id) VALUES('Lena', 'Holowach', 'lena.user@mma.com', 'e606e38b0d8c19b24cf0ee3808183162ea7cd63ff7912dbb22b5e803286b4446', '+380445566789', 1);
+INSERT into service (title, description, price, image) VALUES('Crew Cut', 'Man Military Haircut', 110.00, '/images/service_img/man_hc_1.jpg');
+INSERT into service (title, description, price, image) VALUES('Easy Waves', 'Woman Haircut', 8770.00, '/images/service_img/woman_hc_1.jpg');
+INSERT into service (title, description, price, image) VALUES('Neat Side Fade', 'Kids Haircut', 170.00, '/images/service_img/kid_hc_1.jpg');
+INSERT into service (title, description, price, image) VALUES('Crew Cut', 'Man Military Haircut', 670.00, '/images/service_img/man_hc_1.jpg');
+INSERT into service (title, description, price, image) VALUES('Easy Waves', 'Woman Haircut', 540.00, '/images/service_img/woman_hc_1.jpg');
+INSERT into service (title, description, price, image) VALUES('Neat Side Fade', 'Kids Haircut', 110.00, '/images/service_img/kid_hc_1.jpg');
+INSERT into service (title, description, price, image) VALUES('Crew Cut', 'Man Military Haircut', 130.00, '/images/service_img/man_hc_1.jpg');
+INSERT into service (title, description, price, image) VALUES('Easy Waves', 'Woman Haircut', 170.00, '/images/service_img/woman_hc_1.jpg');
+INSERT into service (title, description, price, image) VALUES('Neat Side Fade', 'Kids Haircut', 190.00, '/images/service_img/kid_hc_1.jpg');
+INSERT into user_to_service (user_id, service_id) VALUES(2, 1);
+INSERT into user_to_service (user_id, service_id) VALUES(2, 8);
+INSERT into user_to_service (user_id, service_id) VALUES(2, 9);
+INSERT into user_to_service (user_id, service_id) VALUES(3, 1);
+INSERT into user_to_service (user_id, service_id) VALUES(3, 2);
+INSERT into user_to_service (user_id, service_id) VALUES(3, 8);
+INSERT into user_to_service (user_id, service_id) VALUES(4, 2);
+INSERT into user_to_service (user_id, service_id) VALUES(4, 5);
+INSERT into user_to_service (user_id, service_id) VALUES(4, 6);
+INSERT into user_to_service (user_id, service_id) VALUES(4, 7);
+INSERT into user_to_service (user_id, service_id) VALUES(5, 5);
+INSERT into user_to_service (user_id, service_id) VALUES(5, 6);
+INSERT into user_to_service (user_id, service_id) VALUES(5, 7);
+INSERT into user_to_service (user_id, service_id) VALUES(6, 3);
+INSERT into user_to_service (user_id, service_id) VALUES(6, 4);
+INSERT into user_to_service (user_id, service_id) VALUES(6, 9);
+INSERT into user_to_service (user_id, service_id) VALUES(7, 3);
+INSERT into user_to_service (user_id, service_id) VALUES(7, 4);
+
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

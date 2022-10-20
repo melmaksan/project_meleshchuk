@@ -13,7 +13,7 @@ public class OrderToServiceDtoConverter implements DtoConverter<OrderToService> 
     @Override
     public OrderToService convertToObject(ResultSet resultSet) throws SQLException {
         return OrderToService.newBuilder()
-                .addOrderIdId(resultSet.getLong(ORDER_ID))
+                .addOrderId(resultSet.getLong(ORDER_ID))
                 .addServiceId(resultSet.getLong(SERVICE_ID))
                 .build();
     }

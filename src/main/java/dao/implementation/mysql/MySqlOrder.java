@@ -135,41 +135,41 @@ public class MySqlOrder implements OrderDao {
 
             mySqlOrder.printAll(mySqlOrder.findAll());
 
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("Insert test:");
-            Order order = mySqlOrder.insert(Order.newBuilder().addOrderTime(LocalDateTime.now())
-                    .addDefaultStatus().addDefaultPaymentStatus().build());
-            mySqlOrder.printAll(mySqlOrder.findAll());
+//            System.out.println("~~~~~~~~~~~~");
+//
+//            System.out.println("Insert test:");
+//            Order order = mySqlOrder.insert(Order.newBuilder().addOrderTime(LocalDateTime.now())
+//                    .addDefaultStatus().addDefaultPaymentStatus().build());
+//            mySqlOrder.printAll(mySqlOrder.findAll());
 
             System.out.println("~~~~~~~~~~~~");
 
             System.out.println("Find one with id 1:");
-            System.out.println(mySqlOrder.findById((long) 13));
+            System.out.println(mySqlOrder.findById((long) 37));
 
             System.out.println("~~~~~~~~~~~~");
 
-            System.out.println("Change day:");
-            mySqlOrder.changeBookingTime(order, LocalDateTime.of(2022, 8, 26, 13, 45));
-            mySqlOrder.printAll(mySqlOrder.findAll());
+//            System.out.println("Change day:");
+//            mySqlOrder.changeBookingTime(order, LocalDateTime.of(2022, 8, 26, 13, 45));
+//            mySqlOrder.printAll(mySqlOrder.findAll());
 
-            System.out.println("~~~~~~~~~~~~");
+//            System.out.println("~~~~~~~~~~~~");
+//
+//            System.out.println("Change status:");
+//            mySqlOrder.updateOrderStatus(order, OrderStatus.StatusIdentifier.DONE_STATUS.getId());
+//            mySqlOrder.printAll(mySqlOrder.findAll());
+//
+//            System.out.println("~~~~~~~~~~~~");
+//
+//            System.out.println("Change status:");
+//            mySqlOrder.updatePaymentStatus(order, PaymentStatus.PaymentIdentifier.PAID_STATUS.getId());
+//            mySqlOrder.printAll(mySqlOrder.findAll());
 
-            System.out.println("Change status:");
-            mySqlOrder.updateOrderStatus(order, OrderStatus.StatusIdentifier.DONE_STATUS.getId());
-            mySqlOrder.printAll(mySqlOrder.findAll());
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("Change status:");
-            mySqlOrder.updatePaymentStatus(order, PaymentStatus.PaymentIdentifier.PAID_STATUS.getId());
-            mySqlOrder.printAll(mySqlOrder.findAll());
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("Delete:");
-            mySqlOrder.delete(order.getId());
-            mySqlOrder.printAll(mySqlOrder.findAll());
+//            System.out.println("~~~~~~~~~~~~");
+//
+//            System.out.println("Delete:");
+//            mySqlOrder.delete(order.getId());
+//            mySqlOrder.printAll(mySqlOrder.findAll());
 
 
 

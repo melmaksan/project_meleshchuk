@@ -1,6 +1,8 @@
 package entity;
 
-public class PaymentStatus extends Designation {
+import java.io.Serializable;
+
+public class PaymentStatus extends Designation implements Serializable {
 
     public PaymentStatus(int id, String name) {
         super(id, name);

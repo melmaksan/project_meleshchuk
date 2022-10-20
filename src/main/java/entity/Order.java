@@ -2,6 +2,7 @@ package entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class Order implements Serializable {
@@ -11,6 +12,8 @@ public class Order implements Serializable {
 
     private static final String DEFAULT_PAYMENT_STATUS = PaymentStatus.PaymentIdentifier.UNPAID_STATUS.name();
     private static final int DEFAULT_PAYMENT_STATUS_ID = PaymentStatus.PaymentIdentifier.UNPAID_STATUS.getId();
+
+    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     private long id;
     private OrderStatus orderStatus;
@@ -47,8 +50,8 @@ public class Order implements Serializable {
         this.paymentStatus = paymentStatus;
     }
 
-    public LocalDateTime getOrderTime() {
-        return orderTime;
+    public String getOrderTime() {
+        return orderTime.format(dateTimeFormatter);
     }
 
     public void setOrderTime(LocalDateTime orderTime) {

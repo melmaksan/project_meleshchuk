@@ -1,6 +1,8 @@
 package entity;
 
-public class OrderStatus extends Designation {
+import java.io.Serializable;
+
+public class OrderStatus extends Designation implements Serializable {
 
     public OrderStatus(int id, String name) {
         super(id, name);

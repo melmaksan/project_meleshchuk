@@ -8,7 +8,8 @@
 <html>
 <head>
     <jsp:include page="/WEB-INF/views/includes/head.jsp"/>
-    <title>Registration Page</title></head>
+    <title>Registration Page</title>
+</head>
 <body>
 <jsp:include page="/WEB-INF/views/includes/navbar.jsp"/>
 
@@ -46,7 +47,7 @@
                 </div>
 
                 <div class="text-center ">
-                    <button type="submit" class="btn btn-outline-success"><fmt:message key="signup"/></button>
+                    <button type="submit" class="btn btn-outline-primary"><fmt:message key="signup"/></button>
                 </div>
 
             </form>

@@ -28,23 +28,18 @@ public class MySqlUser implements UserDao {
                     "FROM user " +
                     "JOIN role ON user.role_id = role.id ";
 
-    private static final String SELECT_SPECIALIST =
-            "SELECT user.id AS user_id, user.first_name, user.last_name, user.rate " +
-                    "FROM user ";
-
-    private static final String SELECT_USER =
-            "SELECT user.id AS user_id, user.first_name, user.last_name, user.email " +
-                    "FROM user " +
-                    "JOIN role ON user.role_id = role.id ";
-
     private static final String WHERE_ID = "WHERE user.id = ? ";
 
-    private static final String ROLE_ID = "AND user.role_id = ? ";
+    private static final String ROLE_ID = "WHERE user.role_id = ? ";
 
     private static final String WHERE_LOGIN = "WHERE user.login = ? ";
 
     private static final String WHERE_USER_NAME =
             "WHERE user.first_name = ? AND user.last_name = ? ";
+
+    private static final String ASC_BY_NAME = "ORDER BY first_name ASC ";
+
+    private static final String DESC_BY_NAME = "ORDER BY first_name DESC ";
 
     private static final String ASC_BY_RATING = "ORDER BY rate ASC ";
 
@@ -123,27 +118,44 @@ public class MySqlUser implements UserDao {
         return defaultDao.findOne(SELECT_ALL + WHERE_USER_NAME, firstName, lastName);
     }
 
-    public Optional<User> findUserByName(String firstName, String lastName, int roleId) {
-        return defaultDao.findOne(SELECT_ALL + WHERE_USER_NAME + ROLE_ID, firstName, lastName, roleId);
-    }
-
-    public Optional<User> findSpecialistByName(String firstName, String lastName, int roleId) {
-        return defaultDao.findOne(SELECT_ALL + WHERE_USER_NAME + ROLE_ID, firstName, lastName, roleId);
-    }
-
     @Override
     public List<User> findAll(int limit, int offset) {
         return defaultDao.findAll(SELECT_ALL + PAGINATION, limit, offset);
     }
 
     @Override
+    public List<User> findAllSpecialists() {
+        return defaultDao.findAll(SELECT_ALL + ROLE_ID,
+                Role.RoleIdentifier.SPECIALIST_ROLE.getId());
+    }
+    @Override
+    public List<User> findAllUsers() {
+        return defaultDao.findAll(SELECT_ALL + ROLE_ID,
+                Role.RoleIdentifier.USER_ROLE.getId());
+    }
+
+    @Override
     public List<User> ascByRating() {
-        return defaultDao.findAll(SELECT_ALL + ASC_BY_RATING);
+        return defaultDao.findAll(SELECT_ALL + ROLE_ID + ASC_BY_RATING,
+                Role.RoleIdentifier.SPECIALIST_ROLE.getId());
     }
 
     @Override
     public List<User> descByRating() {
-        return defaultDao.findAll(SELECT_ALL + DESC_BY_RATING);
+        return defaultDao.findAll(SELECT_ALL + ROLE_ID + DESC_BY_RATING,
+                Role.RoleIdentifier.SPECIALIST_ROLE.getId());
+    }
+
+    @Override
+    public List<User> ascByName() {
+        return defaultDao.findAll(SELECT_ALL + ROLE_ID + ASC_BY_NAME,
+                Role.RoleIdentifier.SPECIALIST_ROLE.getId());
+    }
+
+    @Override
+    public List<User> descByName() {
+        return defaultDao.findAll(SELECT_ALL + ROLE_ID + DESC_BY_NAME,
+                Role.RoleIdentifier.SPECIALIST_ROLE.getId());
     }
 
     @Override
@@ -151,11 +163,13 @@ public class MySqlUser implements UserDao {
         return defaultDao.getNumberOfRows(NUMBER_OF_ROWS);
     }
 
+    @Override
     public void changePassword(User user, String password) {
         Objects.requireNonNull(user);
         defaultDao.executeUpdate(UPDATE_PASSWORD + WHERE_ID, password, user.getId());
     }
 
+    @Override
     public void updateRating(User user, float rate) {
         Objects.requireNonNull(user);
         defaultDao.executeUpdate(UPDATE_RATING + WHERE_ID, rate, user.getId());
@@ -181,56 +195,69 @@ public class MySqlUser implements UserDao {
 
             mySqlUser.printAll(mySqlUser.findAll());
 
+//            System.out.println("~~~~~~~~~~~~");
+//
+//            System.out.println("Insert test:");
+//            User user = mySqlUser.insert(User.newBuilder().addFirstName("AA").addLastName("BB")
+//                    .addLogin("CC").addPassword("AAAAAAAAAAA").addPhoneNumber("9379992")
+//                    .addDefaultRole().build());
+//            mySqlUser.printAll(mySqlUser.findAll());
+
             System.out.println("~~~~~~~~~~~~");
 
-            System.out.println("Insert test:");
-            User user = mySqlUser.insert(User.newBuilder().addFirstName("AA").addLastName("BB")
-                    .addLogin("CC").addPassword("AAAAAAAAAAA").addPhoneNumber("9379992")
-                    .addDefaultRole().build());
-            mySqlUser.printAll(mySqlUser.findAll());
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("Find with id 1:");
+            System.out.println("Find with id 4:");
             System.out.println(mySqlUser.findById(4L));
 
             System.out.println("~~~~~~~~~~~~");
 
-            System.out.println("Find one by login:");
-            System.out.println(mySqlUser.findByLogin("CC"));
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("Find one by name:");
-            System.out.println(mySqlUser.findByName("AA", "BB"));
+            System.out.println("Find spec:");
+            System.out.println(mySqlUser.findAllSpecialists());
 
             System.out.println("~~~~~~~~~~~~");
 
             System.out.println("Find user:");
-            System.out.println(mySqlUser.findUserByName("AA", "BB", Role.RoleIdentifier.USER_ROLE.getId()));
+            System.out.println(mySqlUser.findAllUsers());
+//
+//            System.out.println("~~~~~~~~~~~~");
+//
+//            System.out.println("Find one by name:");
+//            System.out.println(mySqlUser.findByName("AA", "BB"));
+//
+//            System.out.println("~~~~~~~~~~~~");
+//
+//            System.out.println("Find user:");
+//            System.out.println(mySqlUser.findUserByName("AA", "BB", Role.RoleIdentifier.USER_ROLE.getId()));
 
             System.out.println("~~~~~~~~~~~~");
 
             System.out.println("Num of rows: ");
             System.out.println(mySqlUser.getNumberOfRows());
 
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("Change password:");
-            mySqlUser.changePassword(user, "qwerty");
-            mySqlUser.printAll(mySqlUser.findAll());
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("Update rate:");
-            mySqlUser.updateRating(user, 4f);
-            mySqlUser.printAll(mySqlUser.findAll());
+//            System.out.println("~~~~~~~~~~~~");
+//
+//            System.out.println("Change password:");
+//            mySqlUser.changePassword(user, "qwerty");
+//            mySqlUser.printAll(mySqlUser.findAll());
 
             System.out.println("~~~~~~~~~~~~");
 
-            System.out.println("Delete:");
-            mySqlUser.delete(user.getId());
-            mySqlUser.printAll(mySqlUser.findAll());
+            System.out.println("Sort by rate: ");
+            System.out.println(mySqlUser.descByRating());
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Sort by name: ");
+            System.out.println(mySqlUser.ascByName());
+
+//            System.out.println("Update rate:");
+//            mySqlUser.updateRating(user, 4f);
+//            mySqlUser.printAll(mySqlUser.findAll());
+//
+//            System.out.println("~~~~~~~~~~~~");
+//
+//            System.out.println("Delete:");
+//            mySqlUser.delete(user.getId());
+//            mySqlUser.printAll(mySqlUser.findAll());
 
 
         } catch (SQLException throwable) {

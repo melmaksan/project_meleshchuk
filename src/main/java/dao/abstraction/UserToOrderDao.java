@@ -23,4 +23,6 @@ public interface UserToOrderDao extends GenericDao<UserToOrder, Long> {
      * @return list, which contains retrieved objects
      */
     List<UserToOrder> findAllByOrder(long orderId);
+
+    List<UserToOrder> findSpecialistByOrder(long orderId);
 }

@@ -44,14 +44,4 @@ public class UserDtoConverter implements DtoConverter<User> {
                 .addRole(role)
                 .build();
     }
-
-    private List<Order> getOrders(String concatOrders) {
-        return Stream.of(concatOrders.split(",")).map(split ->
-                Order.newBuilder().addId(Integer.parseInt(split)).build()).collect(Collectors.toList());
-    }
-
-    private List<Service> getServices(String concatServices) {
-        return Stream.of(concatServices.split(",")).map(split ->
-                Service.newBuilder().addServiceName(split).build()).collect(Collectors.toList());
-    }
 }

@@ -1,0 +1,44 @@
+.card {
+    width: 21rem
+}
+
+.card-img-top {
+    height: 400px;
+}
+
+#sortTable_length {
+    margin-left: 17.2%;
+}
+
+#sortTable_paginate {
+    margin-right: 15%;
+}
+
+#sortTable2_length {
+    margin-left: 17.2%;
+}
+
+#sortTable2_info{
+    margin-left: 20.5%;
+}
+
+#sortTable2_filter {
+    margin-right: 17.6%;
+}
+
+#sortTable2_paginate {
+    margin-right: 15%;
+}
+
+
+.pagination .page-item.active .page-link {
+    background-color: lightgray; color: black!important; border-color: black!important; border-radius: 3px;
+}
+
+.pagination .page-item.active .page-link:hover {
+    background-color: lightgray; color: black!important; border-color: black!important;
+}
+
+.pagination .page-item .page-link {
+    color: black!important; border-color: lightgray!important;
+}

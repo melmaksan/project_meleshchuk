@@ -1,7 +1,6 @@
 package controller;
 
 import controller.command.ICommand;
-import controller.command.authorization.GetLoginCommand;
 import controller.i18n.SupportedLocale;
 import controller.util.constants.Attributes;
 import controller.util.constants.Views;
