@@ -9,7 +9,6 @@
     <nav class="navbar navbar-expand navbar-dark bg-dark fixed-top">
         <div class="navbar-brand ml-1">
             <span><img src="${pageContext.request.contextPath}/images/logo.png" height="50" alt="BS Logo"></span>
-
         </div>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">

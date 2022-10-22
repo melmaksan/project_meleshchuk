@@ -49,7 +49,6 @@
                     </button>
                 </form>
                 <h5 class="pt-2">Filter:</h5>
-
                 <div class="dropdown py-0 pl-3 mb-1">
                     <button class="btn-sm btn-outline-dark dropdown-toggle" id="dropdown02" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false" style="border-radius: 6px">

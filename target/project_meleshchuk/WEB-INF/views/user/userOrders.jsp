@@ -15,7 +15,6 @@
 <jsp:include page="/WEB-INF/views/includes/navbar.jsp"/>
 <br>
 
-
 <h1 class="offset-1 mt-2 mb-3">Your Orders</h1>
 <table class="table offset-1 text-center table-sm table-striped table-bordered" id="sortTable2" style="width: 83%">
     <thead class="thead-dark">
