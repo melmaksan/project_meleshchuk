@@ -1,7 +1,6 @@
 package controller.command.user;
 
 import controller.command.ICommand;
-import controller.command.visitor.GetSpecialistsCommand;
 import entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

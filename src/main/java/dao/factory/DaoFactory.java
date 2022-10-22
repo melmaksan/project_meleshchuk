@@ -21,7 +21,7 @@ public abstract class DaoFactory {
 
     private static DaoFactory instance;
 
-    public static DaoFactory getInstance()  {
+    public static synchronized DaoFactory getInstance()  {
         if (instance == null) {
             ResourceBundle bundle = ResourceBundle.getBundle(DB_BUNDLE);
             String className = bundle.getString(DB_CLASS);

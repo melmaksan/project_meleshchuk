@@ -1,12 +1,10 @@
 package service;
 
-
 import dao.abstraction.UserToOrderDao;
 import dao.factory.DaoFactory;
 import dao.factory.connection.DaoConnection;
 
 import entity.UserToOrder;
-
 import java.util.List;
 
 public class UserToOrderService {

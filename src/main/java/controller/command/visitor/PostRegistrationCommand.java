@@ -2,7 +2,6 @@ package controller.command.visitor;
 
 import controller.command.ICommand;
 import controller.util.Util;
-import controller.util.constants.Views;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.ServiceFactory;

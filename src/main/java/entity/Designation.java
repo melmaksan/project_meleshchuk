@@ -1,7 +1,5 @@
 package entity;
 
-import java.util.Objects;
-
 public abstract class Designation {
 
     private int id;

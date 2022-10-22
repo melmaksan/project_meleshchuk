@@ -1,7 +1,6 @@
 package controller.command;
 
 import controller.util.Util;
-import controller.util.constants.Views;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

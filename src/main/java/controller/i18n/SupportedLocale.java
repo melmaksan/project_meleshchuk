@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 
 public enum SupportedLocale {
+
     EN(new Locale("en", "EN")),
     UK(new Locale("uk", "UA"));
 

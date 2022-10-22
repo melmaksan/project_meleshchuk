@@ -2,11 +2,9 @@ package controller.command.user;
 
 import controller.command.ICommand;
 import entity.Order;
-import entity.Service;
 import entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import service.OrderService;
 import service.ServiceFactory;
 import service.UserService;
 
@@ -21,7 +19,6 @@ import static controller.util.constants.Views.USER_ORDERS_VIEW;
 public class GetUserOrdersCommand implements ICommand {
 
     private static final UserService userService = ServiceFactory.getUserService();
-    private static final OrderService orderService = ServiceFactory.getOrderService();
     private static final Logger logger = LogManager.getLogger(GetUserOrdersCommand.class);
 
     @Override

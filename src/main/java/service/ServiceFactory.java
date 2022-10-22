@@ -4,21 +4,14 @@ public class ServiceFactory {
 
     private static volatile ServiceFactory instance;
 
-    private ServiceFactory() {
-    }
-
-    public static ServiceFactory getInstance() {
-//        ServiceFactory localInstance = instance;
+    public static synchronized ServiceFactory getInstance() {
         if (instance == null) {
-            synchronized (ServiceFactory.class) {
-//                localInstance = instance;
-                if (instance == null) {
-//                    instance = localInstance = new ServiceFactory();
-                    instance = new ServiceFactory();
-                }
-            }
+            instance = new ServiceFactory();
         }
         return instance;
+    }
+
+    private ServiceFactory() {
     }
 
     public static OrderService getOrderService() {
