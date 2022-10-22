@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 
 import static controller.util.constants.Attributes.HOME_PATH;
+import static controller.util.constants.Views.PAGES_BUNDLE;
 
 public class LogoutCommand implements ICommand {
 
@@ -19,7 +20,7 @@ public class LogoutCommand implements ICommand {
             throws ServletException, IOException {
         request.getSession().invalidate();
         Util.redirectTo(request, response, ResourceBundle.
-                getBundle(Views.PAGES_BUNDLE).getString(HOME_PATH));
+                getBundle(PAGES_BUNDLE).getString(HOME_PATH));
         return REDIRECTED;
     }
 }

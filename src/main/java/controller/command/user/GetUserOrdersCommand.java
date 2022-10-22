@@ -21,7 +21,6 @@ import static controller.util.constants.Views.USER_ORDERS_VIEW;
 public class GetUserOrdersCommand implements ICommand {
 
     private static final UserService userService = ServiceFactory.getUserService();
-    private static final OrderService orderService = ServiceFactory.getOrderService();
     private static final Logger logger = LogManager.getLogger(GetUserOrdersCommand.class);
 
     @Override
