@@ -212,7 +212,7 @@ INSERT into status (id, name) VALUES(2, 'DONE_STATUS');
 INSERT into status (id, name) VALUES(3, 'CANCELED_STATUS');
 INSERT into payment_status (id, name) VALUES(1, 'UNPAID_STATUS');
 INSERT into payment_status (id, name) VALUES(2, 'PAID_STATUS');
-INSERT into user (id, first_name, last_name, login, password, phone_num, role_id) VALUES(1, 'Max', 'Admin', 'admin@mma.com', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', '+380449379992', 2);
+INSERT into user (id, first_name, last_name, login, password, phone_num, role_id) VALUES(1, 'Max', 'Pain', 'admin@mma.com', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', '+380449379992', 2);
 INSERT into user (id, first_name, last_name, login, password, phone_num, role_id) VALUES(2, 'Alex', 'Jones', 'alex.spec@mma.com', '92984524c562dcc97f4939ba3c903d3e7aa880e3cf1060557de8175b2dab53e8', '+380449379992', 3);
 INSERT into user (id, first_name, last_name, login, password, phone_num, role_id) VALUES(3, 'Yulia', 'Gerasimova', 'yulia.spec@mma.com', '92984524c562dcc97f4939ba3c903d3e7aa880e3cf1060557de8175b2dab53e8', '+380449379992', 3);
 INSERT into user (id, first_name, last_name, login, password, phone_num, role_id) VALUES(4, 'Anna', 'Yakovenko', 'anna.spec@mma.com', '92984524c562dcc97f4939ba3c903d3e7aa880e3cf1060557de8175b2dab53e8', '+380449379992', 3);

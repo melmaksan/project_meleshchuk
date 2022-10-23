@@ -15,7 +15,15 @@
 <jsp:include page="/WEB-INF/views/includes/navbar.jsp"/>
 <br>
 
-<h1 class="offset-1 mt-2 mb-3">Your Orders</h1>
+<c:if test="${not empty requestScope.errors}">
+    <div class="alert alert-danger">
+        <c:forEach items="${requestScope.errors}" var="error">
+            <strong><fmt:message key="error"/></strong>${error}<br>
+        </c:forEach>
+    </div>
+</c:if>
+
+<h1 class="offset-1 my-3">Your Orders</h1>
 <table class="table offset-1 text-center table-sm table-striped table-bordered" id="sortTable2" style="width: 83%">
     <thead class="thead-dark">
     <tr>
@@ -31,7 +39,7 @@
     <tbody>
     <c:forEach var="order" items="${requestScope.orders}">
         <c:forEach var="service" items="${order.services}">
-            <c:forEach var="spec" items="${order.users}">
+            <c:forEach var="spec" items="${order.specialists}">
                 <tr>
                     <td class="col-1 py-1">${order.id}</td>
                     <td class="col-2 py-1">${service.title}</td>

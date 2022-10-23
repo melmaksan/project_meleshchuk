@@ -10,7 +10,7 @@ public class PaymentStatus extends Designation implements Serializable {
 
     public enum PaymentIdentifier {
 
-        UNPAID_STATUS(1), PAID_STATUS(2);
+        UNPAID(1), PAID(2);
 
         private final int id;
 

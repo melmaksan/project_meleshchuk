@@ -8,7 +8,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,8 +20,13 @@ public class OrderService {
     private static final UserToOrderService userToOrderService = ServiceFactory.getUserToOrderService();
     private static final UserService userService = ServiceFactory.getUserService();
     private static final ServiceForService serviceForService = ServiceFactory.getServiceService();
-    private static final String ORDER_IS_BOOKED = "Can't delete order, order is booked or is paid";
-    private static final String ORDER_IS_PAID = "Order can't be canceled, because order is paid!";
+    private static final String ORDER_IS_BOOKED = "Can't delete the order, it has booked or paid! " +
+            "You can cancel the order and try again";
+    private static final String ORDER_IS_NOT_BOOKED = "You can't change order time because order has already done or canceled!";
+    private static final String ORDER_IS_PAID = "Order can't be canceled because order has paid!";
+    private static final String ORDER_PAID = "You can't change payment status because order has already paid or " +
+            "the order is canceled and you can`t paid it!";
+
     private final DaoFactory daoFactory = DaoFactory.getInstance();
     private static OrderService instance;
 
@@ -43,9 +47,11 @@ public class OrderService {
             OrderDao orderDao = daoFactory.getOrderDao(connection);
             List<Order> orders = orderDao.findAll();
             for (Order order : orders) {
-                List<User> users = getUsers(order);
+                List<User> users = getClients(order);
+                List<User> specialists = getSpecialist(order);
                 List<Service> services = getServices(order);
                 order.setUsers(users);
+                order.setSpecialists(specialists);
                 order.setServices(services);
             }
             return orders;
@@ -65,22 +71,22 @@ public class OrderService {
         return services;
     }
 
-    private List<User> getUsers(Order order) {
-        List<User> users = new ArrayList<>();
-        List<UserToOrder> userToOrders = userToOrderService.findAllUsersByOrder(order.getId());
+    private List<User> getSpecialist(Order order) {
+        List<User> specialists = new ArrayList<>();
+        List<UserToOrder> userToOrders = userToOrderService.findSpecialistByOrder(order.getId());
         for (UserToOrder userToOrder : userToOrders) {
             try {
-                users.add((userService.findUserForOtherEntity(userToOrder.getUserId())).orElse(null));
+                specialists.add((userService.findUserForOtherEntity(userToOrder.getUserId())).orElse(null));
             } catch (RuntimeException ex) {
                 logger.error("There are no users here!", ex);
             }
         }
-        return users;
+        return specialists;
     }
 
-    private List<User> getSpecialist(Order order) {
+    private List<User> getClients(Order order) {
         List<User> specialists = new ArrayList<>();
-        List<UserToOrder> userToOrders = userToOrderService.findSpecialistByOrder(order.getId());
+        List<UserToOrder> userToOrders = userToOrderService.findClientsByOrder(order.getId());
         for (UserToOrder userToOrder : userToOrders) {
             try {
                 specialists.add((userService.findUserForOtherEntity(userToOrder.getUserId())).orElse(null));
@@ -101,8 +107,8 @@ public class OrderService {
                 e.printStackTrace();
             }
             List<Service> serviceList = getServices(Objects.requireNonNull(order));
-            List<User> users = getSpecialist(order);
-            order.setUsers(users);
+            List<User> specialists = getSpecialist(order);
+            order.setSpecialists(specialists);
             order.setServices(serviceList);
             return order;
         }
@@ -133,10 +139,8 @@ public class OrderService {
 
 
     private Order getDataFromRequestCreating(String dateTime) {
-        String dateTimeString = dateTime.replace("T", " ");
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return Order.newBuilder()
-                .addOrderTime(LocalDateTime.parse(dateTimeString, dateTimeFormatter))
+                .addOrderTime(LocalDateTime.parse(dateTime))
                 .addDefaultStatus()
                 .addDefaultPaymentStatus()
                 .build();
@@ -156,38 +160,61 @@ public class OrderService {
                 .build();
     }
 
-    public List<String> updateOrderStatus(Order order, OrderStatus orderStatus) {
+    public List<String> updateOrderStatus(Order order, int orderStatus) {
         List<String> errors = new ArrayList<>();
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.startSerializableTransaction();
-            if (order.getPaymentStatus().getId() == PaymentStatus.PaymentIdentifier.PAID_STATUS.getId() &&
-                    orderStatus.getId() == OrderStatus.StatusIdentifier.CANCELED_STATUS.getId()) {
+            if (checkPaymentStatus(order.getPaymentStatus().getId(), PaymentStatus.PaymentIdentifier.PAID) &&
+                    checkOrderStatus(orderStatus, OrderStatus.StatusIdentifier.CANCELED)) {
                 errors.add(ORDER_IS_PAID);
                 return errors;
             }
             OrderDao orderDao = daoFactory.getOrderDao(connection);
-            orderDao.updateOrderStatus(order, orderStatus.getId());
+            orderDao.updateOrderStatus(order, orderStatus);
             connection.commit();
         }
         return errors;
     }
 
-    public void updatePaymentStatus(Order order, PaymentStatus paymentStatus) {
+    public List<String> updatePaymentStatus(Order order, int paymentStatus) {
+        List<String> errors = new ArrayList<>();
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.startSerializableTransaction();
+            if ((checkPaymentStatus(order.getPaymentStatus().getId(), PaymentStatus.PaymentIdentifier.PAID)
+                    && checkPaymentStatus(paymentStatus, PaymentStatus.PaymentIdentifier.UNPAID)) ||
+                    checkOrderStatus(order.getOrderStatus().getId(), OrderStatus.StatusIdentifier.CANCELED)) {
+                errors.add(ORDER_PAID);
+                return errors;
+            }
             OrderDao orderDao = daoFactory.getOrderDao(connection);
-            orderDao.updateOrderStatus(order, paymentStatus.getId());
+            orderDao.updatePaymentStatus(order, paymentStatus);
             connection.commit();
         }
+        return errors;
     }
 
-    public void changeBookingTime(Order order, LocalDateTime localDateTime) {
+    private boolean checkPaymentStatus(int id, PaymentStatus.PaymentIdentifier paid) {
+        return id == paid.getId();
+    }
+
+    private boolean checkOrderStatus(int id, OrderStatus.StatusIdentifier canceled) {
+        return id == canceled.getId();
+    }
+
+    public List<String> changeBookingTime(Order order, String dateTime) {
+        List<String> errors = new ArrayList<>();
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.startSerializableTransaction();
+            if (checkOrderStatus(order.getOrderStatus().getId(), OrderStatus.StatusIdentifier.CANCELED) ||
+                    checkOrderStatus(order.getOrderStatus().getId(), OrderStatus.StatusIdentifier.DONE)) {
+                errors.add(ORDER_IS_NOT_BOOKED);
+                return errors;
+            }
             OrderDao orderDao = daoFactory.getOrderDao(connection);
-            orderDao.changeBookingTime(order, localDateTime);
+            orderDao.changeBookingTime(order, LocalDateTime.parse(dateTime));
             connection.commit();
         }
+        return errors;
     }
 
     public List<String> deleteOrder(long orderId) {
@@ -206,13 +233,15 @@ public class OrderService {
     }
 
     private boolean orderCheckPaymentStatus(long orderId) {
-        return Objects.requireNonNull(findOrderById(orderId)).getPaymentStatus().getId() ==
-                PaymentStatus.PaymentIdentifier.PAID_STATUS.getId();
+        return (checkPaymentStatus(Objects.requireNonNull(findOrderById(orderId)).getPaymentStatus().getId(),
+                PaymentStatus.PaymentIdentifier.PAID)) &&
+                (checkOrderStatus(Objects.requireNonNull(findOrderById(orderId)).getOrderStatus().getId(),
+                        OrderStatus.StatusIdentifier.BOOKED));
     }
 
     private boolean orderCheckStatus(long orderId) {
-        return Objects.requireNonNull(findOrderById(orderId)).getOrderStatus().getId() ==
-                OrderStatus.StatusIdentifier.BOOKED_STATUS.getId();
+        return checkOrderStatus(Objects.requireNonNull(findOrderById(orderId)).getOrderStatus().getId(),
+                OrderStatus.StatusIdentifier.BOOKED);
     }
 
     public Optional<Order> findOrderForOtherEntity(Long id) {

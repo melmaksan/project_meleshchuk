@@ -17,9 +17,12 @@ public class Views {
 
     public static final String USER_FAST_BOOK_VIEW = FOLDER + USER_ROLE_FOLDER + "userFastBooking.jsp";
     public static final String USER_SPECIALISTS_VIEW = FOLDER + USER_ROLE_FOLDER + "userSpecialists.jsp";
-    public static final String USER_ACCOUNT_VIEW = FOLDER + USER_ROLE_FOLDER + "userAccount.jsp";
     public static final String USER_ORDERS_VIEW = FOLDER + USER_ROLE_FOLDER + "userOrders.jsp";
 
+    public static final String ADMIN_ORDERS_VIEW = FOLDER + ADMIN_ROLE_FOLDER + "adminOrders.jsp";
+    public static final String ADMIN_SPECIALISTS_VIEW = FOLDER + ADMIN_ROLE_FOLDER + "adminSpecialists.jsp";
+    public static final String ADMIN_USERS_VIEW = FOLDER + ADMIN_ROLE_FOLDER + "adminUsers.jsp";
+    public static final String CREATE_VIEW = FOLDER + ADMIN_ROLE_FOLDER + "create.jsp";
 
 
 }

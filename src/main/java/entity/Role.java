@@ -10,7 +10,7 @@ public class Role extends Designation implements Serializable {
 
     public enum RoleIdentifier {
 
-        USER_ROLE(1), ADMIN_ROLE(2), SPECIALIST_ROLE(3);
+        USER(1), ADMIN(2), SPECIALIST(3);
 
         private final int id;
 

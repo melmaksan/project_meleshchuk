@@ -19,9 +19,9 @@ import static controller.util.constants.Attributes.*;
 
 public class AuthorizationFilter implements Filter {
 
-    public static final int ADMIN_ROLE_ID = Role.RoleIdentifier.ADMIN_ROLE.getId();
-    public static final int USER_ROLE_ID = Role.RoleIdentifier.USER_ROLE.getId();
-    public static final int SPEC_ROLE_ID = Role.RoleIdentifier.SPECIALIST_ROLE.getId();
+    public static final int ADMIN_ROLE_ID = Role.RoleIdentifier.ADMIN.getId();
+    public static final int USER_ROLE_ID = Role.RoleIdentifier.USER.getId();
+    public static final int SPEC_ROLE_ID = Role.RoleIdentifier.SPECIALIST.getId();
     private static final ResourceBundle bundle = ResourceBundle.getBundle(Views.PAGES_BUNDLE);
 
     private static final Logger logger = LogManager.getLogger(AuthorizationFilter.class);

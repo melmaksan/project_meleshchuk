@@ -5,8 +5,8 @@ import java.util.List;
 
 public class User implements Serializable {
 
-    private static final String DEFAULT_ROLE = Role.RoleIdentifier.USER_ROLE.name();
-    private static final int DEFAULT_ROLE_ID = Role.RoleIdentifier.USER_ROLE.getId();
+    private static final String DEFAULT_ROLE = Role.RoleIdentifier.USER.name();
+    private static final int DEFAULT_ROLE_ID = Role.RoleIdentifier.USER.getId();
 
     private long id;
     private String firstName;
@@ -104,15 +104,15 @@ public class User implements Serializable {
     }
 
     public boolean isUser() {
-        return role.getId() == Role.RoleIdentifier.USER_ROLE.getId();
+        return role.getId() == Role.RoleIdentifier.USER.getId();
     }
 
     public boolean isAdmin() {
-        return role.getId() == Role.RoleIdentifier.ADMIN_ROLE.getId();
+        return role.getId() == Role.RoleIdentifier.ADMIN.getId();
     }
 
     public boolean isSpecialist() {
-        return role.getId() == Role.RoleIdentifier.SPECIALIST_ROLE.getId();
+        return role.getId() == Role.RoleIdentifier.SPECIALIST.getId();
     }
 
     public void setDefaultRole() {

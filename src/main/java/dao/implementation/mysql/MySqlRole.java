@@ -102,14 +102,14 @@ public class MySqlRole implements RoleDao {
 
             System.out.println("Insert test:");
             Role role1 = mySqlRoleDao.insert(new Role(
-                    Role.RoleIdentifier.USER_ROLE.getId(),
-                    Role.RoleIdentifier.USER_ROLE.name()));
+                    Role.RoleIdentifier.USER.getId(),
+                    Role.RoleIdentifier.USER.name()));
             Role role2 = mySqlRoleDao.insert(new Role(
-                    Role.RoleIdentifier.ADMIN_ROLE.getId(),
-                    Role.RoleIdentifier.ADMIN_ROLE.name()));
+                    Role.RoleIdentifier.ADMIN.getId(),
+                    Role.RoleIdentifier.ADMIN.name()));
             Role role3 = mySqlRoleDao.insert(new Role(
-                    Role.RoleIdentifier.SPECIALIST_ROLE.getId(),
-                    Role.RoleIdentifier.SPECIALIST_ROLE.name()));
+                    Role.RoleIdentifier.SPECIALIST.getId(),
+                    Role.RoleIdentifier.SPECIALIST.name()));
             mySqlRoleDao.printAll(mySqlRoleDao.findAll());
 
             System.out.println("~~~~~~~~~~~~");

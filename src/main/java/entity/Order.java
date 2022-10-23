@@ -7,11 +7,11 @@ import java.util.List;
 
 public class Order implements Serializable {
 
-    private static final String DEFAULT_STATUS = OrderStatus.StatusIdentifier.BOOKED_STATUS.name();
-    private static final int DEFAULT_STATUS_ID = OrderStatus.StatusIdentifier.BOOKED_STATUS.getId();
+    private static final String DEFAULT_STATUS = OrderStatus.StatusIdentifier.BOOKED.name();
+    private static final int DEFAULT_STATUS_ID = OrderStatus.StatusIdentifier.BOOKED.getId();
 
-    private static final String DEFAULT_PAYMENT_STATUS = PaymentStatus.PaymentIdentifier.UNPAID_STATUS.name();
-    private static final int DEFAULT_PAYMENT_STATUS_ID = PaymentStatus.PaymentIdentifier.UNPAID_STATUS.getId();
+    private static final String DEFAULT_PAYMENT_STATUS = PaymentStatus.PaymentIdentifier.UNPAID.name();
+    private static final int DEFAULT_PAYMENT_STATUS_ID = PaymentStatus.PaymentIdentifier.UNPAID.getId();
 
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
@@ -21,6 +21,7 @@ public class Order implements Serializable {
     private LocalDateTime orderTime;
     private List<Service> services;
     private List<User> users;
+    private List<User> specialists;
 
     public static Builder newBuilder() {
         return new Builder();
@@ -74,16 +75,24 @@ public class Order implements Serializable {
         this.users = users;
     }
 
+    public List<User> getSpecialists() {
+        return specialists;
+    }
+
+    public void setSpecialists(List<User> specialists) {
+        this.specialists = specialists;
+    }
+
     public boolean isBooked() {
-        return orderStatus.getId() == OrderStatus.StatusIdentifier.BOOKED_STATUS.getId();
+        return orderStatus.getId() == OrderStatus.StatusIdentifier.BOOKED.getId();
     }
 
     public boolean isDone() {
-        return orderStatus.getId() == OrderStatus.StatusIdentifier.DONE_STATUS.getId();
+        return orderStatus.getId() == OrderStatus.StatusIdentifier.DONE.getId();
     }
 
     public boolean isCanceled() {
-        return orderStatus.getId() == OrderStatus.StatusIdentifier.CANCELED_STATUS.getId();
+        return orderStatus.getId() == OrderStatus.StatusIdentifier.CANCELED.getId();
     }
 
     public void setDefaultOrderStatus() {
@@ -91,11 +100,11 @@ public class Order implements Serializable {
     }
 
     public boolean isPaid() {
-        return paymentStatus.getId() == PaymentStatus.PaymentIdentifier.PAID_STATUS.getId();
+        return paymentStatus.getId() == PaymentStatus.PaymentIdentifier.PAID.getId();
     }
 
     public boolean isUnpaid() {
-        return paymentStatus.getId() == PaymentStatus.PaymentIdentifier.UNPAID_STATUS.getId();
+        return paymentStatus.getId() == PaymentStatus.PaymentIdentifier.UNPAID.getId();
     }
 
     public void setDefaultPaymentStatus() {

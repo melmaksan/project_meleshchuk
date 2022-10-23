@@ -48,6 +48,8 @@ public interface UserDao extends GenericDao<User, Long> {
 
     List<User> findAllUsers();
 
+    List<User> findAllAdmins();
+
     void changePassword(User user, String password);
 
     void updateRating(User user, float rate);

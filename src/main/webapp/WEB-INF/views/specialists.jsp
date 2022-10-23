@@ -12,16 +12,17 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/includes/navbar.jsp"/>
+<br>
 
 <c:if test="${not empty requestScope.errors}">
     <div class="alert alert-danger">
         <c:forEach items="${requestScope.errors}" var="error">
-            <strong><fmt:message key="error"/></strong> <fmt:message key="${error}"/><br>
+            <strong><fmt:message key="error"/></strong>${error}<br>
         </c:forEach>
     </div>
 </c:if>
 
-<h1 class="offset-1 mt-4 mb-3">Specialists</h1>
+<h1 class="offset-1 my-3">Specialists</h1>
 <table class="table offset-1 text-center table-sm table-striped table-bordered" id="sortTable" style="width: 83%">
     <thead class="thead-dark">
     <tr>
@@ -52,8 +53,8 @@
                 <td class="col-1 py-1">${service.price}₴</td>
                 <td class="col-2 py-1">
                     <label for="appointment-time"></label>
-                    <input type="datetime-local" id="appointment-time" name="meeting-time" value="2022-10-19T19:30"
-                           min="2022-10-19T00:00" max="2022-11-19T00:00" required/></td>
+                    <input type="datetime-local" id="appointment-time" name="meeting-time" value="2022-10-22T19:30"
+                           min="2022-10-22T00:00" max="2022-11-22T00:00" required/></td>
                 <td class="col-1 pt-0 pb-1 pr-2">
                     <c:if test="${empty sessionScope.user }">
                         <form class="mt-1 mb-0" action="${pageContext.request.contextPath}/site/login">
@@ -68,31 +69,6 @@
     </c:forEach>
     </tbody>
 </table>
-
-
-<%--                <label>--%>
-<%--                    <select class="custom-select">--%>
-<%--                        <option selected>Choose type</option>--%>
-<%--                    </select>--%>
-<%--                </label>--%>
-<%--                <div class="dropdown">--%>
-<%--                    <button class="btn" id="dropdown03" data-toggle="dropdown" aria-haspopup="true"--%>
-<%--                            aria-expanded="false">--%>
-<%--                        Choose type--%>
-<%--                    </button>--%>
-<%--                    <div class="dropdown-menu" aria-labelledby="dropdown03">--%>
-<%--                        <c:set var="data" value="serviceTypes${specialist.id}"/>--%>
-<%--                        <c:forEach var="type" items="${requestScope[data]}">--%>
-<%--                            <form class="mb-1" action="${pageContext.request.contextPath}/site/specialists" method="post">--%>
-<%--                                <input type="hidden" name="command" value="filter.service.type"/>--%>
-<%--                                <input type="hidden" name="serviceType" value="${type}"/>--%>
-<%--                                <button class="dropdown-item" type="submit">${type}</button>--%>
-<%--                            </form>--%>
-<%--                        </c:forEach>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-
-
 
 <jsp:include page="/WEB-INF/views/includes/footer.jsp"/>
 </body>

@@ -36,6 +36,13 @@ public class UserToOrderService {
         }
     }
 
+    public List<UserToOrder> findClientsByOrder(long orderId) {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            UserToOrderDao userToOrderDao = daoFactory.getUserToOrderDao(connection);
+            return userToOrderDao.findClientsByOrder(orderId);
+        }
+    }
+
     public List<UserToOrder> findAllOrdersByUser(long userId) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             UserToOrderDao userToOrderDao = daoFactory.getUserToOrderDao(connection);
@@ -51,5 +58,10 @@ public class UserToOrderService {
     public void deleteUserToOrder(long userId, DaoConnection connection) {
         UserToOrderDao userToOrderDao = daoFactory.getUserToOrderDao(connection);
         userToOrderDao.delete(userId);
+    }
+
+    public boolean isSpecExistsInOrder(long userId, DaoConnection connection) {
+        UserToOrderDao userToOrderDao = daoFactory.getUserToOrderDao(connection);
+        return userToOrderDao.isServiceExistInBookedOrder(userId);
     }
 }

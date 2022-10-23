@@ -11,13 +11,22 @@
     <title>Login Page</title></head>
 <body>
 <jsp:include page="/WEB-INF/views/includes/navbar.jsp"/>
+<br>
+
+<c:if test="${not empty requestScope.errors}">
+    <div class="alert alert-danger">
+        <c:forEach items="${requestScope.errors}" var="error">
+            <strong><fmt:message key="error"/></strong>${error}<br>
+        </c:forEach>
+    </div>
+</c:if>
 
 <div class="container">
     <div class="card w-50 mx-auto my-5">
         <div class="card-header text-center font-weight-bold">Sing In</div>
         <div class="card-body">
             <form class=form-group" method="post">
-                <input type="hidden" name="command" value="login.post"/>
+                <input type="hidden" name="command" value="login"/>
 
                 <div class="form-group">
                     <label>Email Address</label>
@@ -38,7 +47,7 @@
 
                 <div class="row justify-content-between py-1">
                     <div class="col">
-                        <button type="submit" class="btn btn-primary m">Login</button>
+                        <button type="submit" class="btn btn-primary">Login</button>
                     </div>
                     <div class="col text-right align-self-end">
                         <a href="${pageContext.request.contextPath}/site/registration">
@@ -55,3 +64,4 @@
 <jsp:include page="/WEB-INF/views/includes/footer.jsp"/>
 </body>
 </html>
+

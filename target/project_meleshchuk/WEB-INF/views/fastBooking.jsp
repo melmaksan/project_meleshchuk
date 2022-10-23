@@ -12,16 +12,17 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/includes/navbar.jsp"/>
+<br>
 
 <c:if test="${not empty requestScope.errors}">
     <div class="alert alert-danger">
         <c:forEach items="${requestScope.errors}" var="error">
-            <strong><fmt:message key="error"/></strong> <fmt:message key="${error}"/><br>
+            <strong><fmt:message key="error"/></strong>${error}<br>
         </c:forEach>
     </div>
 </c:if>
 
-<h1 class="offset-2 mt-3 mb-2">Service specialists</h1>
+<h1 class="offset-2 my-3">Service specialists</h1>
 <table class="table offset-2 text-center table-sm table-striped table-bordered" style="width: 65%">
     <thead class="thead-dark">
     <tr>

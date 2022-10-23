@@ -24,7 +24,7 @@ public class ServiceForService {
     private static final UserService userService = ServiceFactory.getUserService();
     private final DaoFactory daoFactory = DaoFactory.getInstance();
     private static ServiceForService instance;
-    private static final String SERVICE_IS_IN_ORDER = "service.added.to.order";
+    private static final String SERVICE_IS_IN_ORDER = "Service is exist in booked order!";
 
     private static final Logger logger = LogManager.getLogger(ServiceForService.class);
 
@@ -181,8 +181,7 @@ public class ServiceForService {
         List<String> errors = new ArrayList<>();
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.startSerializableTransaction();
-            if (orderToServiceService.isServiceExistsInOrder(serviceId,
-                    OrderStatus.StatusIdentifier.BOOKED_STATUS.getId(), connection)) {
+            if (orderToServiceService.isServiceExistsInOrder(serviceId, connection)) {
                 errors.add(SERVICE_IS_IN_ORDER);
                 return errors;
             }

@@ -4,7 +4,11 @@ public class Attributes {
     public static final String ERRORS = "errors";
     public static final String WARNING = "warning";
     public static final String MESSAGES = "messages";
-    public static final String ORDER = "order";
+    public static final String PAYMENT_STATUS = "paymentStatus";
+    public static final String ORDER_STATUS = "orderStatus";
+    public static final String ORDER_STATUSES = "orderStatuses";
+    public static final String PAYMENT_STATUSES = "paymentStatuses";
+    public static final String ORDER_ID = "orderId";
     public static final String ORDERS = "orders";
     public static final String USER = "user";
     public static final String USER_LIST  ="users";

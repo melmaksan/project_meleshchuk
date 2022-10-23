@@ -10,7 +10,7 @@ public class OrderStatus extends Designation implements Serializable {
 
     public enum StatusIdentifier {
 
-        BOOKED_STATUS(1), DONE_STATUS(2), CANCELED_STATUS(3);
+        BOOKED(1), DONE(2), CANCELED(3);
 
         private final int id;
 

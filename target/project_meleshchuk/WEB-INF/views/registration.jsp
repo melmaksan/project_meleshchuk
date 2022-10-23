@@ -18,7 +18,7 @@
         <div class="card-header text-center font-weight-bold">Sing Up</div>
         <div class="card-body">
             <form class=form-group" method="post">
-                <input type="hidden" name="command" value="register.post"/>
+                <input type="hidden" name="command" value="registration"/>
 
                 <div class="form-group">
                     <label>First Name</label>
@@ -27,23 +27,25 @@
 
                 <div class="form-group">
                     <label>Last Name</label>
-                    <input type="text" class="form-control" name="last_name"  required>
+                    <input type="text" class="form-control" name="last_name" required>
                 </div>
 
                 <div class="form-group">
                     <label>Email Address</label>
-                    <input type="email" class="form-control" name="login" placeholder="Enter your email" required>
+                    <input type="email" class="form-control" name="login" placeholder="Enter your email"
+                           required>
                 </div>
 
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" class="form-control valida" name="password" placeholder="***********"
+                    <input type="password" class="form-control" name="password" placeholder="***********"
                            required>
                 </div>
 
                 <div class="form-group">
                     <label>Phone Number</label>
-                    <input type="tel" class="form-control" name="phone_num" placeholder="+38(044)937-99-92" required>
+                    <input type="tel" class="form-control" name="phone_num" placeholder="+38(044)937-99-92"
+                           required>
                 </div>
 
                 <div class="text-center ">
@@ -51,7 +53,6 @@
                 </div>
 
             </form>
-
         </div>
     </div>
 </div>

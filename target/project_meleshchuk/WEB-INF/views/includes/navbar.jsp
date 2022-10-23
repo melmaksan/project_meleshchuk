@@ -73,6 +73,13 @@
                 </c:if>
             </ul>
             <ul class="navbar-nav ml-auto">
+                <%-- Create(for admin) --%>
+                <c:if test="${sessionScope.user.admin}">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/site/create"
+                           role="button">Create</a>
+                    </li>
+                </c:if>
                 <%-- Account --%>
                 <c:if test="${not empty sessionScope.user}">
                     <li class="nav-item mr-3 active">
@@ -99,9 +106,10 @@
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         ${sessionScope.locale.getLanguage().toUpperCase()}
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdown03">
+                    <div class="dropdown-menu text-center" aria-labelledby="dropdown03" style="min-width: 4rem; padding: 0;">
                         <c:forEach items="${applicationScope.supportedLocales}" var="lang">
-                            <a class="dropdown-item" href="?lang=${lang}">${lang.toUpperCase()}</a>
+                            <a class="dropdown-item" href="?lang=${lang}" style="padding: 0.25rem 0.5rem;">
+                                    ${lang.toUpperCase()}</a>
                         </c:forEach>
                     </div>
                 </div>

@@ -126,36 +126,43 @@ public class MySqlUser implements UserDao {
     @Override
     public List<User> findAllSpecialists() {
         return defaultDao.findAll(SELECT_ALL + ROLE_ID,
-                Role.RoleIdentifier.SPECIALIST_ROLE.getId());
+                Role.RoleIdentifier.SPECIALIST.getId());
     }
+
     @Override
     public List<User> findAllUsers() {
         return defaultDao.findAll(SELECT_ALL + ROLE_ID,
-                Role.RoleIdentifier.USER_ROLE.getId());
+                Role.RoleIdentifier.USER.getId());
+    }
+
+    @Override
+    public List<User> findAllAdmins() {
+        return defaultDao.findAll(SELECT_ALL + ROLE_ID,
+                Role.RoleIdentifier.ADMIN.getId());
     }
 
     @Override
     public List<User> ascByRating() {
         return defaultDao.findAll(SELECT_ALL + ROLE_ID + ASC_BY_RATING,
-                Role.RoleIdentifier.SPECIALIST_ROLE.getId());
+                Role.RoleIdentifier.SPECIALIST.getId());
     }
 
     @Override
     public List<User> descByRating() {
         return defaultDao.findAll(SELECT_ALL + ROLE_ID + DESC_BY_RATING,
-                Role.RoleIdentifier.SPECIALIST_ROLE.getId());
+                Role.RoleIdentifier.SPECIALIST.getId());
     }
 
     @Override
     public List<User> ascByName() {
         return defaultDao.findAll(SELECT_ALL + ROLE_ID + ASC_BY_NAME,
-                Role.RoleIdentifier.SPECIALIST_ROLE.getId());
+                Role.RoleIdentifier.SPECIALIST.getId());
     }
 
     @Override
     public List<User> descByName() {
         return defaultDao.findAll(SELECT_ALL + ROLE_ID + DESC_BY_NAME,
-                Role.RoleIdentifier.SPECIALIST_ROLE.getId());
+                Role.RoleIdentifier.SPECIALIST.getId());
     }
 
     @Override
@@ -228,26 +235,11 @@ public class MySqlUser implements UserDao {
 //            System.out.println("Find user:");
 //            System.out.println(mySqlUser.findUserByName("AA", "BB", Role.RoleIdentifier.USER_ROLE.getId()));
 
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("Num of rows: ");
-            System.out.println(mySqlUser.getNumberOfRows());
-
 //            System.out.println("~~~~~~~~~~~~");
 //
 //            System.out.println("Change password:");
 //            mySqlUser.changePassword(user, "qwerty");
 //            mySqlUser.printAll(mySqlUser.findAll());
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("Sort by rate: ");
-            System.out.println(mySqlUser.descByRating());
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("Sort by name: ");
-            System.out.println(mySqlUser.ascByName());
 
 //            System.out.println("Update rate:");
 //            mySqlUser.updateRating(user, 4f);

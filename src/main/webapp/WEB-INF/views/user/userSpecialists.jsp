@@ -12,16 +12,17 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/includes/navbar.jsp"/>
+<br>
 
 <c:if test="${not empty requestScope.errors}">
     <div class="alert alert-danger">
         <c:forEach items="${requestScope.errors}" var="error">
-            <strong><fmt:message key="error"/></strong> <fmt:message key="${error}"/><br>
+            <strong><fmt:message key="error"/></strong>${error}<br>
         </c:forEach>
     </div>
 </c:if>
 
-<h1 class="offset-1 mt-4 mb-3">Specialists</h1>
+<h1 class="offset-1 my-3">Specialists</h1>
 <table class="table offset-1 text-center table-sm table-striped table-bordered" id="sortTable" style="width: 83%">
     <thead class="thead-dark">
     <tr>
@@ -38,8 +39,8 @@
     <c:forEach var="specialist" items="${requestScope.specialists}">
         <c:forEach var="service" items="${specialist.services}">
             <tr>
-                <form class="" action="${pageContext.request.contextPath}/site/user/orders">
-                    <input type="hidden" name="command" value="addOrder.post"/>
+                <form action="${pageContext.request.contextPath}/site/user/orders" method="post">
+                    <input type="hidden" name="command" value="add.order"/>
                     <td class="col-3 py-1"><c:out value="${specialist.firstName} ${specialist.lastName}"/></td>
                     <td class="col-1 py-1">
                         <h6 class="card-text mt-1 mb-0">${specialist.rating}
@@ -63,9 +64,10 @@
                             <input type="hidden" name="specId" value="${specialist.id}"/>
                             <input type="hidden" name="serviceId" value="${service.id}"/>
                             <button type="submit" class="btn-sm btn-outline-secondary py-0 mt-1 mb-0"
-                                    data-toggle="confirmation" data-singleton="true" data-btn-ok-label="Continue"
-                                    data-btn-cancel-label="Cancel" data-title="Are you sure?"
-                                    data-content="You won't be able to change it" style="border-radius: 8px">
+                                    data-toggle="confirmation" data-singleton="true" data-popout="true"
+                                    data-btn-ok-label="Continue" data-btn-cancel-label="Cancel"
+                                    data-title="Are you sure?" data-content="You won't be able to change it"
+                                    style="border-radius: 8px">
                                 Confirm
                             </button>
                         </c:if>

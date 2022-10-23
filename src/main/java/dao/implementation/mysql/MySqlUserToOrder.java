@@ -4,7 +4,7 @@ import dao.abstraction.UserToOrderDao;
 import dao.datasource.PooledConnection;
 import dao.implementation.mysql.converter.DtoConverter;
 import dao.implementation.mysql.converter.UserToOrderDtoConverter;
-import entity.OrderToService;
+import entity.OrderStatus;
 import entity.Role;
 import entity.UserToOrder;
 
@@ -43,6 +43,12 @@ public class MySqlUserToOrder implements UserToOrderDao {
 
     private final static String DELETE =
             "DELETE FROM user_to_orders ";
+
+    private static final String EXIST_BY_SERVICE =
+            "SELECT user_to_orders.orders_id " +
+                    "FROM user_to_orders " +
+                    "JOIN orders ON user_to_orders.orders_id = orders.id " +
+                    "WHERE user_to_orders.user_id = ? AND orders.status_id = ?";
 
     private final DefaultDaoImpl<UserToOrder> defaultDao;
 
@@ -97,7 +103,18 @@ public class MySqlUserToOrder implements UserToOrderDao {
     @Override
     public List<UserToOrder> findSpecialistByOrder(long orderId) {
         return defaultDao.findAll(SELECT_ALL + WHERE_USER_IS_SPECIALIST, orderId,
-                Role.RoleIdentifier.SPECIALIST_ROLE.getId());
+                Role.RoleIdentifier.SPECIALIST.getId());
+    }
+
+    @Override
+    public List<UserToOrder> findClientsByOrder(long orderId) {
+        return defaultDao.findAll(SELECT_ALL + WHERE_USER_IS_SPECIALIST, orderId,
+                Role.RoleIdentifier.USER.getId());
+    }
+
+    @Override
+    public boolean isServiceExistInBookedOrder(long userId) {
+        return defaultDao.exist(EXIST_BY_SERVICE, userId, OrderStatus.StatusIdentifier.BOOKED.getId());
     }
 
     private void printAll(List<UserToOrder> list) {
@@ -121,17 +138,19 @@ public class MySqlUserToOrder implements UserToOrderDao {
             System.out.println("~~~~~~~~~~~~");
 
             System.out.println("find spec: ");
-            System.out.println(mySqlUserToOrder.findSpecialistByOrder(4));
+            System.out.println(mySqlUserToOrder.findSpecialistByOrder(10));
 
             System.out.println("~~~~~~~~~~~~");
 
-            System.out.println(mySqlUserToOrder.findAllByOrder(2));
+            System.out.println(mySqlUserToOrder.findAllByOrder(11));
 
             System.out.println("~~~~~~~~~~~~");
 
-            System.out.println(mySqlUserToOrder.findAllByUser(10));
+            System.out.println(mySqlUserToOrder.findAllByUser(5));
 
+            System.out.println("~~~~~~~~~~~~");
 
+            System.out.println(mySqlUserToOrder.isServiceExistInBookedOrder(7));
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }

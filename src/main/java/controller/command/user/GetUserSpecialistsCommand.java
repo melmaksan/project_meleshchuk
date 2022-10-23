@@ -27,12 +27,12 @@ public class GetUserSpecialistsCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<User> users = userService.findAllSpecialists();
-        for (User user : users) {
-            request.setAttribute(SERVICES_UNIQUE_TYPE + user.getId(), serviceService.getUniqueServiceTypes(user.getServices()));
-        }
+//        List<User> users = userService.findAllSpecialists();
+//        for (User user : users) {
+//            request.setAttribute(SERVICES_UNIQUE_TYPE + user.getId(), serviceService.getUniqueServiceTypes(user.getServices()));
+//        }
         request.setAttribute(SPECIALISTS, userService.findAllSpecialists());
-        logger.info("i am user specialist view!!" + userService.findAllSpecialists());
+        logger.info("SPECIALISTS ==> " + userService.findAllSpecialists());
         return USER_SPECIALISTS_VIEW;
     }
 }

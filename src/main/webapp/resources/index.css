@@ -1,4 +1,4 @@
-.card {
+#serviceCard {
     width: 21rem
 }
 
@@ -6,30 +6,50 @@
     height: 400px;
 }
 
-#sortTable_length {
+.card-registration .select-input.form-control[readonly]:not([disabled]) {
+    font-size: 1rem;
+    line-height: 2.15;
+    padding-left: .75em;
+    padding-right: .75em;
+}
+.card-registration .select-arrow {
+    top: 13px;
+}
+
+#sortTable_length, #sortTable2_length, #sortTable3_length,
+#sortTable4_length {
     margin-left: 17.2%;
 }
 
-#sortTable_paginate {
+#sortTable5_length {
+    margin-left: 34%;
+}
+
+#sortTable_paginate, #sortTable2_paginate, #sortTable3_paginate,
+#sortTable4_paginate {
     margin-right: 15%;
 }
 
-#sortTable2_length {
-    margin-left: 17.2%;
+#sortTable5_paginate {
+    margin-right: 30%;
 }
 
-#sortTable2_info{
+
+#sortTable2_info, #sortTable3_info {
     margin-left: 20.5%;
 }
 
-#sortTable2_filter {
+#sortTable5_info {
+    margin-left: 41%;
+}
+
+#sortTable2_filter, #sortTable3_filter, #sortTable4_filter {
     margin-right: 17.6%;
 }
 
-#sortTable2_paginate {
-    margin-right: 15%;
+#sortTable5_filter {
+    margin-right: 35.2%;
 }
-
 
 .pagination .page-item.active .page-link {
     background-color: lightgray; color: black!important; border-color: black!important; border-radius: 3px;
@@ -41,4 +61,32 @@
 
 .pagination .page-item .page-link {
     color: black!important; border-color: lightgray!important;
+}
+
+#dropdown04 {
+    display: inline-block;
+    width: 80%;
+    height: calc(1.5rem + 2px);
+    padding: 0 0.25rem 0.1rem 0.25rem;
+    line-height: 1.5;
+    color: #495057;
+    vertical-align: auto;
+    background: #fff ;
+    background-size: 8px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+#dropdown04:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075), 0 0 5px rgba(128, 189, 255, 0.5);
+}
+
+#dropdown04:focus::-ms-value {
+    color: #495057;
+    background-color: #fff;
 }

@@ -4,7 +4,7 @@ import dao.abstraction.OrderToServiceDao;
 import dao.datasource.PooledConnection;
 import dao.implementation.mysql.converter.DtoConverter;
 import dao.implementation.mysql.converter.OrderToServiceDtoConverter;
-import entity.Order;
+import entity.OrderStatus;
 import entity.OrderToService;
 
 import javax.sql.DataSource;
@@ -86,8 +86,8 @@ public class MySqlOrderToService implements OrderToServiceDao {
     }
 
     @Override
-    public boolean existByService(long serviceId, int orderStatus) {
-        return defaultDao.exist(EXIST_BY_SERVICE, serviceId, orderStatus);
+    public boolean isServiceExistInBookedOrder(long serviceId) {
+        return defaultDao.exist(EXIST_BY_SERVICE, serviceId, OrderStatus.StatusIdentifier.BOOKED.getId());
     }
 
     @Override
@@ -120,8 +120,8 @@ public class MySqlOrderToService implements OrderToServiceDao {
 
             System.out.println("~~~~~~~~~~~~");
 
-            System.out.println("Find one with id 1:");
-            System.out.println(mySqlOrderToService.existByService(2, 1));
+            System.out.println("3 serviceExistInBookedOrder :");
+            System.out.println(mySqlOrderToService.isServiceExistInBookedOrder(3));
 
             System.out.println("~~~~~~~~~~~~");
 

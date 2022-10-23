@@ -23,5 +23,5 @@ public interface OrderToServiceDao extends GenericDao<OrderToService, Long> {
      */
     List<OrderToService> findAllByService(long serviceId);
 
-    boolean existByService(long serviceId, int orderStatus);
+    boolean isServiceExistInBookedOrder(long serviceId);
 }

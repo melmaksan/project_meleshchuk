@@ -20,12 +20,13 @@ import java.util.Optional;
 public class UserService {
 
     private static final UserToOrderService userToOrderService = ServiceFactory.getUserToOrderService();
-    private static final OrderService orderService = ServiceFactory.getOrderService();
     private static final UserToServiceService userToService = ServiceFactory.getUserToServiceService();
+    private static final OrderService orderService = ServiceFactory.getOrderService();
     private static final ServiceForService serviceForService = ServiceFactory.getServiceService();
+    private static final String USER_ALREADY_EXISTS = "User is already exist";
+    private static final String SPEC_IS_IN_ORDER = "Specialist is exist in booked order!";
     private final DaoFactory daoFactory = DaoFactory.getInstance();
     private static UserService instance;
-    private static final String USER_ALREADY_EXISTS = "user.exists";
 
     private static final Logger logger = LogManager.getLogger(UserService.class);
 
@@ -120,46 +121,10 @@ public class UserService {
         }
     }
 
-    public List<User> ascByRating() {
+    public List<User> findAdmins() {
         try (DaoConnection connection = daoFactory.getConnection()) {
             UserDao userDao = daoFactory.getUserDao(connection);
-            List<User> users = userDao.ascByRating();
-            for (User user : users) {
-                List<Service> services = getServices(user);
-                user.setServices(services);
-            }
-            return users;
-        }
-    }
-
-    public List<User> descByRating() {
-        try (DaoConnection connection = daoFactory.getConnection()) {
-            UserDao userDao = daoFactory.getUserDao(connection);
-            List<User> users = userDao.descByRating();
-            for (User user : users) {
-                List<Service> services = getServices(user);
-                user.setServices(services);
-            }
-            return users;
-        }
-    }
-
-    public List<User> ascByName() {
-        try (DaoConnection connection = daoFactory.getConnection()) {
-            UserDao userDao = daoFactory.getUserDao(connection);
-            List<User> users = userDao.ascByName();
-            for (User user : users) {
-                List<Service> services = getServices(user);
-                user.setServices(services);
-            }
-            return users;
-        }
-    }
-
-    public List<User> descByName() {
-        try (DaoConnection connection = daoFactory.getConnection()) {
-            UserDao userDao = daoFactory.getUserDao(connection);
-            List<User> users = userDao.descByName();
+            List<User> users = userDao.findAllAdmins();
             for (User user : users) {
                 List<Service> services = getServices(user);
                 user.setServices(services);
@@ -179,6 +144,19 @@ public class UserService {
             }
         }
         return services;
+    }
+
+    public List<Order> getOrders(User user) {
+        List<Order> orders = new ArrayList<>();
+        List<UserToOrder> userToOrders = userToOrderService.findAllOrdersByUser(user.getId());
+        for (UserToOrder userToOrder : userToOrders) {
+            try {
+                orders.add((orderService.findOrderById(userToOrder.getOrderId())));
+            } catch (RuntimeException ex) {
+                logger.error("There are no orders here!", ex);
+            }
+        }
+        return orders;
     }
 
     private void creatingUser(User user) {
@@ -258,43 +236,25 @@ public class UserService {
         return errors;
     }
 
-
-    public List<User> findAllWithLimit(int limit, int offset) {
-        try (DaoConnection connection = daoFactory.getConnection()) {
-            UserDao userDao = daoFactory.getUserDao(connection);
-            List<User> users = userDao.findAll(limit, offset);
-            for (User user : users) {
-                List<Service> services = getServices(user);
-                user.setServices(services);
-            }
-            return users;
-        }
-    }
-
-    public int getNumberOfRows() {
-        try (DaoConnection connection = daoFactory.getConnection()) {
-            UserDao userDao = daoFactory.getUserDao(connection);
-            return userDao.getNumberOfRows();
-        }
-    }
-
-    public List<Order> getOrders(User user) {
-        List<Order> orders = new ArrayList<>();
-        List<UserToOrder> userToOrders = userToOrderService.findAllOrdersByUser(user.getId());
-        for (UserToOrder userToOrder : userToOrders) {
-            try {
-                orders.add((orderService.findOrderById(userToOrder.getOrderId())));
-            } catch (RuntimeException ex) {
-                logger.error("There are no orders here!", ex);
-            }
-        }
-        return orders;
-    }
-
     public Optional<User> findUserForOtherEntity(Long id) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             UserDao userDao = daoFactory.getUserDao(connection);
             return userDao.findById(id);
         }
+    }
+
+    public List<String> deleteUser(long userId) {
+        List<String> errors = new ArrayList<>();
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            connection.startSerializableTransaction();
+            if (userToOrderService.isSpecExistsInOrder(userId, connection)) {
+                errors.add(SPEC_IS_IN_ORDER);
+                return errors;
+            }
+            UserDao userDao = daoFactory.getUserDao(connection);
+            userDao.delete(userId);
+            connection.commit();
+        }
+        return errors;
     }
 }
