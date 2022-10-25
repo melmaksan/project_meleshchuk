@@ -59,6 +59,7 @@ $('#sortTable3').DataTable({
 
 $('#sortTable4').DataTable({
     info: false,
+    paginate: false,
     order: [[0, 'asc']],
     columnDefs: [
         {
@@ -89,6 +90,23 @@ $('#sortTable5').DataTable({
     ]
 });
 
+$('#sortTable6').DataTable({
+    info: false,
+    paginate: false,
+    columnDefs: [
+        {
+            searchable: false,
+            orderable: false,
+            targets: 4,
+        },
+    ]
+});
+
+$('#sortTable7').DataTable({
+    order: [[5, 'asc'], [4, 'desc']],
+});
+
+
 $('[data-toggle=confirmation]').confirmation({
     rootSelector: '[data-toggle=confirmation]',
     // other options
@@ -98,3 +116,5 @@ $('[data-toggle=confirmation2]').confirmation({
     rootSelector: '[data-toggle=confirmation2]',
     // other options
 });
+
+$('#select').selectpicker();

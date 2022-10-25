@@ -17,7 +17,7 @@
 }
 
 #sortTable_length, #sortTable2_length, #sortTable3_length,
-#sortTable4_length {
+#sortTable4_length, #sortTable7_length {
     margin-left: 17.2%;
 }
 
@@ -26,7 +26,7 @@
 }
 
 #sortTable_paginate, #sortTable2_paginate, #sortTable3_paginate,
-#sortTable4_paginate {
+#sortTable4_paginate, #sortTable7_paginate {
     margin-right: 15%;
 }
 
@@ -35,7 +35,7 @@
 }
 
 
-#sortTable2_info, #sortTable3_info {
+#sortTable2_info, #sortTable3_info, #sortTable7_info {
     margin-left: 20.5%;
 }
 
@@ -43,11 +43,12 @@
     margin-left: 41%;
 }
 
-#sortTable2_filter, #sortTable3_filter, #sortTable4_filter {
+#sortTable2_filter, #sortTable3_filter, #sortTable4_filter,
+#sortTable7_filter {
     margin-right: 17.6%;
 }
 
-#sortTable5_filter {
+#sortTable5_filter, #sortTable6_filter {
     margin-right: 35.2%;
 }
 
@@ -89,4 +90,17 @@
 #dropdown04:focus::-ms-value {
     color: #495057;
     background-color: #fff;
+}
+
+.dropdown.bootstrap-select.show-tick {
+    width: 100%!important;
+}
+
+.bootstrap-select .dropdown-toggle .filter-option {
+    height: 67%!important;
+    font-size: 1rem;
+}
+
+.bootstrap-select>.dropdown-toggle.bs-placeholder {
+    height: 48px;
 }

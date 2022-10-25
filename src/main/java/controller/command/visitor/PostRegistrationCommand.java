@@ -32,7 +32,8 @@ public class PostRegistrationCommand implements ICommand {
                 request.getParameter(LAST_NAME),
                 request.getParameter(LOGIN_PARAM),
                 request.getParameter(PASSWORD_PARAM),
-                request.getParameter(PHONE));
+                request.getParameter(PHONE),
+                request.getParameter(ROLE));
         if (errors.isEmpty()) {
             logger.info("SING UP WITHOUT ERRORS!");
             Util.redirectTo(request, response, ResourceBundle.
@@ -40,11 +41,7 @@ public class PostRegistrationCommand implements ICommand {
             return REDIRECTED;
         }
         logger.info("LOGIN HAS ERRORS!");
-        addInvalidDataToRequest(request, errors);
-        return SIGNUP_VIEW;
-    }
-
-    private void addInvalidDataToRequest(HttpServletRequest request, List<String> errors) {
         request.setAttribute(ERRORS, errors);
+        return SIGNUP_VIEW;
     }
 }

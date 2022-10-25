@@ -22,26 +22,27 @@
     </div>
 </c:if>
 
-<br><br>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-4 offset-1">
             <div class="card shadow-2-strong mx-auto my-5 card-registration" style="border-radius: 15px;">
                 <div class="card-body p-4">
                     <h4 class="card-header text-center font-weight-bold mb-5">Employee Registration Form</h4>
-                    <form>
+                    <form class=form-group" method="post">
+                        <input type="hidden" name="command" value="create.user"/>
 
                         <div class="row">
                             <div class="col-6 mb-2">
                                 <div class="form-outline">
-                                    <input type="text" id="firstName" class="form-control form-control-lg" required/>
-                                    <label class="form-label" for="firstName">First Name</label>
+                                    <input type="text" name="first_name" class="form-control form-control-lg" required/>
+                                    <label class="form-label">First Name</label>
                                 </div>
                             </div>
                             <div class="col-6 mb-2">
                                 <div class="form-outline">
-                                    <input type="text" id="lastName" class="form-control form-control-lg" required/>
-                                    <label class="form-label" for="lastName">Last Name</label>
+                                    <input type="text" name="last_name" class="form-control form-control-lg" required/>
+                                    <label class="form-label">Last Name</label>
                                 </div>
                             </div>
                         </div>
@@ -49,16 +50,15 @@
                         <div class="row">
                             <div class="col-6 mb-2">
                                 <div class="form-outline">
-                                    <input type="email" id="emailAddress" class="form-control form-control-lg"
-                                           required/>
-                                    <label class="form-label" for="emailAddress">Email</label>
+                                    <input type="email" name="login" class="form-control form-control-lg" required/>
+                                    <label class="form-label">Email</label>
                                 </div>
                             </div>
                             <div class="col-6 mb-2">
                                 <div class="form-outline">
-                                    <input type="password" class="form-control form-control-lg" name="password"
+                                    <input type="password" name="password" class="form-control form-control-lg"
                                            required/>
-                                    <label class="form-label" for="emailAddress">Password</label>
+                                    <label class="form-label">Password</label>
                                 </div>
                             </div>
                         </div>
@@ -66,16 +66,17 @@
                         <div class="row">
                             <div class="col-6 mb-2">
                                 <div class="form-outline">
-                                    <input type="tel" id="phoneNumber" class="form-control form-control-lg"/>
-                                    <label class="form-label" for="phoneNumber">Phone Number</label>
+                                    <input type="tel" name="phone_num" placeholder="+38(044)937-99-92"
+                                           class="form-control form-control-lg" required/>
+                                    <label class="form-label">Phone Number</label>
                                 </div>
                             </div>
                             <div class="col-6 mb-2">
-                                <select class="select form-control-lg" style="border: 1px solid #ced4da;">
-                                    <option selected disabled>Choose role</option>
-                                    <option value="2">Subject 1</option>
-                                    <option value="3">Subject 2</option>
-                                    <option value="4">Subject 3</option>
+                                <select class="form-control-lg" name="role" id="role"
+                                        style="border: 1px solid #ced4da;" required>
+                                    <option value="" hidden>Choose Role</option>
+                                    <option value="ADMIN">ADMIN</option>
+                                    <option value="SPECIALIST">SPECIALIST</option>
                                 </select>
                             </div>
 
@@ -93,20 +94,21 @@
         <div class="col-4">
             <div class="card shadow-2-strong mx-auto my-5 card-registration" style="border-radius: 15px;">
                 <div class="card-body p-4">
-                    <h4 class="card-header text-center font-weight-bold mb-5">Service creation Form</h4>
-                    <form>
+                    <h4 class="card-header text-center font-weight-bold mb-5">Service Creation Form</h4>
+                    <form class=form-group" method="post">
+                        <input type="hidden" name="command" value="create.service"/>
 
                         <div class="row">
                             <div class="col-6 mb-2">
                                 <div class="form-outline">
-                                    <input type="text" id="firstName" class="form-control form-control-lg" required/>
-                                    <label class="form-label" for="firstName">Service Title</label>
+                                    <input type="text" name="serviceTitle" class="form-control form-control-lg" required/>
+                                    <label class="form-label">Service Title</label>
                                 </div>
                             </div>
                             <div class="col-6 mb-2">
                                 <div class="form-outline">
-                                    <input type="text" id="lastName" class="form-control form-control-lg" required/>
-                                    <label class="form-label" for="lastName">Service Type</label>
+                                    <input type="text" name="serviceType" class="form-control form-control-lg" required/>
+                                    <label class="form-label">Service Type</label>
                                 </div>
                             </div>
                         </div>
@@ -114,15 +116,26 @@
                         <div class="row">
                             <div class="col-6 mb-2">
                                 <div class="form-outline">
-                                    <input type="text" id="lastName" class="form-control form-control-lg" required/>
-                                    <label class="form-label" for="lastName">Service Price</label>
+                                    <input type="text" name="servicePrice" class="form-control form-control-lg" required/>
+                                    <label class="form-label">Service Price</label>
                                 </div>
                             </div>
                             <div class="col-6 mb-2">
                                 <div class="form-outline">
-                                    <input type="text" id="lastName" class="form-control form-control-lg" required/>
-                                    <label class="form-label" for="lastName">Image (src)</label>
+                                    <select class="selectpicker" name="specId" id="specId" multiple
+                                            title="Select Specialist(s)" data-max-options="3" data-size="5" required>
+                                        <c:forEach var="specialist" items="${requestScope.specialists}">
+                                            <option value="${specialist.id}">${specialist.firstName} ${specialist.lastName}</option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 mb-2">
+                                <input type="text" name="serviceImage" class="form-control form-control-lg" required/>
+                                <label class="form-label">Image (src)</label>
                             </div>
                         </div>
 
@@ -136,6 +149,7 @@
         </div>
     </div>
 </div>
+
 
 <jsp:include page="/WEB-INF/views/includes/footer.jsp"/>
 </body>

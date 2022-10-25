@@ -26,7 +26,7 @@ public class GetUserOrdersCommand implements ICommand {
         User currentUser = getUserFromSession(request.getSession());
         List<Order> orders = userService.getOrders(currentUser);
         for (Order order : orders) {
-            logger.info("users ==> " + order.getUsers());
+            logger.info("specs ==> " + order.getSpecialists());
         }
         currentUser.setOrders(orders);
         request.setAttribute(ORDERS, orders);

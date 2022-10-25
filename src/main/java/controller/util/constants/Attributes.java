@@ -13,9 +13,9 @@ public class Attributes {
     public static final String USER = "user";
     public static final String USER_LIST  ="users";
     public static final String SPECIALISTS  ="specialists";
+    public static final String ADMINS  ="admins";
     public static final String FAST_BOOK = "fastBookSpecialist";
     public static final String SERVICES = "services";
-    public static final String SERVICE_TYPE_PARAM = "serviceType";
     public static final String SERVICES_UNIQUE_TYPE = "serviceTypes";
     public static final String ACCESS_DENIED = "Access denied for page: ";
     public static final String HOME_PATH = "home.path";
@@ -30,11 +30,19 @@ public class Attributes {
     public static final String LOGIN_PARAM = "login";
     public static final String PASSWORD_PARAM = "password";
     public static final String PHONE = "phone_num";
+    public static final String ROLE = "role";
 
     public static final String DATA_TIME = "appointment_time";
     public static final String USER_ID = "userId";
     public static final String SPEC_ID = "specId";
+    public static final String ADMIN_ID = "adminId";
     public static final String SERVICE_ID = "serviceId";
+
+    public static final String SERVICE_TITLE = "serviceTitle";
+    public static final String SERVICE_TYPE = "serviceType";
+    public static final String SERVICE_PRICE = "servicePrice";
+    public static final String SERVICE_IMAGE = "serviceImage";
+
 
 
 }

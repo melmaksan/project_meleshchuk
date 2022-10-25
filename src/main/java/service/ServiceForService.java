@@ -1,9 +1,13 @@
 package service;
 
+import controller.util.Util;
+import controller.util.validator.LoginValidator;
+import controller.util.validator.PasswordValidator;
+import controller.util.validator.PhoneValidator;
+import controller.util.validator.PriceValidator;
 import dao.abstraction.ServiceDao;
 import dao.factory.DaoFactory;
 import dao.factory.connection.DaoConnection;
-import entity.OrderStatus;
 import entity.Service;
 import entity.User;
 import entity.UserToService;
@@ -11,10 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ServiceForService {
@@ -29,7 +30,7 @@ public class ServiceForService {
     private static final Logger logger = LogManager.getLogger(ServiceForService.class);
 
     public static synchronized ServiceForService getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new ServiceForService();
         }
         return instance;
@@ -37,7 +38,6 @@ public class ServiceForService {
 
     private ServiceForService() {
     }
-
 
 
     public List<Service> findAllService() {
@@ -58,7 +58,7 @@ public class ServiceForService {
         for (UserToService userToService : userToServiceList) {
             try {
                 users.add((userService.findUserForOtherEntity(userToService.getUserId())).orElse(null));
-            } catch (RuntimeException ex){
+            } catch (RuntimeException ex) {
                 logger.error("There are no users here!", ex);
             }
         }
@@ -129,11 +129,11 @@ public class ServiceForService {
     }
 
     public List<String> getUniqueServiceTypes(List<Service> serviceList) {
-            List<String> list = new ArrayList<>();
-            for (Service service : serviceList) {
-                list.add(service.getDescription());
-            }
-            return list.stream().distinct().collect(Collectors.toList());
+        List<String> list = new ArrayList<>();
+        for (Service service : serviceList) {
+            list.add(service.getDescription());
+        }
+        return list.stream().distinct().collect(Collectors.toList());
     }
 
     public List<Service> filterByServiceType(String type) {

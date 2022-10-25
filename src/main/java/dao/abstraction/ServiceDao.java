@@ -4,6 +4,7 @@ import entity.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 public interface ServiceDao extends GenericDao<Service, Long> {
 
@@ -49,4 +50,7 @@ public interface ServiceDao extends GenericDao<Service, Long> {
     List<Service> descByTitleService();
 
     int getNumberOfRows();
+
+    Optional<Service> findByTitle(String title);
+
 }

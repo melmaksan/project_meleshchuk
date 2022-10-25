@@ -23,7 +23,7 @@ public class UserService {
     private static final UserToServiceService userToService = ServiceFactory.getUserToServiceService();
     private static final OrderService orderService = ServiceFactory.getOrderService();
     private static final ServiceForService serviceForService = ServiceFactory.getServiceService();
-    private static final String USER_ALREADY_EXISTS = "User is already exist";
+    private static final String USER_ALREADY_EXISTS = "Invalid credentials, please try again";
     private static final String SPEC_IS_IN_ORDER = "Specialist is exist in booked order!";
     private final DaoFactory daoFactory = DaoFactory.getInstance();
     private static UserService instance;
@@ -58,15 +58,7 @@ public class UserService {
     public User findByLogin(String login) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             UserDao userDao = daoFactory.getUserDao(connection);
-            User user = null;
-            try {
-                user = userDao.findByLogin(login).orElseThrow(NoSuchFieldException::new);
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            }
-            List<Service> services = getServices(Objects.requireNonNull(user));
-            user.setServices(services);
-            return user;
+            return userDao.findByLogin(login).orElse(null);
         }
     }
 
@@ -138,8 +130,8 @@ public class UserService {
         List<UserToService> userToServiceList = userToService.findAllServicesByUser(user.getId());
         for (UserToService userToService : userToServiceList) {
             try {
-            services.add(serviceForService.findServiceForOtherEntity(userToService.getServiceId()).orElse(null));
-            } catch (RuntimeException ex){
+                services.add(serviceForService.findServiceForOtherEntity(userToService.getServiceId()).orElse(null));
+            } catch (RuntimeException ex) {
                 logger.error("There are no services here!", ex);
             }
         }
@@ -162,7 +154,7 @@ public class UserService {
     private void creatingUser(User user) {
         Objects.requireNonNull(user);
         if (user.getRole() == null) {
-            user.setDefaultRole();
+            user.setUserRole();
         }
         String hash = PasswordStorage.getSecurePassword(user.getPassword());
         user.setPassword(hash);
@@ -193,15 +185,28 @@ public class UserService {
     }
 
     public List<String> createUser(String firstName, String lastName, String login,
-                                   String password, String phone) {
+                                   String password, String phone, String role) {
         User userDto = getDataFromRequestCreating(firstName, lastName, login,
                 password, phone);
         List<String> errors = validateData(userDto);
         errors.addAll(checkUserUniqueness(login));
         if (errors.isEmpty()) {
+            checkRole(role, userDto);
             creatingUser(userDto);
         }
         return errors;
+    }
+
+    private void checkRole(String role, User userDto) {
+        if (role != null) {
+            switch (Role.RoleIdentifier.valueOf(role)){
+                case ADMIN:
+                    userDto.setAdminRole();
+                    break;
+                case SPECIALIST:
+                    userDto.setSpecialistRole();
+            }
+        }
     }
 
     private List<String> checkUserUniqueness(String login) {

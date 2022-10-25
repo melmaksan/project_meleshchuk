@@ -72,8 +72,7 @@
                                     <div class="dropdown-menu text-center" aria-labelledby="dropdown04"
                                          style="min-width: 5rem; padding: 0;">
                                         <c:forEach var="status" items="${requestScope.orderStatuses}">
-                                            <form class="my-0"
-                                                  action="${pageContext.request.contextPath}/site/admin/orders"
+                                            <form class="my-0" action="${pageContext.request.contextPath}/site/admin/orders"
                                                   method="post">
                                                 <input type="hidden" name="command" value="change.status"/>
                                                 <input type="hidden" name="orderId" value="${order.id}"/>

@@ -108,8 +108,10 @@ public class OrderService {
             }
             List<Service> serviceList = getServices(Objects.requireNonNull(order));
             List<User> specialists = getSpecialist(order);
+            List<User> users = getClients(order);
             order.setSpecialists(specialists);
             order.setServices(serviceList);
+            order.setUsers(users);
             return order;
         }
     }

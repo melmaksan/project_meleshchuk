@@ -4,6 +4,9 @@ import controller.command.DefaultCommand;
 import controller.command.HomeCommand;
 import controller.command.ICommand;
 import controller.command.admin.*;
+import controller.command.specialist.GetSpecialistOrdersCommand;
+import controller.command.specialist.GetSpecialistScheduleCommand;
+import controller.command.specialist.PostChangeServiceStatusCommand;
 import controller.command.user.GetUserFastBookCommand;
 import controller.command.user.GetUserOrdersCommand;
 import controller.command.user.GetUserSpecialistsCommand;
@@ -38,8 +41,6 @@ public class ControllerHelper {
     private void init() {
         commands.put(buildKey(bundle.getString("home.path"), null),
                 new HomeCommand());
-//        commands.put(buildKey(bundle.getString("home.path"), "home"),
-//                new HomeCommand());
         commands.put(buildKey(bundle.getString("login.path"), null),
                 new GetLoginCommand());
         commands.put(buildKey(bundle.getString("login.path"), "login"),
@@ -74,6 +75,8 @@ public class ControllerHelper {
                 new PostAddOrderCommand());
         commands.put(buildKey(bundle.getString("create"), null),
                 new GetCreateCommand());
+        commands.put(buildKey(bundle.getString("admins"), null),
+                new GetAdminsCommand());
         commands.put(buildKey(bundle.getString("admin.orders"), null),
                 new GetAllOrdersCommand());
         commands.put(buildKey(bundle.getString("admin.specialists"), null),
@@ -94,7 +97,18 @@ public class ControllerHelper {
                 new PostDeleteUserCommand());
         commands.put(buildKey(bundle.getString("home.path"), "delete.service"),
                 new PostDeleteServiceCommand());
-
+        commands.put(buildKey(bundle.getString("admins"), "delete.admin"),
+                new PostDeleteAdminCommand());
+        commands.put(buildKey(bundle.getString("create"), "create.user"),
+                new PostCreateEmployeeCommand());
+        commands.put(buildKey(bundle.getString("create"), "create.service"),
+                new PostCreateServiceCommand());
+        commands.put(buildKey(bundle.getString("specialist.schedule"), null),
+                new GetSpecialistScheduleCommand());
+        commands.put(buildKey(bundle.getString("specialist.orders"), null),
+                new GetSpecialistOrdersCommand());
+        commands.put(buildKey(bundle.getString("specialist.orders"), "change.service.status"),
+                new PostChangeServiceStatusCommand());
     }
 
     public ICommand getCommand(String path, String command) {

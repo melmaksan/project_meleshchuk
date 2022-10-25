@@ -2,7 +2,6 @@ package controller.command.visitor;
 
 import controller.command.ICommand;
 import controller.util.Util;
-import controller.util.constants.Views;
 import controller.util.validator.LoginValidator;
 import controller.util.validator.PasswordValidator;
 import entity.User;
@@ -18,23 +17,19 @@ import java.io.IOException;
 import java.util.*;
 
 import static controller.util.constants.Attributes.*;
+import static controller.util.constants.Views.LOGIN_VIEW;
+import static controller.util.constants.Views.PAGES_BUNDLE;
 
 public class PostLoginCommand implements ICommand {
 
-    private static final Logger logger =
-            LogManager.getLogger(PostLoginCommand.class);
-
-    private static final String INVALID_CREDENTIALS =
-            "invalid.credentials";
-    private static final String ACTIVE_ACCOUNT_IS_EXIST =
-            "active.user.exist";
-    private static final ResourceBundle bundle = ResourceBundle.
-            getBundle(Views.PAGES_BUNDLE);
+    private static final Logger logger = LogManager.getLogger(PostLoginCommand.class);
+    private static final String INVALID_CREDENTIALS = "Invalid credentials, please try again";
+    private static final ResourceBundle bundle = ResourceBundle.getBundle(PAGES_BUNDLE);
     private final UserService userService = ServiceFactory.getUserService();
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse
-            response) throws IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
         if (Util.isAlreadyLoggedIn(request.getSession())) {
             Util.redirectTo(request, response, bundle.
                     getString(HOME_PATH));
@@ -42,36 +37,18 @@ public class PostLoginCommand implements ICommand {
         }
         User userDto = getDataFromRequest(request);
         List<String> errors = validateData(userDto);
-        errors.addAll(validateUniquenessActiveUser(request.getSession(),
-                userDto));
-
         if (errors.isEmpty()) {
             logger.info("LOGIN WITHOUT ERRORS!");
             User user = loadUserFromDatabase(userDto.getLogin());
-            addUserToContext(request.getSession(), user);
             addUserToSession(request.getSession(), user);
             Util.redirectTo(request, response, bundle.
-                    getString("home.path"));
+                    getString(HOME_PATH));
             return REDIRECTED;
         }
         logger.info("LOGIN HAS ERRORS!");
         addInvalidDataToRequest(request, userDto, errors);
-        return Views.LOGIN_VIEW;
+        return LOGIN_VIEW;
     }
-
-//    private void checkUserRole(HttpServletRequest request, HttpServletResponse
-//            response, User user) throws IOException {
-//        if (user.isAdmin()) {
-//            Util.redirectTo(request, response, bundle.
-//                    getString("users.path"));
-//        } else if (user.isSpecialist()) {
-//            Util.redirectTo(request, response, bundle.
-//                    getString("specialist.schedule"));
-//        } else {
-//            Util.redirectTo(request, response, bundle.
-//                    getString("home.path"));
-//        }
-//    }
 
     private User getDataFromRequest(HttpServletRequest request) {
         return User.newBuilder()
@@ -94,34 +71,19 @@ public class PostLoginCommand implements ICommand {
         return errors;
     }
 
-    public List<String> validateUniquenessActiveUser(HttpSession session,
-                                                     User user) {
-        List<String> errors = new ArrayList<>();
-        @SuppressWarnings("unchecked")
-        Map<String, User> activeUserList = (Map<String, User>) session
-                .getServletContext().getAttribute(USER_LIST);
-        if (activeUserList.get(user.getLogin()) != null)
-            errors.add(ACTIVE_ACCOUNT_IS_EXIST);
-        return errors;
-    }
-
     private User loadUserFromDatabase(String email) {
-        return userService.findByLogin(email);
+        User user = userService.findByLogin(email);
+        if (user == null) {
+            throw new IllegalStateException();
+        }
+        return user;
     }
 
     private void addUserToSession(HttpSession session, User user) {
         session.setAttribute(USER, user);
     }
 
-    private void addUserToContext(HttpSession session, User user) {
-        @SuppressWarnings("unchecked")
-        Map<String, User> activeUserList = (Map<String, User>) session.
-                getServletContext().getAttribute(USER_LIST);
-        activeUserList.put(user.getLogin(), user);
-    }
-
-    private void addInvalidDataToRequest(HttpServletRequest request,
-                                         User user, List<String> errors) {
+    private void addInvalidDataToRequest(HttpServletRequest request, User user, List<String> errors) {
         request.setAttribute(USER, user);
         request.setAttribute(ERRORS, errors);
     }

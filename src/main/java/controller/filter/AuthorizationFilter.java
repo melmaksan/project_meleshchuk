@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 
 import static controller.util.constants.Attributes.*;
+import static controller.util.constants.Views.PAGES_BUNDLE;
 
 
 public class AuthorizationFilter implements Filter {
@@ -22,7 +23,7 @@ public class AuthorizationFilter implements Filter {
     public static final int ADMIN_ROLE_ID = Role.RoleIdentifier.ADMIN.getId();
     public static final int USER_ROLE_ID = Role.RoleIdentifier.USER.getId();
     public static final int SPEC_ROLE_ID = Role.RoleIdentifier.SPECIALIST.getId();
-    private static final ResourceBundle bundle = ResourceBundle.getBundle(Views.PAGES_BUNDLE);
+    private static final ResourceBundle bundle = ResourceBundle.getBundle(PAGES_BUNDLE);
 
     private static final Logger logger = LogManager.getLogger(AuthorizationFilter.class);
 
@@ -36,13 +37,6 @@ public class AuthorizationFilter implements Filter {
                          FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
 
-//        if (request.getSession().getAttribute(Attributes.USER) == null) {
-//            Util.redirectTo(request, (HttpServletResponse) servletResponse,
-//                    bundle.getString(LOGIN_PATH));
-//            logInfoAboutAccessDenied(request.getRequestURI());
-//            return;
-//        }
-
         User user = (User) request.getSession().getAttribute(Attributes.USER);
 
         if (isUserRoleInvalidForRequestedPage(request, user)) {
@@ -54,14 +48,6 @@ public class AuthorizationFilter implements Filter {
 
         filterChain.doFilter(servletRequest, servletResponse);
     }
-
-//    private boolean isUserLoggedIn(HttpServletRequest request) {
-//        return request.getSession().getAttribute(Attributes.USER) == null;
-//    }
-
-//    private User getUserFromSession(HttpSession session) {
-//        return (User) session.getAttribute(Attributes.USER);
-//    }
 
     private boolean isUserRoleInvalidForRequestedPage(HttpServletRequest request, User user) {
         return (isUserPage(request) && user.getRole().getId() != USER_ROLE_ID) ||

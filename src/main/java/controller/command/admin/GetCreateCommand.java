@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static controller.util.constants.Attributes.ORDERS;
+import static controller.util.constants.Attributes.SPECIALISTS;
 import static controller.util.constants.Views.CREATE_VIEW;
 
 public class GetCreateCommand implements ICommand {
@@ -22,8 +23,8 @@ public class GetCreateCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        logger.info("admins ==> " + userService.findAdmins());
-        request.setAttribute(ORDERS, userService.findAdmins());
+        request.setAttribute(SPECIALISTS, userService.findAllSpecialists());
+        logger.info("SPECIALISTS ==> " + userService.findAllSpecialists());
         return CREATE_VIEW;
     }
 }

@@ -5,9 +5,6 @@ import java.util.List;
 
 public class User implements Serializable {
 
-    private static final String DEFAULT_ROLE = Role.RoleIdentifier.USER.name();
-    private static final int DEFAULT_ROLE_ID = Role.RoleIdentifier.USER.getId();
-
     private long id;
     private String firstName;
     private String lastName;
@@ -104,19 +101,35 @@ public class User implements Serializable {
     }
 
     public boolean isUser() {
-        return role.getId() == Role.RoleIdentifier.USER.getId();
+        return role.getId() == getUserId(Role.RoleIdentifier.USER);
     }
 
     public boolean isAdmin() {
-        return role.getId() == Role.RoleIdentifier.ADMIN.getId();
+        return role.getId() == getUserId(Role.RoleIdentifier.ADMIN);
     }
 
     public boolean isSpecialist() {
-        return role.getId() == Role.RoleIdentifier.SPECIALIST.getId();
+        return role.getId() == getUserId(Role.RoleIdentifier.SPECIALIST);
     }
 
-    public void setDefaultRole() {
-        this.role = new Role(DEFAULT_ROLE_ID, DEFAULT_ROLE);
+    public void setUserRole() {
+        this.role = new Role(getUserId(Role.RoleIdentifier.USER), getName(Role.RoleIdentifier.USER));
+    }
+
+    public void setAdminRole() {
+        this.role = new Role(getUserId(Role.RoleIdentifier.ADMIN), getName(Role.RoleIdentifier.ADMIN));
+    }
+
+    public void setSpecialistRole() {
+        this.role = new Role(getUserId(Role.RoleIdentifier.SPECIALIST), getName(Role.RoleIdentifier.SPECIALIST));
+    }
+
+    private int getUserId(Role.RoleIdentifier user) {
+        return user.getId();
+    }
+
+    private String getName(Role.RoleIdentifier user) {
+        return user.name();
     }
 
     @Override
@@ -191,22 +204,12 @@ public class User implements Serializable {
         }
 
         public Builder addDefaultRole() {
-            user.setDefaultRole();
+            user.setUserRole();
             return this;
         }
 
         public Builder addDefaultRate() {
             user.setRating(0);
-            return this;
-        }
-
-        public Builder addServices(List<Service> services) {
-            user.setServices(services);
-            return this;
-        }
-
-        public Builder addOrders(List<Order> orders) {
-            user.setOrders(orders);
             return this;
         }
 

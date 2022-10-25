@@ -22,7 +22,7 @@
     </div>
 </c:if>
 
-<h1 class="offset-2 my-3">All users</h1>
+<h1 class="offset-2 my-3">All Users</h1>
 <table class="table offset-2 text-center table-sm table-striped table-bordered" id="sortTable5" style="width: 66%">
     <thead class="thead-dark">
     <tr>

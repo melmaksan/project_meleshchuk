@@ -106,12 +106,12 @@ public class Service implements Serializable {
             return this;
         }
 
-        public Builder addServiceName(String serviceName) {
+        public Builder addServiceTitle(String serviceName) {
             service.setTitle(serviceName);
             return this;
         }
 
-        public Builder addDescription(String description) {
+        public Builder addServiceType(String description) {
             service.setDescription(description);
             return this;
         }

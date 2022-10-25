@@ -12,7 +12,6 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/includes/navbar.jsp"/>
-<br>
 
 <c:if test="${not empty requestScope.errors}">
     <div class="alert alert-danger">

@@ -4,9 +4,6 @@ import entity.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ServiceDtoConverter implements DtoConverter<Service> {
 
@@ -21,8 +18,8 @@ public class ServiceDtoConverter implements DtoConverter<Service> {
     public Service convertToObject(ResultSet resultSet) throws SQLException {
         return Service.newBuilder()
                 .addServiceId(resultSet.getLong(ID_FIELD))
-                .addServiceName(resultSet.getString(SERVICE_NAME))
-                .addDescription(resultSet.getString(SERVICE_DESCRIPTION))
+                .addServiceTitle(resultSet.getString(SERVICE_NAME))
+                .addServiceType(resultSet.getString(SERVICE_DESCRIPTION))
                 .addPrice(resultSet.getBigDecimal(PRICE))
                 .addImage(resultSet.getString(IMAGE))
                 .build();

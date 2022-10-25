@@ -22,25 +22,21 @@ public class MySqlService implements ServiceDao {
                     "service_price, service.image " +
                     "FROM service ";
 
-    private static final String WHERE_ID =
-            "WHERE service.id = ? ";
+    private static final String WHERE_ID = "WHERE service.id = ? ";
+
+    private static final String WHERE_TITLE = "WHERE service.title = ?";
 
     private static final String PAGINATION = "limit ? offset ? ";
 
-    private static final String GROUP_BY =
-            "GROUP BY service.id ";
+    private static final String GROUP_BY = "GROUP BY service.id ";
 
-    private static final String ASC_BY_PRICE =
-            "ORDER BY service_price ASC ";
+    private static final String ASC_BY_PRICE = "ORDER BY service_price ASC ";
 
-    private static final String DESC_BY_PRICE =
-            "ORDER BY service_price DESC ";
+    private static final String DESC_BY_PRICE = "ORDER BY service_price DESC ";
 
-    private static final String ASC_BY_TITLE =
-            "ORDER BY service_title ASC ";
+    private static final String ASC_BY_TITLE = "ORDER BY service_title ASC ";
 
-    private static final String DESC_BY_TITLE =
-            "ORDER BY service_title DESC ";
+    private static final String DESC_BY_TITLE = "ORDER BY service_title DESC ";
 
     private static final String WHERE_SERVICE_DESCRIPTION =
             "WHERE service.description = ? ";
@@ -52,11 +48,9 @@ public class MySqlService implements ServiceDao {
     private static final String UPDATE =
             "UPDATE service SET title = ?, description = ?, price = ?, image = ? ";
 
-    private static final String CHANGE_PRICE =
-            "UPDATE service SET price =  ? ";
+    private static final String CHANGE_PRICE = "UPDATE service SET price =  ? ";
 
-    private static final String DELETE =
-            "DELETE FROM service ";
+    private static final String DELETE = "DELETE FROM service ";
 
     private static final String NUMBER_OF_ROWS = "SELECT COUNT(*) FROM service";
 
@@ -74,6 +68,11 @@ public class MySqlService implements ServiceDao {
     @Override
     public Optional<Service> findById(Long id) {
         return defaultDao.findOne(SELECT_ALL + WHERE_ID, id);
+    }
+
+    @Override
+    public Optional<Service> findByTitle(String title) {
+        return defaultDao.findOne(SELECT_ALL + WHERE_TITLE, title);
     }
 
     @Override
@@ -182,6 +181,9 @@ public class MySqlService implements ServiceDao {
             System.out.println(mySqlService.filterByServiceDescription("Woman Haircut"));
 
             System.out.println("~~~~~~~~~~~~");
+
+            System.out.println("Find one with id :");
+            System.out.println(mySqlService.findByTitle("Crew Cut"));
 
 //            System.out.println("Change cost:");
 //            mySqlService.changePrice(service1, BigDecimal.ONE);

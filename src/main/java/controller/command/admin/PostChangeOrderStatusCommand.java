@@ -26,7 +26,7 @@ import static controller.util.constants.Views.PAGES_BUNDLE;
 public class PostChangeOrderStatusCommand implements ICommand {
 
     private final OrderService orderService = ServiceFactory.getOrderService();
-    private static final Logger logger = LogManager.getLogger(GetAllOrdersCommand.class);
+    private static final Logger logger = LogManager.getLogger(PostChangeOrderStatusCommand.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)

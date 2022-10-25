@@ -1,9 +1,27 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="customTag" uri="/WEB-INF/customTags/selectedPageTag" %>
 
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="i18n.lang"/>
+
+<c:set var="homePage" scope="page" value="/WEB-INF/views/index.jsp"/>
+<c:set var="visitorSpecPage" scope="page" value="/WEB-INF/views/specialists.jsp"/>
+<c:set var="userSpecPage" scope="page" value="/WEB-INF/views/user/userSpecialists.jsp"/>
+<c:set var="userOrdersPage" scope="page" value="/WEB-INF/views/user/userOrders.jsp"/>
+<c:set var="specialistOrdersPage" scope="page" value="/WEB-INF/views/specialist/specialistOrders.jsp"/>
+<c:set var="specialistSchedulePage" scope="page" value="/WEB-INF/views/specialist/specialistSchedule.jsp"/>
+<c:set var="adminSpecPage" scope="page" value="/WEB-INF/views/admin/adminSpecialists.jsp"/>
+<c:set var="adminOrdersPage" scope="page" value="/WEB-INF/views/admin/adminOrders.jsp"/>
+<c:set var="adminUsersPage" scope="page" value="/WEB-INF/views/admin/adminUsers.jsp"/>
+<c:set var="adminAdminsPage" scope="page" value="/WEB-INF/views/admin/admins.jsp"/>
+<c:set var="adminCreatePage" scope="page" value="/WEB-INF/views/admin/create.jsp"/>
+
+
+<c:set var="currPage" scope="page">
+    <customTag:currPage/>
+</c:set>
 
 <div class="container-fluid" id="nav-bar" style="height: 4.6rem">
     <nav class="navbar navbar-expand navbar-dark bg-dark fixed-top">
@@ -71,6 +89,13 @@
                            role="button">Users</a>
                     </li>
                 </c:if>
+                <%-- Admins(for admin) --%>
+                <c:if test="${sessionScope.user.admin}">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/site/admins"
+                           role="button">Admins</a>
+                    </li>
+                </c:if>
             </ul>
             <ul class="navbar-nav ml-auto">
                 <%-- Create(for admin) --%>
@@ -106,7 +131,8 @@
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         ${sessionScope.locale.getLanguage().toUpperCase()}
                     </button>
-                    <div class="dropdown-menu text-center" aria-labelledby="dropdown03" style="min-width: 4rem; padding: 0;">
+                    <div class="dropdown-menu text-center" aria-labelledby="dropdown03"
+                         style="min-width: 4rem; padding: 0;">
                         <c:forEach items="${applicationScope.supportedLocales}" var="lang">
                             <a class="dropdown-item" href="?lang=${lang}" style="padding: 0.25rem 0.5rem;">
                                     ${lang.toUpperCase()}</a>
@@ -136,25 +162,25 @@
                     <div class="container text-center">
                         <img src="${pageContext.request.contextPath}/images/profile.jpg" class="img-fluid"
                              alt="profile" id="profile_img" style="max-height:  150px; border-radius: 25%"><br><br><br>
-<%--                        <h4 class="modal-title mt-3">${sessionScope.user.firstName} ${sessionScope.user.lastName}</h4>--%>
+                        <%--                        <h4 class="modal-title mt-3">${sessionScope.user.firstName} ${sessionScope.user.lastName}</h4>--%>
 
                         <!-- details   -->
                         <table class="table">
                             <tbody>
                             <tr>
-                                <th scope="row"> Name: </th>
+                                <th scope="row"> Name:</th>
                                 <td>${sessionScope.user.firstName} ${sessionScope.user.lastName}</td>
                             </tr>
                             <tr>
-                                <th scope="row"> Email: </th>
+                                <th scope="row"> Email:</th>
                                 <td>${sessionScope.user.login}</td>
                             </tr>
                             <tr>
-                                <th scope="row"> Phone: </th>
+                                <th scope="row"> Phone:</th>
                                 <td>${sessionScope.user.phoneNumber}</td>
                             </tr>
                             <tr>
-                                <th scope="row"> Role: </th>
+                                <th scope="row"> Role:</th>
                                 <td>${sessionScope.user.role.name}</td>
                             </tr>
                             </tbody>
