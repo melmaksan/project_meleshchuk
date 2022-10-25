@@ -7,6 +7,7 @@
   <welcome-file-list>
     <welcome-file>/WEB-INF/views/index.jsp</welcome-file>
   </welcome-file-list>
+
   <servlet>
     <servlet-name>FrontController</servlet-name>
     <servlet-class>controller.Controller</servlet-class>
@@ -64,14 +65,14 @@
     <url-pattern>/site/info</url-pattern>
   </filter-mapping>
 
-<!--  <error-page>-->
-<!--    <error-code>404</error-code>-->
-<!--    <location>/WEB-INF/views/errors/pageNotFound.jsp</location>-->
-<!--  </error-page>-->
+  <error-page>
+    <error-code>404</error-code>
+    <location>/WEB-INF/views/errors/pageNotFound.jsp</location>
+  </error-page>
 
-<!--  <error-page>-->
-<!--    <exception-type>java.lang.Throwable</exception-type>-->
-<!--    <location>/WEB-INF/views/errors/internalServerError.jsp</location>-->
-<!--  </error-page>-->
+  <error-page>
+    <exception-type>java.lang.Throwable</exception-type>
+    <location>/WEB-INF/views/errors/internalServerError.jsp</location>
+  </error-page>
 
 </web-app>
