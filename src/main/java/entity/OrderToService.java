@@ -1,23 +1,15 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class OrderToService implements Serializable {
 
-    private long id;
     private long orderId;
     private long serviceId;
 
     public static Builder newBuilder() {
         return new Builder();
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public long getOrderId() {
@@ -49,20 +41,20 @@ public class OrderToService implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderToService that = (OrderToService) o;
-        return id == that.id;
+        return orderId == that.orderId && serviceId == that.serviceId;
     }
 
-     public static class Builder {
+    @Override
+    public int hashCode() {
+        return Objects.hash(orderId, serviceId);
+    }
+
+    public static class Builder {
 
         private final OrderToService orderToService;
 
         public Builder() {
             orderToService = new OrderToService();
-        }
-
-        public Builder addId(long id) {
-            orderToService.setId(id);
-            return this;
         }
 
         public Builder addOrderId(long orderId) {

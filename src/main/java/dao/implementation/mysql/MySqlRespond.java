@@ -5,12 +5,11 @@ import dao.datasource.PooledConnection;
 import dao.implementation.mysql.converter.DtoConverter;
 import dao.implementation.mysql.converter.RespondDtoConverter;
 import entity.Respond;
-import entity.Role;
-import entity.User;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -18,22 +17,15 @@ import java.util.Optional;
 public class MySqlRespond implements RespondDao {
 
     private final static String SELECT_ALL =
-            "SELECT respond.id AS respond_id, respond.respond, respond.user_id, user.first_name, user.last_name " +
-                    "FROM respond " +
-                    "JOIN user ON respond.user_id = user.id ";
+            "SELECT respond.id, respond.username, respond.datetime, respond.mark, respond.respond " +
+                    "FROM respond ";
 
     private final static String WHERE_ID =
             "WHERE respond.id = ? ";
 
-    private static final String WHERE_USER_ID =
-            "WHERE respond.user_id = ? ";
-
-    private static final String GROUP_BY =
-            "GROUP BY respond.user_id ";
-
     private final static String INSERT =
-            "INSERT into respond (respond, user_id)" +
-                    "VALUES(?, ?) ";
+            "INSERT into respond (username, datetime, mark, respond)" +
+                    "VALUES(?, ?, ?, ?) ";
 
     private final static String UPDATE =
             "UPDATE respond SET respond = ? ";
@@ -47,8 +39,7 @@ public class MySqlRespond implements RespondDao {
         this(connection, new RespondDtoConverter());
     }
 
-    public MySqlRespond(Connection connection,
-                                  DtoConverter<Respond> converter) {
+    public MySqlRespond(Connection connection, DtoConverter<Respond> converter) {
         this.defaultDao = new DefaultDaoImpl<>(connection, converter);
     }
 
@@ -66,7 +57,7 @@ public class MySqlRespond implements RespondDao {
     public Respond insert(Respond respond) {
         Objects.requireNonNull(respond);
         long id = defaultDao.executeInsertWithGeneratedPrimaryKey(
-                INSERT, respond.getRespond(), respond.getUserId());
+                INSERT, respond.getUserName(), respond.getDateTime(), respond.getMark(), respond.getRespond());
         respond.setId(id);
         return respond;
     }
@@ -81,12 +72,6 @@ public class MySqlRespond implements RespondDao {
     @Override
     public void delete(Long id) {
         defaultDao.executeUpdate(DELETE + WHERE_ID, id);
-    }
-
-    @Override
-    public List<Respond> findByUser(long userId) {
-        return defaultDao.findAll(SELECT_ALL + WHERE_USER_ID +
-                GROUP_BY, userId);
     }
 
     private void printAll(List<Respond> list) {
@@ -107,35 +92,33 @@ public class MySqlRespond implements RespondDao {
 
             mySqlRespond.printAll(mySqlRespond.findAll());
 
-            System.out.println("~~~~~~~~~~~~");
+//            System.out.println("~~~~~~~~~~~~");
+//
+//            System.out.println("Insert test:");
+//            for (int i = 1; i < 10; i++) {
+//                mySqlRespond.insert(Respond.newBuilder().addName("user" + i)
+//                        .addRespond("bla bla").addRespondTime(LocalDateTime.now()).addMark(i).build());
+//            }
 
-            System.out.println("Insert test:");
-            Respond account1 = mySqlRespond.insert(Respond.newBuilder()
-                    .addRespond("qwerty").addUserId(2).build());
             mySqlRespond.printAll(mySqlRespond.findAll());
 
             System.out.println("~~~~~~~~~~~~");
 
-            System.out.println("Find one with id 11:");
-            System.out.println(mySqlRespond.findById((long) 11));
+            System.out.println("Find one with id 1:");
+            System.out.println(mySqlRespond.findById((long) 3));
 
             System.out.println("~~~~~~~~~~~~");
 
-            System.out.println("Find one by user:");
-            System.out.println(mySqlRespond.findByUser(2));
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("Update:");
-            account1.setRespond("12345");
-            mySqlRespond.update(account1);
-            mySqlRespond.printAll(mySqlRespond.findAll());
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("Delete:");
-            mySqlRespond.delete(account1.getId());
-            mySqlRespond.printAll(mySqlRespond.findAll());
+//            System.out.println("Update:");
+//            account1.setRespond("12345");
+//            mySqlRespond.update(account1);
+//            mySqlRespond.printAll(mySqlRespond.findAll());
+//
+//            System.out.println("~~~~~~~~~~~~");
+//
+//            System.out.println("Delete:");
+//            mySqlRespond.delete(account1.getId());
+//            mySqlRespond.printAll(mySqlRespond.findAll());
 
 
         } catch (SQLException ex) {

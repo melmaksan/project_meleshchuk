@@ -7,16 +7,9 @@ public class ServiceFactory {
     private ServiceFactory() {
     }
 
-    public static ServiceFactory getInstance() {
-//        ServiceFactory localInstance = instance;
+    public static synchronized ServiceFactory getInstance() {
         if (instance == null) {
-            synchronized (ServiceFactory.class) {
-//                localInstance = instance;
-//                if (instance == null) {
-//                    instance = localInstance = new ServiceFactory();
-                    instance = new ServiceFactory();
-//                }
-            }
+            instance = new ServiceFactory();
         }
         return instance;
     }
@@ -48,4 +41,6 @@ public class ServiceFactory {
     public static UserToServiceService getUserToServiceService() {
         return UserToServiceService.getInstance();
     }
+
+    public static UserToRespondService getUserToRespondService() { return UserToRespondService.getInstance(); }
 }

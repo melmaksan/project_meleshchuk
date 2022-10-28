@@ -8,7 +8,7 @@
 <html>
 <head>
     <jsp:include page="/WEB-INF/views/includes/head.jsp"/>
-    <title>Beauty Salon</title>
+    <title>Specialists Page</title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/includes/navbar.jsp"/>
@@ -52,7 +52,6 @@
                 <td class="col-2 py-1 align-middle">${service.title}</td>
                 <td class="col-1 py-1 align-middle">${service.price}₴</td>
                 <td class="col-2 py-1">
-                    <label for="appointment-time"></label>
                     <input type="datetime-local" id="appointment-time" name="meeting-time" value="2022-10-22T19:30"
                            min="2022-10-22T00:00" max="2022-11-22T00:00" required/></td>
                 <td class="col-1 pt-0 pb-1 pr-2">

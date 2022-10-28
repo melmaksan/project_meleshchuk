@@ -28,22 +28,29 @@ public class MySqlUser implements UserDao {
                     "FROM user " +
                     "JOIN role ON user.role_id = role.id ";
 
-    private static final String WHERE_ID = "WHERE user.id = ? ";
+    private static final String WHERE_ID =
+            "WHERE user.id = ? ";
 
-    private static final String ROLE_ID = "WHERE user.role_id = ? ";
+    private static final String ROLE_ID =
+            "WHERE user.role_id = ? ";
 
-    private static final String WHERE_LOGIN = "WHERE user.login = ? ";
+    private static final String WHERE_LOGIN =
+            "WHERE user.login = ? ";
 
     private static final String WHERE_USER_NAME =
             "WHERE user.first_name = ? AND user.last_name = ? ";
 
-    private static final String ASC_BY_NAME = "ORDER BY first_name ASC ";
+    private static final String ASC_BY_NAME =
+            "ORDER BY first_name ASC ";
 
-    private static final String DESC_BY_NAME = "ORDER BY first_name DESC ";
+    private static final String DESC_BY_NAME =
+            "ORDER BY first_name DESC ";
 
-    private static final String ASC_BY_RATING = "ORDER BY rate ASC ";
+    private static final String ASC_BY_RATING =
+            "ORDER BY rate ASC ";
 
-    private static final String DESC_BY_RATING = "ORDER BY rate DESC ";
+    private static final String DESC_BY_RATING =
+            "ORDER BY rate DESC ";
 
     private static final String INSERT =
             "INSERT into user (first_name, last_name, login, password, " +
@@ -53,15 +60,20 @@ public class MySqlUser implements UserDao {
             "UPDATE user SET first_name = ?, last_name = ?, login = ?, " +
                     "password = ?, phone_num = ? ";
 
-    private static final String UPDATE_PASSWORD = "UPDATE user SET password = ? ";
+    private static final String UPDATE_PASSWORD =
+            "UPDATE user SET password = ? ";
 
-    private static final String UPDATE_RATING = "UPDATE user SET rate = ? ";
+    private static final String UPDATE_RATING =
+            "UPDATE user SET rate = ? ";
 
-    private static final String DELETE = "DELETE FROM user ";
+    private static final String DELETE =
+            "DELETE FROM user ";
 
-    private static final String PAGINATION = "limit ? offset ? ";
+    private static final String PAGINATION =
+            "limit ? offset ? ";
 
-    private static final String NUMBER_OF_ROWS = "SELECT COUNT(*) FROM user ";
+    private static final String NUMBER_OF_ROWS =
+            "SELECT COUNT(*) FROM user ";
 
     private final DefaultDaoImpl<User> defaultDao;
 
@@ -177,7 +189,7 @@ public class MySqlUser implements UserDao {
     }
 
     @Override
-    public void updateRating(User user, float rate) {
+    public void updateRating(User user, double rate) {
         Objects.requireNonNull(user);
         defaultDao.executeUpdate(UPDATE_RATING + WHERE_ID, rate, user.getId());
     }

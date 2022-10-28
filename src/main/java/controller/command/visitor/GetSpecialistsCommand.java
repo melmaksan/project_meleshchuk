@@ -19,13 +19,13 @@ import static controller.util.constants.Views.SPECIALISTS_VIEW;
 public class GetSpecialistsCommand implements ICommand {
 
     private static final UserService userService = ServiceFactory.getUserService();
-    private static final ServiceForService serviceService = ServiceFactory.getServiceService();
     private static final Logger logger = LogManager.getLogger(GetSpecialistsCommand.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setAttribute(SPECIALISTS, userService.findAllSpecialists());
+        logger.info("i am GetSpecialistsCommand");
         return SPECIALISTS_VIEW;
     }
 }

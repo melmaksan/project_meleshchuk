@@ -22,17 +22,10 @@ public class UserToOrderService {
     private UserToOrderService() {
     }
 
-    public List<UserToOrder> findAllUsersByOrder(long orderId) {
+    public List<UserToOrder> findSpecialistsByOrder(long orderId) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             UserToOrderDao userToOrderDao = daoFactory.getUserToOrderDao(connection);
-            return userToOrderDao.findAllByOrder(orderId);
-        }
-    }
-
-    public List<UserToOrder> findSpecialistByOrder(long orderId) {
-        try (DaoConnection connection = daoFactory.getConnection()) {
-            UserToOrderDao userToOrderDao = daoFactory.getUserToOrderDao(connection);
-            return userToOrderDao.findSpecialistByOrder(orderId);
+            return userToOrderDao.findSpecialistsByOrder(orderId);
         }
     }
 
@@ -62,6 +55,6 @@ public class UserToOrderService {
 
     public boolean isSpecExistsInOrder(long userId, DaoConnection connection) {
         UserToOrderDao userToOrderDao = daoFactory.getUserToOrderDao(connection);
-        return userToOrderDao.isServiceExistInBookedOrder(userId);
+        return userToOrderDao.isSpecExistsInOrder(userId);
     }
 }

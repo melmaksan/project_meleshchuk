@@ -6,22 +6,23 @@
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="i18n.lang"/>
 
-<c:set var="homePage" scope="page" value="/WEB-INF/views/index.jsp"/>
-<c:set var="visitorSpecPage" scope="page" value="/WEB-INF/views/specialists.jsp"/>
-<c:set var="userSpecPage" scope="page" value="/WEB-INF/views/user/userSpecialists.jsp"/>
-<c:set var="userOrdersPage" scope="page" value="/WEB-INF/views/user/userOrders.jsp"/>
-<c:set var="specialistOrdersPage" scope="page" value="/WEB-INF/views/specialist/specialistOrders.jsp"/>
-<c:set var="specialistSchedulePage" scope="page" value="/WEB-INF/views/specialist/specialistSchedule.jsp"/>
-<c:set var="adminSpecPage" scope="page" value="/WEB-INF/views/admin/adminSpecialists.jsp"/>
-<c:set var="adminOrdersPage" scope="page" value="/WEB-INF/views/admin/adminOrders.jsp"/>
-<c:set var="adminUsersPage" scope="page" value="/WEB-INF/views/admin/adminUsers.jsp"/>
-<c:set var="adminAdminsPage" scope="page" value="/WEB-INF/views/admin/admins.jsp"/>
-<c:set var="adminCreatePage" scope="page" value="/WEB-INF/views/admin/create.jsp"/>
+<c:set var="homePage" scope="page" value="/beauty_salon/WEB-INF/views/index.jsp"/>
+<c:set var="visitorSpecPage" scope="page" value="/beauty_salon/WEB-INF/views/specialists.jsp"/>
+<c:set var="userSpecPage" scope="page" value="/beauty_salon/WEB-INF/views/user/userSpecialists.jsp"/>
+<c:set var="userOrdersPage" scope="page" value="/beauty_salon/WEB-INF/views/user/userOrders.jsp"/>
+<c:set var="userCreatePage" scope="page" value="/beauty_salon/WEB-INF/views/user/createRespond.jsp"/>
+<c:set var="specialistOrdersPage" scope="page" value="/beauty_salon/WEB-INF/views/specialist/specialistOrders.jsp"/>
+<c:set var="specialistSchedulePage" scope="page" value="/beauty_salon/WEB-INF/views/specialist/specialistSchedule.jsp"/>
+<c:set var="adminSpecPage" scope="page" value="/beauty_salon/WEB-INF/views/admin/adminSpecialists.jsp"/>
+<c:set var="adminOrdersPage" scope="page" value="/beauty_salon/WEB-INF/views/admin/adminOrders.jsp"/>
+<c:set var="adminUsersPage" scope="page" value="/beauty_salon/WEB-INF/views/admin/adminUsers.jsp"/>
+<c:set var="adminAdminsPage" scope="page" value="/beauty_salon/WEB-INF/views/admin/admins.jsp"/>
+<c:set var="adminCreatePage" scope="page" value="/beauty_salon/WEB-INF/views/admin/create.jsp"/>
+<c:set var="loginPage" scope="page" value="/beauty_salon/WEB-INF/views/login.jsp"/>
+<c:set var="respondsPage" scope="page" value="/beauty_salon/WEB-INF/views/responds.jsp"/>
 
 
-<c:set var="currPage" scope="page">
-    <customTag:currPage/>
-</c:set>
+<c:set var="currPage" scope="page"><customTag:currPage/></c:set>
 
 <div class="container-fluid" id="nav-bar" style="height: 4.6rem">
     <nav class="navbar navbar-expand navbar-dark bg-dark fixed-top">
@@ -63,67 +64,171 @@
                     </c:choose>
                 </c:if>
                 <c:if test="${sessionScope.user.user}">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/site/user/specialists"
-                           role="button">Specialists</a>
-                    </li>
+                    <c:choose>
+                        <c:when test="${not userSpecPage.equals(currPage)}">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/site/user/specialists"
+                                   role="button">Specialists</a>
+                            </li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="nav-item">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/site/user/specialists"
+                                   role="button">Specialists</a>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
                 </c:if>
                 <c:if test="${sessionScope.user.admin}">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/site/admin/specialists"
-                           role="button">Specialists</a>
-                    </li>
+                    <c:choose>
+                        <c:when test="${not adminSpecPage.equals(currPage)}">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/site/admin/specialists"
+                                   role="button">Specialists</a>
+                            </li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="nav-item">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/site/admin/specialists"
+                                   role="button">Specialists</a>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
                 </c:if>
                 <%-- Schedule(for specialist) --%>
                 <c:if test="${sessionScope.user.specialist}">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/site/specialist/schedule"
-                           role="button">Schedule</a>
-                    </li>
+                    <c:choose>
+                        <c:when test="${not specialistSchedulePage.equals(currPage)}">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/site/specialist/schedule"
+                                   role="button">Schedule</a>
+                            </li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="nav-item">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/site/specialist/schedule"
+                                   role="button">Schedule</a>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
                 </c:if>
                 <%-- Orders --%>
                 <c:if test="${not empty sessionScope.user}">
                     <c:if test="${ sessionScope.user.user}">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/site/user/orders"
-                               role="button"><fmt:message key="user.orders"/></a>
-                        </li>
+                        <c:choose>
+                            <c:when test="${not userOrdersPage.equals(currPage)}">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/site/user/orders"
+                                       role="button"><fmt:message key="user.orders"/></a>
+                                </li>
+                            </c:when>
+                            <c:otherwise>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/site/user/orders"
+                                       role="button"><fmt:message key="user.orders"/></a>
+                                </li>
+                            </c:otherwise>
+                        </c:choose>
                     </c:if>
                     <c:if test="${ sessionScope.user.admin}">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/site/admin/orders"
-                               role="button"><fmt:message key="user.orders"/></a>
-                        </li>
+                        <c:choose>
+                            <c:when test="${not adminOrdersPage.equals(currPage)}">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/site/admin/orders"
+                                       role="button"><fmt:message key="user.orders"/></a>
+                                </li>
+                            </c:when>
+                            <c:otherwise>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/site/admin/orders"
+                                       role="button"><fmt:message key="user.orders"/></a>
+                                </li>
+                            </c:otherwise>
+                        </c:choose>
                     </c:if>
                     <c:if test="${ sessionScope.user.specialist}">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/site/specialist/orders"
-                               role="button"><fmt:message key="user.orders"/></a>
-                        </li>
+                        <c:choose>
+                            <c:when test="${not specialistOrdersPage.equals(currPage)}">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/site/specialist/orders"
+                                       role="button"><fmt:message key="user.orders"/></a>
+                                </li>
+                            </c:when>
+                            <c:otherwise>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/site/specialist/orders"
+                                       role="button"><fmt:message key="user.orders"/></a>
+                                </li>
+                            </c:otherwise>
+                        </c:choose>
                     </c:if>
                 </c:if>
                 <%-- Users(for admin) --%>
                 <c:if test="${sessionScope.user.admin}">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/site/admin/users"
-                           role="button">Users</a>
-                    </li>
+                    <c:choose>
+                        <c:when test="${not adminUsersPage.equals(currPage)}">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/site/admin/users"
+                                   role="button">Users</a>
+                            </li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="nav-item">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/site/admin/users"
+                                   role="button">Users</a>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
                 </c:if>
                 <%-- Admins(for admin) --%>
                 <c:if test="${sessionScope.user.admin}">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/site/admins"
-                           role="button">Admins</a>
-                    </li>
+                    <c:choose>
+                        <c:when test="${not adminAdminsPage.equals(currPage)}">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/site/admins"
+                                   role="button">Admins</a>
+                            </li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="nav-item">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/site/admins"
+                                   role="button">Admins</a>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
                 </c:if>
+                <c:choose>
+                    <c:when test="${not respondsPage.equals(currPage)}">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/site/responds"
+                               role="button">Responds</a>
+                        </li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/site/responds"
+                               role="button">Responds</a>
+                        </li>
+                    </c:otherwise>
+                </c:choose>
             </ul>
             <ul class="navbar-nav ml-auto">
                 <%-- Create(for admin) --%>
                 <c:if test="${sessionScope.user.admin}">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/site/create"
-                           role="button">Create</a>
-                    </li>
+                    <c:choose>
+                        <c:when test="${not adminCreatePage.equals(currPage)}">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/site/create"
+                                   role="button">Create</a>
+                            </li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="nav-item">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/site/create"
+                                   role="button">Create</a>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
                 </c:if>
                 <%-- Account --%>
                 <c:if test="${not empty sessionScope.user}">
@@ -134,10 +239,20 @@
                 </c:if>
                 <%-- Login/Logout --%>
                 <c:if test="${empty sessionScope.user}">
-                    <li>
-                        <a class="btn btn-success" href="${pageContext.request.contextPath}/site/login"
-                           role="button"><fmt:message key="login"/></a>
-                    </li>
+                    <c:choose>
+                        <c:when test="${not loginPage.equals(currPage)}">
+                            <li>
+                                <a class="btn btn-success" href="${pageContext.request.contextPath}/site/login"
+                                   role="button"><fmt:message key="login"/></a>
+                            </li>
+                        </c:when>
+                        <c:otherwise>
+                            <li>
+                                <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/site/login"
+                                   role="button"><fmt:message key="login"/></a>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
                 </c:if>
                 <c:if test="${not empty sessionScope.user}">
                     <li>

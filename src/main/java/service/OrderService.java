@@ -7,11 +7,11 @@ import entity.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 
 public class OrderService {
@@ -47,12 +47,24 @@ public class OrderService {
             OrderDao orderDao = daoFactory.getOrderDao(connection);
             List<Order> orders = orderDao.findAll();
             for (Order order : orders) {
-                List<User> users = getClients(order);
+                User user = getClient(order);
                 List<User> specialists = getSpecialist(order);
                 List<Service> services = getServices(order);
-                order.setUsers(users);
+                order.setUser(user);
                 order.setSpecialists(specialists);
                 order.setServices(services);
+            }
+            return orders;
+        }
+    }
+
+    public List<Order> findOrderByForFeedback(LocalDate dateFrom, LocalDate dateTo, int status) {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            OrderDao orderDao = daoFactory.getOrderDao(connection);
+            List<Order> orders = orderDao.findAllWithCredentials(dateFrom, dateTo, status);
+            for (Order order : orders) {
+                User user = getClient(order);
+                order.setUser(user);
             }
             return orders;
         }
@@ -73,51 +85,49 @@ public class OrderService {
 
     private List<User> getSpecialist(Order order) {
         List<User> specialists = new ArrayList<>();
-        List<UserToOrder> userToOrders = userToOrderService.findSpecialistByOrder(order.getId());
+        List<UserToOrder> userToOrders = userToOrderService.findSpecialistsByOrder(order.getId());
         for (UserToOrder userToOrder : userToOrders) {
             try {
-                specialists.add((userService.findUserForOtherEntity(userToOrder.getUserId())).orElse(null));
+                specialists.add((userService.findUserById(userToOrder.getUserId())).orElse(null));
             } catch (RuntimeException ex) {
-                logger.error("There are no users here!", ex);
+                logger.error("There are no specialists here!", ex);
             }
         }
         return specialists;
     }
 
-    private List<User> getClients(Order order) {
-        List<User> specialists = new ArrayList<>();
+    private User getClient(Order order) {
+        User user = new User();
         List<UserToOrder> userToOrders = userToOrderService.findClientsByOrder(order.getId());
         for (UserToOrder userToOrder : userToOrders) {
-            try {
-                specialists.add((userService.findUserForOtherEntity(userToOrder.getUserId())).orElse(null));
-            } catch (RuntimeException ex) {
-                logger.error("There are no users here!", ex);
-            }
+            user = (userService.findUserById(userToOrder.getUserId())).orElse(null);
         }
-        return specialists;
+        if (user == null) {
+            logger.error("There is no client here!");
+        }
+        return user;
     }
 
     public Order findOrderById(long orderId) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             OrderDao orderDao = daoFactory.getOrderDao(connection);
-            Order order = null;
+            Order order = orderDao.findById(orderId).orElse(null);
             try {
-                order = orderDao.findById(orderId).orElseThrow(NoSuchFieldException::new);
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
+                List<Service> serviceList = getServices(Objects.requireNonNull(order));
+                List<User> specialists = getSpecialist(order);
+                User user = getClient(order);
+                order.setSpecialists(specialists);
+                order.setServices(serviceList);
+                order.setUser(user);
+            } catch (NullPointerException ex) {
+                logger.error("There are no orders here!", ex);
             }
-            List<Service> serviceList = getServices(Objects.requireNonNull(order));
-            List<User> specialists = getSpecialist(order);
-            List<User> users = getClients(order);
-            order.setSpecialists(specialists);
-            order.setServices(serviceList);
-            order.setUsers(users);
             return order;
         }
     }
 
-    public void createOrder(String dataTime, long userId, long specId, long serviceId) {
-        Order orderDto = getDataFromRequestCreating(dataTime);
+    public void createOrder(String dateTime, long userId, long specId, long serviceId) {
+        Order orderDto = getDataFromRequestCreating(dateTime);
         Objects.requireNonNull(orderDto);
         if (orderDto.getOrderStatus() == null) {
             orderDto.setDefaultOrderStatus();
@@ -244,13 +254,6 @@ public class OrderService {
     private boolean orderCheckStatus(long orderId) {
         return checkOrderStatus(Objects.requireNonNull(findOrderById(orderId)).getOrderStatus().getId(),
                 OrderStatus.StatusIdentifier.BOOKED);
-    }
-
-    public Optional<Order> findOrderForOtherEntity(Long id) {
-        try (DaoConnection connection = daoFactory.getConnection()) {
-            OrderDao orderDao = daoFactory.getOrderDao(connection);
-            return orderDao.findById(id);
-        }
     }
 
 }

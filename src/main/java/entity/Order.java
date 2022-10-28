@@ -20,7 +20,7 @@ public class Order implements Serializable {
     private PaymentStatus paymentStatus;
     private LocalDateTime orderTime;
     private List<Service> services;
-    private List<User> users;
+    private User user;
     private List<User> specialists;
 
     public static Builder newBuilder() {
@@ -67,12 +67,12 @@ public class Order implements Serializable {
         this.services = services;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public List<User> getSpecialists() {
@@ -155,16 +155,6 @@ public class Order implements Serializable {
 
         public Builder addOrderTime(LocalDateTime orderTime) {
             order.setOrderTime(orderTime);
-            return this;
-        }
-
-        public Builder addServices(List<Service> services) {
-            order.setServices(services);
-            return this;
-        }
-
-        public Builder addUsers(List<User> users) {
-            order.setUsers(users);
             return this;
         }
 

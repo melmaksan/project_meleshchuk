@@ -39,11 +39,10 @@
     <tbody>
     <c:forEach var="order" items="${requestScope.orders}">
         <c:forEach var="service" items="${order.services}">
-            <c:forEach var="user" items="${order.users}">
                 <tr>
                     <td class="col-1 py-1">${order.id}</td>
                     <td class="col-2 py-1">${service.title}</td>
-                    <td class="col-2 py-1">${user.firstName} ${user.lastName}</td>
+                    <td class="col-2 py-1">${order.user.firstName} ${order.user.lastName}</td>
                     <td class="col-1 py-1">${service.price}₴</td>
                     <td class="col-2 py-1">${order.orderTime}</td>
                     <td class="col-1 py-1">
@@ -74,7 +73,6 @@
                     <td class="col-1 py-1">${order.paymentStatus.name}</td>
                 </tr>
             </c:forEach>
-        </c:forEach>
     </c:forEach>
     </tbody>
 </table>

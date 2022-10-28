@@ -24,9 +24,9 @@ public interface UserToOrderDao extends GenericDao<UserToOrder, Long> {
      */
     List<UserToOrder> findAllByOrder(long orderId);
 
-    List<UserToOrder> findSpecialistByOrder(long orderId);
+    List<UserToOrder> findSpecialistsByOrder(long orderId);
 
     List<UserToOrder> findClientsByOrder(long orderId);
 
-    boolean isServiceExistInBookedOrder(long userId);
+    boolean isSpecExistsInOrder(long userId);
 }

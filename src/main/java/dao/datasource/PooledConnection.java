@@ -35,7 +35,4 @@ public class PooledConnection {
         return dataSource;
     }
 
-//    private static class Singleton {
-//        private static final DataSource INSTANCE = initDataSource();
-//    }
 }

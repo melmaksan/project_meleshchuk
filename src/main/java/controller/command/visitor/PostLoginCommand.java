@@ -23,7 +23,6 @@ import static controller.util.constants.Views.PAGES_BUNDLE;
 public class PostLoginCommand implements ICommand {
 
     private static final Logger logger = LogManager.getLogger(PostLoginCommand.class);
-    private static final String INVALID_CREDENTIALS = "Invalid credentials, please try again";
     private static final ResourceBundle bundle = ResourceBundle.getBundle(PAGES_BUNDLE);
     private final UserService userService = ServiceFactory.getUserService();
 
@@ -37,9 +36,9 @@ public class PostLoginCommand implements ICommand {
         }
         User userDto = getDataFromRequest(request);
         List<String> errors = validateData(userDto);
+        User user = loadUserFromDatabase(userDto, errors);
         if (errors.isEmpty()) {
             logger.info("LOGIN WITHOUT ERRORS!");
-            User user = loadUserFromDatabase(userDto.getLogin());
             addUserToSession(request.getSession(), user);
             Util.redirectTo(request, response, bundle.
                     getString(HOME_PATH));
@@ -48,6 +47,14 @@ public class PostLoginCommand implements ICommand {
         logger.info("LOGIN HAS ERRORS!");
         addInvalidDataToRequest(request, userDto, errors);
         return LOGIN_VIEW;
+    }
+
+    private User loadUserFromDatabase(User userDto, List<String> errors) {
+        User user = userService.findByLogin(userDto.getLogin());
+        if (user == null) {
+            errors.add(USER_NOT_EXIST);
+        }
+        return user;
     }
 
     private User getDataFromRequest(HttpServletRequest request) {
@@ -69,14 +76,6 @@ public class PostLoginCommand implements ICommand {
             errors.add(INVALID_CREDENTIALS);
         }
         return errors;
-    }
-
-    private User loadUserFromDatabase(String email) {
-        User user = userService.findByLogin(email);
-        if (user == null) {
-            throw new IllegalStateException();
-        }
-        return user;
     }
 
     private void addUserToSession(HttpSession session, User user) {

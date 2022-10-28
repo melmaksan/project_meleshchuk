@@ -8,9 +8,11 @@ import org.apache.logging.log4j.Logger;
 import service.ServiceFactory;
 import service.UserService;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 import static controller.util.constants.Attributes.*;
@@ -22,7 +24,8 @@ public class GetUserOrdersCommand implements ICommand {
     private static final Logger logger = LogManager.getLogger(GetUserOrdersCommand.class);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         User currentUser = getUserFromSession(request.getSession());
         List<Order> orders = userService.getOrders(currentUser);
         for (Order order : orders) {

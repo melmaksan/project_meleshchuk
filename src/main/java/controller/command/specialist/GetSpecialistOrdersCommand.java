@@ -26,9 +26,6 @@ public class GetSpecialistOrdersCommand implements ICommand {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         User specialist = getUserFromSession(request.getSession());
         List<Order> orders = userService.getOrders(specialist);
-        for (Order order : orders) {
-            logger.info("users ==> " + order.getUsers());
-        }
         specialist.setOrders(orders);
         request.setAttribute(ORDERS, orders);
         logger.info("I am GetSpecialistOrders command");

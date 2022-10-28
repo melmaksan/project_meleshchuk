@@ -2,7 +2,6 @@ package controller.filter;
 
 import controller.util.Util;
 import controller.util.constants.Attributes;
-import controller.util.constants.Views;
 import entity.Role;
 import entity.User;
 import org.apache.logging.log4j.LogManager;
@@ -37,7 +36,13 @@ public class AuthorizationFilter implements Filter {
                          FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
 
-        User user = (User) request.getSession().getAttribute(Attributes.USER);
+        if (isUserLoggedIn(request)) {
+            Util.redirectTo(request, (HttpServletResponse) servletResponse, bundle.getString(LOGIN_PATH));
+            logInfoAboutAccessDenied(request.getRequestURI());
+            return;
+        }
+
+        User user = (User) request.getSession().getAttribute(USER);
 
         if (isUserRoleInvalidForRequestedPage(request, user)) {
             Util.redirectTo(request, (HttpServletResponse) servletResponse,
@@ -49,6 +54,10 @@ public class AuthorizationFilter implements Filter {
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
+    private boolean isUserLoggedIn(HttpServletRequest request) {
+        return request.getSession().getAttribute(Attributes.USER) == null;
+    }
+
     private boolean isUserRoleInvalidForRequestedPage(HttpServletRequest request, User user) {
         return (isUserPage(request) && user.getRole().getId() != USER_ROLE_ID) ||
                 (isAdminPage(request) && user.getRole().getId() != ADMIN_ROLE_ID) ||
@@ -56,17 +65,17 @@ public class AuthorizationFilter implements Filter {
     }
 
     private boolean isUserPage(HttpServletRequest request) {
-        return request.getRequestURI().startsWith(bundle.getString(SITE_PREFIX) +
+        return request.getRequestURI().startsWith(request.getContextPath() + bundle.getString(SITE_PREFIX) +
                         bundle.getString(USER_PREFIX));
     }
 
     private boolean isAdminPage(HttpServletRequest request) {
-        return request.getRequestURI().startsWith(bundle.getString(SITE_PREFIX) +
+        return request.getRequestURI().startsWith(request.getContextPath() + bundle.getString(SITE_PREFIX) +
                         bundle.getString(ADMIN_PREFIX));
     }
 
     private boolean isSpecialistPage(HttpServletRequest request) {
-        return request.getRequestURI().startsWith(bundle.getString(SITE_PREFIX) +
+        return request.getRequestURI().startsWith(request.getContextPath() + bundle.getString(SITE_PREFIX) +
                 bundle.getString(SPEC_PREFIX));
     }
 

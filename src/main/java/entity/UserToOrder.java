@@ -5,20 +5,11 @@ import java.util.Objects;
 
 public class UserToOrder implements Serializable {
 
-    private long id;
     private long userId;
     private long orderId;
 
     public static Builder newBuilder() {
         return new Builder();
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public long getUserId() {
@@ -50,7 +41,12 @@ public class UserToOrder implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserToOrder that = (UserToOrder) o;
-        return id == that.id;
+        return userId == that.userId && orderId == that.orderId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, orderId);
     }
 
     public static class Builder {
@@ -59,11 +55,6 @@ public class UserToOrder implements Serializable {
 
         private Builder() {
             userToOrder = new UserToOrder();
-        }
-
-        public Builder addId(long id) {
-            userToOrder.setId(id);
-            return this;
         }
 
         public Builder addUserId(long userId) {

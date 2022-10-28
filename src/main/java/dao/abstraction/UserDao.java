@@ -52,7 +52,7 @@ public interface UserDao extends GenericDao<User, Long> {
 
     void changePassword(User user, String password);
 
-    void updateRating(User user, float rate);
+    void updateRating(User user, double rate);
 
     List<User> ascByName();
 

@@ -118,3 +118,4 @@ $('[data-toggle=confirmation2]').confirmation({
 });
 
 $('#select').selectpicker();
+

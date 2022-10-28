@@ -8,7 +8,7 @@
 <html>
 <head>
     <jsp:include page="/WEB-INF/views/includes/head.jsp"/>
-    <title>Beauty Salon</title>
+    <title>Users Page</title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/includes/navbar.jsp"/>

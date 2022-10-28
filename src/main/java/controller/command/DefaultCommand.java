@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
+import static controller.util.constants.Attributes.HOME_PATH;
 import static controller.util.constants.Views.PAGES_BUNDLE;
 
 public class DefaultCommand implements ICommand {
@@ -21,7 +22,7 @@ public class DefaultCommand implements ICommand {
             throws ServletException, IOException {
         Util.redirectTo(request, response, ResourceBundle
                 .getBundle(PAGES_BUNDLE)
-                .getString("home.path"));
+                .getString(HOME_PATH));
         logger.info("i am DefaultCommand");
         return REDIRECTED;
     }

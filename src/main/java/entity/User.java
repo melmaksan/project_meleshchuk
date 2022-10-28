@@ -11,10 +11,11 @@ public class User implements Serializable {
     private String login;
     private String password;
     private String phoneNumber;
-    private float rating;
+    private double rating;
     private Role role;
     private List<Service> services;
     private List<Order> orders;
+    private List<Respond> responds;
 
     public static Builder newBuilder() {
         return new Builder();
@@ -68,11 +69,11 @@ public class User implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public float getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(float rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 
@@ -98,6 +99,14 @@ public class User implements Serializable {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public List<Respond> getResponds() {
+        return responds;
+    }
+
+    public void setResponds(List<Respond> responds) {
+        this.responds = responds;
     }
 
     public boolean isUser() {
@@ -138,11 +147,10 @@ public class User implements Serializable {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", rating=" + rating +
-                ", role=" + role +
+//                ", login='" + login + '\'' +
+//                ", phoneNumber='" + phoneNumber + '\'' +
+//                ", rating=" + rating +
+//                ", role=" + role +
                 '}';
     }
 
@@ -193,18 +201,13 @@ public class User implements Serializable {
             return this;
         }
 
-        public Builder addRating(float rating) {
+        public Builder addRating(double rating) {
             user.setRating(rating);
             return this;
         }
 
         public Builder addRole(Role role) {
             user.setRole(role);
-            return this;
-        }
-
-        public Builder addDefaultRole() {
-            user.setUserRole();
             return this;
         }
 

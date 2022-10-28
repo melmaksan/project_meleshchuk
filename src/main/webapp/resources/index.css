@@ -2,18 +2,18 @@
     width: 21rem
 }
 
-.card-img-top {
-    height: 400px;
+#respondCard {
+    width: 30rem;
 }
 
-.card-registration .select-input.form-control[readonly]:not([disabled]) {
-    font-size: 1rem;
-    line-height: 2.15;
-    padding-left: .75em;
-    padding-right: .75em;
+#respButton {
+    width: 160px;
+    border-color: black;
+    color: black;
 }
-.card-registration .select-arrow {
-    top: 13px;
+
+.card-img-top {
+    height: 400px;
 }
 
 #sortTable_length, #sortTable2_length, #sortTable3_length,
@@ -101,6 +101,18 @@
     font-size: 1rem;
 }
 
-.bootstrap-select>.dropdown-toggle.bs-placeholder {
-    height: 48px;
+.rating-input-wrapper input[type="radio"] {
+    display: none;
 }
+.rating-input-wrapper input[type="radio"] ~ span {
+    cursor: pointer;
+}
+.rating-input-wrapper input[type="radio"]:checked ~ span {
+    background-color: #ffc107;
+    color: black;
+}
+.rating-labels > label{
+    font-size: 13px;
+    color: #777;
+}
+

@@ -7,22 +7,19 @@ import controller.command.admin.*;
 import controller.command.specialist.GetSpecialistOrdersCommand;
 import controller.command.specialist.GetSpecialistScheduleCommand;
 import controller.command.specialist.PostChangeServiceStatusCommand;
-import controller.command.user.GetUserFastBookCommand;
-import controller.command.user.GetUserOrdersCommand;
-import controller.command.user.GetUserSpecialistsCommand;
-import controller.command.user.PostAddOrderCommand;
+import controller.command.user.*;
 import controller.command.visitor.*;
-import controller.util.constants.Views;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import static controller.util.constants.Views.PAGES_BUNDLE;
+
 public class ControllerHelper {
 
     private final static String DELIMITER = ":";
-    private static final ResourceBundle bundle = ResourceBundle.
-            getBundle(Views.PAGES_BUNDLE);
+    private static final ResourceBundle bundle = ResourceBundle.getBundle(PAGES_BUNDLE);
     private final DefaultCommand DEFAULT_COMMAND = new DefaultCommand();
     private final Map<String, ICommand> commands = new HashMap<>();
     private static ControllerHelper instance;
@@ -52,19 +49,21 @@ public class ControllerHelper {
         commands.put(buildKey(bundle.getString("signup.path"), "registration"),
                 new PostRegistrationCommand());
         commands.put(buildKey(bundle.getString("home.path"), "asc.title"),
-                new PostAscTitleCommand());
+                new GetAscTitleCommand());
         commands.put(buildKey(bundle.getString("home.path"), "desc.title"),
-                new PostDescTitleCommand());
+                new GetDescTitleCommand());
         commands.put(buildKey(bundle.getString("home.path"), "asc.price"),
-                new PostAscPriceCommand());
+                new GetAscPriceCommand());
         commands.put(buildKey(bundle.getString("home.path"), "desc.price"),
-                new PostDescPriceCommand());
+                new GetDescPriceCommand());
         commands.put(buildKey(bundle.getString("home.path"), "filter.service"),
-                new PostFilterByServiceCommand());
+                new GetFilterByServiceCommand());
         commands.put(buildKey(bundle.getString("fastBook"), null),
                 new GetFastBookCommand());
         commands.put(buildKey(bundle.getString("specialists"), null),
                 new GetSpecialistsCommand());
+        commands.put(buildKey(bundle.getString("responds"), null),
+                new GetRespondsCommand());
         commands.put(buildKey(bundle.getString("user.orders"), null),
                 new GetUserOrdersCommand());
         commands.put(buildKey(bundle.getString("user.fastBook"), null),
@@ -73,6 +72,12 @@ public class ControllerHelper {
                 new GetUserSpecialistsCommand());
         commands.put(buildKey(bundle.getString("user.orders"), "add.order"),
                 new PostAddOrderCommand());
+        commands.put(buildKey(bundle.getString("responds"), "filter.respond"),
+                new GetRespondsFilterByUserCommand());
+        commands.put(buildKey(bundle.getString("user.create"), null),
+                new GetCreateRespondCommand());
+        commands.put(buildKey(bundle.getString("user.create"), "create.respond"),
+                new PostCreateRespondCommand());
         commands.put(buildKey(bundle.getString("create"), null),
                 new GetCreateCommand());
         commands.put(buildKey(bundle.getString("admins"), null),

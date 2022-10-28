@@ -40,8 +40,9 @@ public class PostRegistrationCommand implements ICommand {
                     getBundle(PAGES_BUNDLE).getString(HOME_PATH));
             return REDIRECTED;
         }
-        logger.info("LOGIN HAS ERRORS!");
+        logger.info("SING UP HAS ERRORS!");
         request.setAttribute(ERRORS, errors);
+        logger.info(errors);
         return SIGNUP_VIEW;
     }
 }

@@ -34,29 +34,30 @@ public class MySqlDaoFactory extends DaoFactory {
         }
     }
 
+    private Connection getOwnSqlConnection(DaoConnection connection) {
+        checkDaoConnection(connection);
+        return (Connection) connection.getNativeConnection();
+    }
+
+    private void checkDaoConnection(DaoConnection connection) {
+        if (connection == null || connection.getNativeConnection() == null) {
+            logger.error(NULLABLE_CONNECTION);
+            throw new DaoException(NULLABLE_CONNECTION);
+        }
+        if (!(connection instanceof MySqlConnection)) {
+            logger.error(WRONG_TYPE_CONNECTION);
+            throw new DaoException(WRONG_TYPE_CONNECTION);
+        }
+    }
+
     @Override
     public OrderDao getOrderDao(DaoConnection connection) {
         return new MySqlOrder(getOwnSqlConnection(connection));
     }
 
     @Override
-    public OrderStatusDao getOrderStatusDao(DaoConnection connection) {
-        return new MySqlOrderStatus(getOwnSqlConnection(connection));
-    }
-
-    @Override
     public OrderToServiceDao getOrderToServiceDao(DaoConnection connection) {
         return new MySqlOrderToService(getOwnSqlConnection(connection));
-    }
-
-    @Override
-    public PaymentStatusDao getPaymentStatusDao(DaoConnection connection) {
-        return new MySqlPaymentStatus(getOwnSqlConnection(connection));
-    }
-
-    @Override
-    public RoleDao getRoleDao(DaoConnection connection) {
-        return new MySqlRole(getOwnSqlConnection(connection));
     }
 
     @Override
@@ -84,19 +85,8 @@ public class MySqlDaoFactory extends DaoFactory {
         return new MySqlRespond(getOwnSqlConnection(connection));
     }
 
-    private Connection getOwnSqlConnection(DaoConnection connection) {
-        checkDaoConnection(connection);
-        return (Connection) connection.getNativeConnection();
-    }
-
-    private void checkDaoConnection(DaoConnection connection) {
-        if (connection == null || connection.getNativeConnection() == null) {
-            logger.error(NULLABLE_CONNECTION);
-            throw new DaoException(NULLABLE_CONNECTION);
-        }
-        if (!(connection instanceof MySqlConnection)) {
-            logger.error(WRONG_TYPE_CONNECTION);
-            throw new DaoException(WRONG_TYPE_CONNECTION);
-        }
+    @Override
+    public UserToRespondDao getUserToRespondDao(DaoConnection connection) {
+        return new MySqlUserToRespond(getOwnSqlConnection(connection));
     }
 }

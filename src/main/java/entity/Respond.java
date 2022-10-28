@@ -1,16 +1,33 @@
 package entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Objects;
 
 public class Respond implements Serializable {
 
+    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
     private long id;
+    private String userName;
+    private LocalDateTime dateTime;
+    private int mark;
     private String respond;
-    private long userId;
+    private List<User> users;
+    private List<User> specialists;
 
     public static Builder newBuilder() {
         return new Builder();
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public long getId() {
@@ -29,20 +46,46 @@ public class Respond implements Serializable {
         this.respond = respond;
     }
 
-    public long getUserId() {
-        return userId;
+    public String getDateTime() {
+        return dateTime.format(dateTimeFormatter);
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public int getMark() {
+        return mark;
+    }
+
+    public void setMark(int mark) {
+        this.mark = mark;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public List<User> getSpecialists() {
+        return specialists;
+    }
+
+    public void setSpecialists(List<User> specialists) {
+        this.specialists = specialists;
     }
 
     @Override
     public String toString() {
         return "Respond{" +
                 "id=" + id +
-                ", respond='" + respond + '\'' +
-                ", userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", dateTime=" + dateTime +
+                ", mark=" + mark +
+//                ", respond='" + respond + '\'' +
                 '}';
     }
 
@@ -67,13 +110,23 @@ public class Respond implements Serializable {
             return this;
         }
 
+        public Builder addName(String name) {
+            respond.setUserName(name);
+            return this;
+        }
+
         public Builder addRespond(String response) {
             respond.setRespond(response);
             return this;
         }
 
-        public Builder addUserId(long userId) {
-            respond.setUserId(userId);
+        public Builder addMark(int mark) {
+            respond.setMark(mark);
+            return this;
+        }
+
+        public Builder addRespondTime(LocalDateTime dateTime) {
+            respond.setDateTime(dateTime);
             return this;
         }
 

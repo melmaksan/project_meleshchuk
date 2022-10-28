@@ -2,7 +2,6 @@ package controller.command.admin;
 
 import controller.command.ICommand;
 import controller.util.Util;
-import controller.util.constants.Attributes;
 import controller.util.validator.PriceValidator;
 import entity.Service;
 import entity.User;
@@ -25,9 +24,9 @@ import static controller.util.constants.Views.*;
 
 public class PostCreateServiceCommand implements ICommand {
 
-    private static final Logger logger = LogManager.getLogger(PostCreateServiceCommand.class);
     private static final ServiceForService services = ServiceFactory.getServiceService();
     private final UserService userService = ServiceFactory.getUserService();
+    private static final Logger logger = LogManager.getLogger(PostCreateServiceCommand.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
@@ -35,14 +34,15 @@ public class PostCreateServiceCommand implements ICommand {
         List<String> errors = new ArrayList<>(validatePriceFromRequest(request));
         if (errors.isEmpty()) {
             services.createService(getDataFromRequestCreating(request));
-            request.setAttribute(SERVICES_UNIQUE_TYPE, services.getUniqueServiceTypes(services.findAllService()));
+            request.setAttribute(SERVICES_UNIQUE_TYPE, services.getUniqueServiceTypes
+                    (services.findAllService()));
             request.setAttribute(SERVICES,services.findAllService());
             Util.redirectTo(request, response, ResourceBundle.
                     getBundle(PAGES_BUNDLE).getString(HOME_PATH));
             return REDIRECTED;
         }
         logger.info("creating service has errors");
-        request.setAttribute(Attributes.ERRORS, errors);
+        request.setAttribute(ERRORS, errors);
         request.setAttribute(SPECIALISTS, userService.findAllSpecialists());
         logger.info("SPECIALISTS ==> " + userService.findAllSpecialists());
         return CREATE_VIEW;
@@ -61,7 +61,7 @@ public class PostCreateServiceCommand implements ICommand {
         logger.info("users ==> " + Arrays.toString(usersId));
         List<User> specialists = new ArrayList<>();
         for (String specId : usersId) {
-            Optional<User> specialist = userService.findUserForOtherEntity(Long.parseLong(specId));
+            Optional<User> specialist = userService.findUserById(Long.parseLong(specId));
             specialist.ifPresent(specialists::add);
         }
         logger.info("specialists ==> " + specialists);

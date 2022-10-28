@@ -12,6 +12,15 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/includes/navbar.jsp"/>
+<br>
+
+<c:if test="${not empty requestScope.errors}">
+    <div class="alert alert-danger">
+        <c:forEach items="${requestScope.errors}" var="error">
+            <strong><fmt:message key="error"/></strong>${error}<br>
+        </c:forEach>
+    </div>
+</c:if>
 
 <div class="container">
     <div class="card w-50 mx-auto my-5">
@@ -32,19 +41,19 @@
 
                 <div class="form-group">
                     <label>Email Address</label>
-                    <input type="email" class="form-control" name="login" placeholder="Enter your email"
+                    <input type="email" class="form-control" name="login" placeholder="example@form.com"
                            required>
                 </div>
 
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" class="form-control" name="password" placeholder="***********"
+                    <input type="text" class="form-control" name="password" placeholder="min 5, max 45 characters"
                            required>
                 </div>
 
                 <div class="form-group">
                     <label>Phone Number</label>
-                    <input type="tel" class="form-control" name="phone_num" placeholder="+38(044)937-99-92"
+                    <input type="tel" class="form-control" name="phone_num" placeholder="+38(0xx)xx-xx-xx"
                            required>
                 </div>
 

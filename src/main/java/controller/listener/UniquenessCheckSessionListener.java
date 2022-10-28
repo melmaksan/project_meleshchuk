@@ -1,6 +1,5 @@
 package controller.listener;
 
-import controller.util.constants.Attributes;
 import entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,6 +9,9 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import java.util.Map;
 import java.util.Objects;
+
+import static controller.util.constants.Attributes.USER;
+import static controller.util.constants.Attributes.USER_LIST;
 
 public class UniquenessCheckSessionListener implements HttpSessionListener {
 
@@ -32,10 +34,10 @@ public class UniquenessCheckSessionListener implements HttpSessionListener {
     public void sessionDestroyed(HttpSessionEvent sessionEvent) {
         totalActiveSessions--;
         ServletContext context = sessionEvent.getSession().getServletContext();
-        User user = (User) sessionEvent.getSession().getAttribute(Attributes.USER);
+        User user = (User) sessionEvent.getSession().getAttribute(USER);
         @SuppressWarnings("unchecked")
         Map<String, User> activeUserList = (Map<String, User>)
-                context.getAttribute(Attributes.USER_LIST);
+                context.getAttribute(USER_LIST);
         logger.debug("Destroyed session: " + sessionEvent.getSession().getId() +
                 (Objects.nonNull(user) ? "; User: " + user.getLogin() + ";" : ";"));
         activeUserList.remove(user.getLogin());

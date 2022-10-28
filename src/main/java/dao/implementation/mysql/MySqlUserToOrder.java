@@ -86,8 +86,7 @@ public class MySqlUserToOrder implements UserToOrderDao {
 
     @Override
     public void delete(Long id) {
-        defaultDao.executeUpdate(
-                DELETE + WHERE_USER, id);
+        defaultDao.executeUpdate(DELETE + WHERE_USER, id);
     }
 
     @Override
@@ -101,7 +100,7 @@ public class MySqlUserToOrder implements UserToOrderDao {
     }
 
     @Override
-    public List<UserToOrder> findSpecialistByOrder(long orderId) {
+    public List<UserToOrder> findSpecialistsByOrder(long orderId) {
         return defaultDao.findAll(SELECT_ALL + WHERE_USER_IS_SPECIALIST, orderId,
                 Role.RoleIdentifier.SPECIALIST.getId());
     }
@@ -113,7 +112,7 @@ public class MySqlUserToOrder implements UserToOrderDao {
     }
 
     @Override
-    public boolean isServiceExistInBookedOrder(long userId) {
+    public boolean isSpecExistsInOrder(long userId) {
         return defaultDao.exist(EXIST_BY_SERVICE, userId, OrderStatus.StatusIdentifier.BOOKED.getId());
     }
 
@@ -138,7 +137,7 @@ public class MySqlUserToOrder implements UserToOrderDao {
             System.out.println("~~~~~~~~~~~~");
 
             System.out.println("find spec: ");
-            System.out.println(mySqlUserToOrder.findSpecialistByOrder(10));
+            System.out.println(mySqlUserToOrder.findSpecialistsByOrder(10));
 
             System.out.println("~~~~~~~~~~~~");
 
@@ -150,7 +149,7 @@ public class MySqlUserToOrder implements UserToOrderDao {
 
             System.out.println("~~~~~~~~~~~~");
 
-            System.out.println(mySqlUserToOrder.isServiceExistInBookedOrder(7));
+            System.out.println(mySqlUserToOrder.isSpecExistsInOrder(7));
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }

@@ -8,7 +8,7 @@
 <html>
 <head>
     <jsp:include page="/WEB-INF/views/includes/head.jsp"/>
-    <title>Beauty Salon</title>
+    <title>Home Page</title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/includes/navbar.jsp"/>
@@ -27,23 +27,23 @@
             <div class="nav flex-column pl-4 m-1">
                 <h5 class="pt-3">Sort:</h5>
                 <h6 class="pb-0 pl-2 mb-0">by price</h6>
-                <form class="py-0 pl-3 my-1" action="${pageContext.request.contextPath}/site/home" method="post">
+                <form class="py-0 pl-3 my-1" action="${pageContext.request.contextPath}/site/home">
                     <input type="hidden" name="command" value="asc.price">
                     <button type="submit" class="btn-sm btn-outline-dark py-0" style="border-radius: 6px">ascPrice
                     </button>
                 </form>
-                <form class="py-0 pl-3 mb-1" action="${pageContext.request.contextPath}/site/home" method="post">
+                <form class="py-0 pl-3 mb-1" action="${pageContext.request.contextPath}/site/home">
                     <input type="hidden" name="command" value="desc.price">
                     <button type="submit" class="btn-sm btn-outline-dark py-0" style="border-radius: 6px">descPrice
                     </button>
                 </form>
                 <h6 class="pb-0 pl-2 mb-0 ">by title</h6>
-                <form class="py-0 pl-3 my-1" action="${pageContext.request.contextPath}/site/home" method="post">
+                <form class="py-0 pl-3 my-1" action="${pageContext.request.contextPath}/site/home" >
                     <input type="hidden" name="command" value="asc.title">
                     <button type="submit" class="btn-sm btn-outline-dark py-0" style="border-radius: 6px">ascTitle
                     </button>
                 </form>
-                <form class="py-0 pl-3 mb-1" action="${pageContext.request.contextPath}/site/home" method="post">
+                <form class="py-0 pl-3 mb-1" action="${pageContext.request.contextPath}/site/home" >
                     <input type="hidden" name="command" value="desc.title">
                     <button type="submit" class="btn-sm btn-outline-dark py-0" style="border-radius: 6px">descTitle
                     </button>
@@ -56,7 +56,7 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdown02">
                         <c:forEach var="type" items="${requestScope.serviceTypes}">
-                            <form class="mb-1" action="${pageContext.request.contextPath}/site/home" method="post">
+                            <form class="mb-1" action="${pageContext.request.contextPath}/site/home">
                                 <input type="hidden" name="command" value="filter.service"/>
                                 <input type="hidden" name="serviceType" value="${type}"/>
                                 <button class="dropdown-item" type="submit">${type}</button>

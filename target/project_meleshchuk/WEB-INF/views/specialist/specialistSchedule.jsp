@@ -9,7 +9,7 @@
 <html>
 <head>
     <jsp:include page="/WEB-INF/views/includes/head.jsp"/>
-    <title>Orders Page</title>
+    <title>Schedule Page</title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/includes/navbar.jsp"/>

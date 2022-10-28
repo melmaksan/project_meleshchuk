@@ -1,23 +1,15 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class UserToService implements Serializable {
 
-    private long id;
     private long userId;
     private long serviceId;
 
     public static Builder newBuilder() {
         return new Builder();
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public long getUserId() {
@@ -39,7 +31,6 @@ public class UserToService implements Serializable {
     @Override
     public String toString() {
         return "UserServices{" +
-                "id=" + id +
                 ", userId=" + userId +
                 ", serviceId=" + serviceId +
                 '}';
@@ -50,7 +41,12 @@ public class UserToService implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserToService that = (UserToService) o;
-        return id == that.id;
+        return userId == that.userId && serviceId == that.serviceId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, serviceId);
     }
 
     public static class Builder {
@@ -59,11 +55,6 @@ public class UserToService implements Serializable {
 
         public Builder() {
             userToService = new UserToService();
-        }
-
-        public Builder addId(long id) {
-            userToService.setId(id);
-            return this;
         }
 
         public Builder addUserId(long userId) {

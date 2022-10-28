@@ -40,13 +40,7 @@ public abstract class DaoFactory {
 
     public abstract OrderDao getOrderDao(DaoConnection connection);
 
-    public abstract OrderStatusDao getOrderStatusDao(DaoConnection connection);
-
     public abstract OrderToServiceDao getOrderToServiceDao(DaoConnection connection);
-
-    public abstract PaymentStatusDao getPaymentStatusDao(DaoConnection connection);
-
-    public abstract RoleDao getRoleDao(DaoConnection connection);
 
     public abstract ServiceDao getServiceDao(DaoConnection connection);
 
@@ -57,4 +51,6 @@ public abstract class DaoFactory {
     public abstract UserToServiceDao getUserToServiceDao(DaoConnection connection);
 
     public abstract RespondDao getRespondDao(DaoConnection connection);
+
+    public abstract UserToRespondDao getUserToRespondDao(DaoConnection connection);
 }

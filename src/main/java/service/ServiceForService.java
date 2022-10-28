@@ -1,10 +1,5 @@
 package service;
 
-import controller.util.Util;
-import controller.util.validator.LoginValidator;
-import controller.util.validator.PasswordValidator;
-import controller.util.validator.PhoneValidator;
-import controller.util.validator.PriceValidator;
 import dao.abstraction.ServiceDao;
 import dao.factory.DaoFactory;
 import dao.factory.connection.DaoConnection;
@@ -57,7 +52,7 @@ public class ServiceForService {
         List<UserToService> userToServiceList = userToService.findAllUsersByService(service.getId());
         for (UserToService userToService : userToServiceList) {
             try {
-                users.add((userService.findUserForOtherEntity(userToService.getUserId())).orElse(null));
+                users.add((userService.findUserById(userToService.getUserId())).orElse(null));
             } catch (RuntimeException ex) {
                 logger.error("There are no users here!", ex);
             }

@@ -22,7 +22,7 @@ public class GetAllSpecialistsCommand implements ICommand {
 
     private final UserService userService = ServiceFactory.getUserService();
     private final ServiceForService service = ServiceFactory.getServiceService();
-    private static final Logger logger = LogManager.getLogger(GetAllOrdersCommand.class);
+    private static final Logger logger = LogManager.getLogger(GetAllSpecialistsCommand.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)

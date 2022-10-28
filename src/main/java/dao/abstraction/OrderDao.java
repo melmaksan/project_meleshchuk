@@ -4,6 +4,7 @@ import entity.Order;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface OrderDao extends GenericDao<Order, Long> {
 
@@ -32,4 +33,6 @@ public interface OrderDao extends GenericDao<Order, Long> {
     void updatePaymentStatus(Order order, int paymentStatus);
 
     int getNumberOfRows();
+
+    List<Order> findAllWithCredentials(LocalDate dateFrom, LocalDate dateTo, int status);
 }

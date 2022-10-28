@@ -8,7 +8,7 @@
 <html>
 <head>
     <jsp:include page="/WEB-INF/views/includes/head.jsp"/>
-    <title>Beauty Salon</title>
+    <title>Orders Page</title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/includes/navbar.jsp"/>
@@ -41,12 +41,11 @@
     <tbody>
     <c:forEach var="order" items="${requestScope.orders}">
         <c:forEach var="service" items="${order.services}">
-            <c:forEach var="client" items="${order.users}">
                 <c:forEach var="spec" items="${order.specialists}">
                     <tr>
                         <c:if test="${sessionScope.user.admin}">
                             <td class="col-1 py-1" style="max-width: 5%">${order.id}</td>
-                            <td class="col-2 py-1">${client.firstName} ${client.lastName}</td>
+                            <td class="col-2 py-1">${order.user.firstName} ${order.user.lastName}</td>
                             <td class="col-1 py-1" style="max-width: 12%; min-width: 8%">${service.title}</td>
                             <td class="col-1 py-1">${spec.firstName}</td>
                             <td class="col-1 py-1">${service.price}₴</td>
@@ -124,7 +123,6 @@
                         </c:if>
                     </tr>
                 </c:forEach>
-            </c:forEach>
         </c:forEach>
     </c:forEach>
     </tbody>

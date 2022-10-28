@@ -30,8 +30,7 @@ public class PostAddOrderCommand implements ICommand {
                 Long.parseLong(request.getParameter(SPEC_ID)),
                 Long.parseLong(request.getParameter(SERVICE_ID)));
         Util.redirectTo(request, response, ResourceBundle
-                .getBundle(PAGES_BUNDLE)
-                .getString("user.orders"));
+                .getBundle(PAGES_BUNDLE).getString("user.orders"));
         logger.info("redirect to orders");
         return REDIRECTED;
     }
