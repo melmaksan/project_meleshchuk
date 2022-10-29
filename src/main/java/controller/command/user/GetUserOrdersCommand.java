@@ -28,9 +28,6 @@ public class GetUserOrdersCommand implements ICommand {
             throws ServletException, IOException {
         User currentUser = getUserFromSession(request.getSession());
         List<Order> orders = userService.getOrders(currentUser);
-        for (Order order : orders) {
-            logger.info("specs ==> " + order.getSpecialists());
-        }
         currentUser.setOrders(orders);
         request.setAttribute(ORDERS, orders);
         logger.info("I am getUserOrders command");

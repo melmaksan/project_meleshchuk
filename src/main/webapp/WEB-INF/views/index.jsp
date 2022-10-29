@@ -38,18 +38,18 @@
                     </button>
                 </form>
                 <h6 class="pb-0 pl-2 mb-0 ">by title</h6>
-                <form class="py-0 pl-3 my-1" action="${pageContext.request.contextPath}/site/home" >
+                <form class="py-0 pl-3 my-1" action="${pageContext.request.contextPath}/site/home">
                     <input type="hidden" name="command" value="asc.title">
                     <button type="submit" class="btn-sm btn-outline-dark py-0" style="border-radius: 6px">ascTitle
                     </button>
                 </form>
-                <form class="py-0 pl-3 mb-1" action="${pageContext.request.contextPath}/site/home" >
+                <form class="py-0 pl-3 mb-1" action="${pageContext.request.contextPath}/site/home">
                     <input type="hidden" name="command" value="desc.title">
                     <button type="submit" class="btn-sm btn-outline-dark py-0" style="border-radius: 6px">descTitle
                     </button>
                 </form>
                 <h5 class="pt-2">Filter:</h5>
-                <div class="dropdown py-0 pl-3 mb-1">
+                <div class="dropdown py-0 pl-3 mb-3">
                     <button class="btn-sm btn-outline-dark dropdown-toggle" id="dropdown02" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false" style="border-radius: 6px">
                         by service
@@ -83,13 +83,12 @@
                                     </div>
                                     <div class="col-4 text-right ">
                                         <c:if test="${empty sessionScope.user}">
-                                            <form action="${pageContext.request.contextPath}/site/fast_booking">
-                                                <input type="hidden" name="serviceId" value="${service.id}"/>
+                                            <form class="mb-0" action="${pageContext.request.contextPath}/site/login">
                                                 <button type="submit" class="btn btn-outline-info">Book</button>
                                             </form>
                                         </c:if>
                                         <c:if test="${sessionScope.user.user}">
-                                            <form action="${pageContext.request.contextPath}/site/user/fast_booking">
+                                            <form action="${pageContext.request.contextPath}/site/user/confirmation">
                                                 <input type="hidden" name="serviceId" value="${service.id}"/>
                                                 <button type="submit" class="btn btn-outline-info">Book</button>
                                             </form>

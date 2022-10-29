@@ -17,11 +17,11 @@ import java.util.OptionalDouble;
 public class UpdateSpecRating implements Runnable {
 
     private static final UserService userService = ServiceFactory.getUserService();
-    private static final Logger logger = LogManager.getLogger(SendEmail.class);
+    private static final Logger logger = LogManager.getLogger(UpdateSpecRating.class);
 
     @Override
     public void run() {
-        updateRate();
+        //updateRate();
     }
 
     public static void updateRate() {
@@ -29,7 +29,6 @@ public class UpdateSpecRating implements Runnable {
         List<User> specialists = userService.findAllSpecialists();
         for (User spec : specialists) {
             List<Respond> responds = userService.getResponds(spec);
-            logger.info("responds ==> " + responds);
             OptionalDouble rate = responds.stream().mapToDouble(Respond::getMark).average();
             if (rate.isPresent()) {
                 i++;

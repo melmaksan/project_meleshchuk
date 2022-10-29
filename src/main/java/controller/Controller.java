@@ -2,10 +2,7 @@ package controller;
 
 import controller.command.ICommand;
 import controller.i18n.SupportedLocale;
-import controller.listener.ContextListener;
-import controller.util.constants.Attributes;
 import controller.util.constants.Views;
-import entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ResourceBundle;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class Controller extends HttpServlet {
 
@@ -30,9 +26,6 @@ public class Controller extends HttpServlet {
         controllerHelper = ControllerHelper.getInstance();
         getServletContext().setAttribute(SUPPORTED_LOCALES,
                 SupportedLocale.getSupportedLanguages());
-        getServletContext().setAttribute(Attributes.USER_LIST,
-                new ConcurrentHashMap<String, User>());
-
     }
 
     @Override
@@ -62,6 +55,7 @@ public class Controller extends HttpServlet {
         String path = command.execute(request, response);
 
         logger.info("path ==>   " + path);
+
         if (!path.equals(ICommand.REDIRECTED)) {
             logger.info("i am before forward");
             request.getRequestDispatcher(path).forward(request, response);

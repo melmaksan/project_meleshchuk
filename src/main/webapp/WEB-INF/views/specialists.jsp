@@ -28,11 +28,10 @@
     <tr>
         <th class="col-3 " scope="col">Name</th>
         <th class="col-1 " scope="col">Rating</th>
-        <th class="col-2 " scope="col">Service Type</th>
+        <th class="col-3 " scope="col">Service Type</th>
         <th class="col-2 " scope="col">Service Title</th>
-        <th class="col-1 " scope="col">Price</th>
-        <th class="col-2 " scope="col">Data & Time</th>
-        <th class="col-1 " scope="col">Booking</th>
+        <th class="col-2 " scope="col">Price</th>
+        <th class="col-1 " scope="col"></th>
     </tr>
     </thead>
     <tbody>
@@ -48,17 +47,14 @@
                         </svg>
                     </h6>
                 </td>
-                <td class="col-2 py-1 align-middle">${service.description}</td>
+                <td class="col-3 py-1 align-middle">${service.description}</td>
                 <td class="col-2 py-1 align-middle">${service.title}</td>
-                <td class="col-1 py-1 align-middle">${service.price}₴</td>
-                <td class="col-2 py-1">
-                    <input type="datetime-local" id="appointment-time" name="meeting-time" value="2022-10-22T19:30"
-                           min="2022-10-22T00:00" max="2022-11-22T00:00" required/></td>
-                <td class="col-1 pt-0 pb-1 pr-2">
+                <td class="col-2 py-1 align-middle">${service.price}₴</td>
+                <td class="col-1 pt-0 pb-1">
                     <c:if test="${empty sessionScope.user }">
-                        <form class="mt-1 mb-0" action="${pageContext.request.contextPath}/site/login">
-                            <button type="submit" class="btn-sm btn-outline-secondary py-0" style="border-radius: 8px">
-                                Book
+                        <form class="mb-0" action="${pageContext.request.contextPath}/site/login">
+                            <button type="submit" class="btn-sm btn-outline-secondary py-0 mt-1 mb-0" style="border-radius: 4px">
+                                Choose
                             </button>
                         </form>
                     </c:if>

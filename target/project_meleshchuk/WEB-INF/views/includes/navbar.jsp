@@ -297,7 +297,6 @@
                     <div class="container text-center">
                         <img src="${pageContext.request.contextPath}/images/profile.jpg" class="img-fluid"
                              alt="profile" id="profile_img" style="max-height:  150px; border-radius: 25%"><br><br><br>
-                        <%--                        <h4 class="modal-title mt-3">${sessionScope.user.firstName} ${sessionScope.user.lastName}</h4>--%>
 
                         <!-- details   -->
                         <table class="table">

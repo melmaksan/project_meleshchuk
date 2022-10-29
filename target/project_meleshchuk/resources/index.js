@@ -8,12 +8,6 @@ $('#sortTable').DataTable({
             orderable: false,
             targets: 5,
         },
-
-        {
-            searchable: false,
-            orderable: false,
-            targets: 6,
-        }
     ],
 });
 
@@ -118,4 +112,19 @@ $('[data-toggle=confirmation2]').confirmation({
 });
 
 $('#select').selectpicker();
+
+// DateTime Picker#1
+const d = new Date();
+const one_month = d.setMonth(d.getMonth() + 1);
+$(function () {
+    $('#datetimepicker1').datetimepicker({
+        timeZone: 'Europe/Kyiv',
+        minDate: new Date(),
+        maxDate: one_month,
+        defaultDate: new Date(),
+        format: 'YYYY-MM-DD HH:mm',
+        stepping: 30,
+        enabledHours:[9,10,11,12,13,14,15,16,17,18,19]
+    });
+});
 

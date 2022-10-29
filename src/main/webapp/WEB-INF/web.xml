@@ -31,6 +31,10 @@
     <listener-class>controller.listener.UniquenessCheckSessionListener</listener-class>
   </listener>
 
+  <listener>
+    <listener-class>controller.listener.ContextListener</listener-class>
+  </listener>
+
   <filter>
     <filter-name>AuthorizationFilter</filter-name>
     <filter-class>controller.filter.AuthorizationFilter</filter-class>

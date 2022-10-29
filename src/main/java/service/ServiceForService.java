@@ -40,14 +40,14 @@ public class ServiceForService {
             ServiceDao serviceDao = daoFactory.getServiceDao(connection);
             List<Service> services = serviceDao.findAll();
             for (Service service : services) {
-                List<User> users = getUsers(service);
-                service.setUsers(users);
+                List<User> specialists = getSpecialists(service);
+                service.setUsers(specialists);
             }
             return services;
         }
     }
 
-    private List<User> getUsers(Service service) {
+    public List<User> getSpecialists(Service service) {
         List<User> users = new ArrayList<>();
         List<UserToService> userToServiceList = userToService.findAllUsersByService(service.getId());
         for (UserToService userToService : userToServiceList) {
@@ -69,7 +69,7 @@ public class ServiceForService {
             } catch (NoSuchFieldException e) {
                 e.printStackTrace();
             }
-            List<User> users = getUsers(Objects.requireNonNull(service));
+            List<User> users = getSpecialists(Objects.requireNonNull(service));
             service.setUsers(users);
             return service;
         }
@@ -80,7 +80,7 @@ public class ServiceForService {
             ServiceDao serviceDao = daoFactory.getServiceDao(connection);
             List<Service> services = serviceDao.ascByPriceService();
             for (Service service : services) {
-                List<User> users = getUsers(service);
+                List<User> users = getSpecialists(service);
                 service.setUsers(users);
             }
             return services;
@@ -92,7 +92,7 @@ public class ServiceForService {
             ServiceDao serviceDao = daoFactory.getServiceDao(connection);
             List<Service> services = serviceDao.descByPriceService();
             for (Service service : services) {
-                List<User> users = getUsers(service);
+                List<User> users = getSpecialists(service);
                 service.setUsers(users);
             }
             return services;
@@ -104,7 +104,7 @@ public class ServiceForService {
             ServiceDao serviceDao = daoFactory.getServiceDao(connection);
             List<Service> services = serviceDao.ascByTitleService();
             for (Service service : services) {
-                List<User> users = getUsers(service);
+                List<User> users = getSpecialists(service);
                 service.setUsers(users);
             }
             return services;
@@ -116,7 +116,7 @@ public class ServiceForService {
             ServiceDao serviceDao = daoFactory.getServiceDao(connection);
             List<Service> services = serviceDao.descByTitleService();
             for (Service service : services) {
-                List<User> users = getUsers(service);
+                List<User> users = getSpecialists(service);
                 service.setUsers(users);
             }
             return services;
@@ -136,7 +136,7 @@ public class ServiceForService {
             ServiceDao serviceDao = daoFactory.getServiceDao(connection);
             List<Service> services = serviceDao.filterByServiceDescription(type);
             for (Service service : services) {
-                List<User> users = getUsers(service);
+                List<User> users = getSpecialists(service);
                 service.setUsers(users);
             }
             return services;

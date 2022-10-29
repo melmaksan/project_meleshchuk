@@ -44,7 +44,7 @@ public class OrderDtoConverter implements DtoConverter<Order> {
     private LocalDateTime convertTime(Timestamp timestamp) {
         LocalDateTime localDateTime = timestamp.toLocalDateTime();
         ZonedDateTime zonedUTC = localDateTime.atZone(ZoneId.of("UTC"));
-        ZonedDateTime zonedIST = zonedUTC.withZoneSameInstant(ZoneId.of("GMT-3"));
+        ZonedDateTime zonedIST = zonedUTC.withZoneSameInstant(ZoneId.of("GMT-2"));
         return zonedIST.toLocalDateTime();
     }
 }

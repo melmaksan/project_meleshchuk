@@ -18,6 +18,7 @@ public class Attributes {
     public static final String ADMINS  ="admins";
     public static final String FAST_BOOK = "fastBookSpecialist";
     public static final String SERVICES = "services";
+    public static final String SERVICE = "service";
     public static final String SERVICES_UNIQUE_TYPE = "serviceTypes";
     public static final String ACCESS_DENIED = "Access denied for page: ";
     public static final String HOME_PATH = "home.path";
@@ -50,6 +51,8 @@ public class Attributes {
     public static final String RESPOND_NAME = "respondName";
 
     public static final String USER_NOT_EXIST = "There is no user with such email, please try again";
+    public static final String SPEC_NOT_EXIST = "There is no specialist with such id, please try again";
+    public static final String SERVICE_NOT_EXIST = "There is no service with such id, please try again";
     public static final String NO_RATE = "Rating is not specified, please try again";
     public static final String INVALID_CREDENTIALS = "Invalid credentials, please try again";
 }

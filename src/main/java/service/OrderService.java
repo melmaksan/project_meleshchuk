@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -151,8 +152,9 @@ public class OrderService {
 
 
     private Order getDataFromRequestCreating(String dateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return Order.newBuilder()
-                .addOrderTime(LocalDateTime.parse(dateTime))
+                .addOrderTime(LocalDateTime.parse(dateTime, formatter))
                 .addDefaultStatus()
                 .addDefaultPaymentStatus()
                 .build();

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="file://$PROJECT_DIR$" libraries="{@popperjs, bootstrap, bootstrap-multiselect, bootstrap-select, bootstrap.bundle, buttons.bootstrap4, buttons.dataTables, cdb5eadd59, dataTables.bootstrap4, dataTables.buttons, datatables, jquery, jquery-3.6.1, jquery.dataTables, popper.js, sweetalert}" />
+    <file url="file://$PROJECT_DIR$" libraries="{@popperjs, bootstrap, bootstrap-datepicker, bootstrap-datetimepicker, bootstrap-multiselect, bootstrap-select, bootstrap.bundle, buttons.bootstrap4, buttons.dataTables, cdb5eadd59, dataTables.bootstrap4, dataTables.buttons, datatables, jquery, jquery-3.6.1, jquery.dataTables, moment, moment.js, popper.js, sweetalert, tempusdominus-bootstrap-4}" />
   </component>
 </project>

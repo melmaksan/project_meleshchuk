@@ -58,20 +58,18 @@ public class ControllerHelper {
                 new GetDescPriceCommand());
         commands.put(buildKey(bundle.getString("home.path"), "filter.service"),
                 new GetFilterByServiceCommand());
-        commands.put(buildKey(bundle.getString("fastBook"), null),
-                new GetFastBookCommand());
         commands.put(buildKey(bundle.getString("specialists"), null),
                 new GetSpecialistsCommand());
         commands.put(buildKey(bundle.getString("responds"), null),
                 new GetRespondsCommand());
         commands.put(buildKey(bundle.getString("user.orders"), null),
                 new GetUserOrdersCommand());
-        commands.put(buildKey(bundle.getString("user.fastBook"), null),
-                new GetUserFastBookCommand());
         commands.put(buildKey(bundle.getString("user.specialists"), null),
                 new GetUserSpecialistsCommand());
+        commands.put(buildKey(bundle.getString("user.confirmation"), null),
+                new GetConfirmationCommand());
         commands.put(buildKey(bundle.getString("user.orders"), "add.order"),
-                new PostAddOrderCommand());
+                new PostConfirmOrderCommand());
         commands.put(buildKey(bundle.getString("responds"), "filter.respond"),
                 new GetRespondsFilterByUserCommand());
         commands.put(buildKey(bundle.getString("user.create"), null),
