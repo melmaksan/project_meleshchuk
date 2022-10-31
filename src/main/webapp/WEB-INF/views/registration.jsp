@@ -23,49 +23,49 @@
 </c:if>
 
 <section id="section">
-<div class="container">
-    <div class="card w-50 mx-auto my-5">
-        <div class="card-header text-center font-weight-bold"><fmt:message key="signup"/></div>
-        <div class="card-body">
-            <form class=form-group" method="post">
-                <input type="hidden" name="command" value="registration"/>
+    <div class="container">
+        <div class="card w-50 mx-auto my-5">
+            <div class="card-header text-center font-weight-bold"><fmt:message key="signup"/></div>
+            <div class="card-body">
+                <form class=form-group" method="post">
+                    <input type="hidden" name="command" value="registration"/>
 
-                <div class="form-group">
-                    <label><fmt:message key="first.name"/></label>
-                    <input type="text" class="form-control" name="first_name" required>
-                </div>
+                    <div class="form-group">
+                        <label><fmt:message key="first.name"/></label>
+                        <input type="text" class="form-control" name="first_name" required>
+                    </div>
 
-                <div class="form-group">
-                    <label><fmt:message key="last.name"/></label>
-                    <input type="text" class="form-control" name="last_name" required>
-                </div>
+                    <div class="form-group">
+                        <label><fmt:message key="last.name"/></label>
+                        <input type="text" class="form-control" name="last_name" required>
+                    </div>
 
-                <div class="form-group">
-                    <label><fmt:message key="email.address"/></label>
-                    <input type="email" class="form-control" name="login" placeholder="example@form.com"
-                           required>
-                </div>
+                    <div class="form-group">
+                        <label><fmt:message key="email.address"/></label>
+                        <input type="email" class="form-control" name="login" placeholder="example@form.com"
+                               required>
+                    </div>
 
-                <div class="form-group">
-                    <label><fmt:message key="password"/></label>
-                    <input type="text" class="form-control" name="password" placeholder="min 5, max 45 characters"
-                           required>
-                </div>
+                    <div class="form-group">
+                        <label><fmt:message key="password"/></label>
+                        <input type="text" class="form-control" name="password" placeholder="min 5, max 45 characters"
+                               required>
+                    </div>
 
-                <div class="form-group">
-                    <label><fmt:message key="phone.number"/></label>
-                    <input type="tel" class="form-control" name="phone_num" placeholder="+38(0xx)xx-xx-xx"
-                           required>
-                </div>
+                    <div class="form-group">
+                        <label><fmt:message key="phone.number"/></label>
+                        <input type="tel" class="form-control" name="phone_num" placeholder="+38(0xx)xx-xx-xx"
+                               required>
+                    </div>
 
-                <div class="text-center ">
-                    <button type="submit" class="btn btn-outline-primary"><fmt:message key="signup"/></button>
-                </div>
+                    <div class="text-center ">
+                        <button type="submit" class="btn btn-outline-primary"><fmt:message key="signup"/></button>
+                    </div>
 
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 </section>
 
 <jsp:include page="/WEB-INF/views/includes/footer.jsp"/>

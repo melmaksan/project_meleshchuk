@@ -22,4 +22,6 @@ public interface UserToServiceDao extends GenericDao<UserToService, Long> {
      * @return list, which contains retrieved objects
      */
     List<UserToService> findAllByService(long serviceId);
+
+    void deleteService(long id);
 }

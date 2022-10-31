@@ -95,22 +95,6 @@
                     </c:choose>
                 </c:if>
                 <%-- Schedule(for specialist) --%>
-                <c:if test="${sessionScope.user.specialist}">
-                    <c:choose>
-                        <c:when test="${not specialistSchedulePage.equals(currPage)}">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/site/specialist/schedule"
-                                   role="button"><fmt:message key="schedule"/></a>
-                            </li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="nav-item">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/site/specialist/schedule"
-                                   role="button"><fmt:message key="schedule"/></a>
-                            </li>
-                        </c:otherwise>
-                    </c:choose>
-                </c:if>
                 <%-- Orders --%>
                 <c:if test="${not empty sessionScope.user}">
                     <c:if test="${ sessionScope.user.user}">

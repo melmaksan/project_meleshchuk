@@ -94,6 +94,8 @@ $('#sortTable6').DataTable({
 });
 
 $('#sortTable7').DataTable({
+    filter: false,
+    info: false,
     order: [[6, 'asc'], [4, 'desc']],
     columnDefs: [
         {
@@ -129,5 +131,13 @@ $(function () {
         format: 'YYYY-MM-DD HH:mm',
         stepping: 30,
         enabledHours: [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+    });
+});
+
+$(function () {
+    $('#datetimepicker2').datetimepicker({
+        timeZone: 'Europe/Kyiv',
+        maxDate: one_month,
+        format: 'YYYY-MM-DD'
     });
 });

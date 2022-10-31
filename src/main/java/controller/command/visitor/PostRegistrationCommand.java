@@ -35,9 +35,10 @@ public class PostRegistrationCommand implements ICommand {
                 request.getParameter(PHONE),
                 request.getParameter(ROLE));
         if (errors.isEmpty()) {
+            request.getSession().setAttribute(REGISTER, SUCCESS_REGISTER);
             logger.info("SING UP WITHOUT ERRORS!");
             Util.redirectTo(request, response, ResourceBundle.
-                    getBundle(PAGES_BUNDLE).getString(HOME_PATH));
+                    getBundle(PAGES_BUNDLE).getString("login.path"));
             return REDIRECTED;
         }
         logger.info("SING UP HAS ERRORS!");

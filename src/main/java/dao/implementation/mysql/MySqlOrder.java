@@ -160,6 +160,11 @@ public class MySqlOrder implements OrderDao {
                     .findAllWithCredentials(LocalDate.now().plusDays(2),
                             LocalDate.now().plusDays(7),  2));
 
+
+            System.out.println("find id");
+            System.out.println(mySqlOrder
+                    .findById(22L));
+
 //            System.out.println("Insert test:");
 //            Order order = mySqlOrder.insert(Order.newBuilder().addOrderTime(LocalDateTime.now())
 //                    .addDefaultStatus().addDefaultPaymentStatus().build());

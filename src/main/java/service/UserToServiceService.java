@@ -41,8 +41,13 @@ public class UserToServiceService {
         userToServiceDao.insert(userToService);
     }
 
-    public void deleteUserToOrder(long userId, DaoConnection connection) {
+    public void deleteUserToService(long userId, DaoConnection connection) {
         UserToServiceDao userToServiceDao = daoFactory.getUserToServiceDao(connection);
         userToServiceDao.delete(userId);
+    }
+
+    public void deleteServiceToUser(long serviceId, DaoConnection connection) {
+        UserToServiceDao userToServiceDao = daoFactory.getUserToServiceDao(connection);
+        userToServiceDao.deleteService(serviceId);
     }
 }

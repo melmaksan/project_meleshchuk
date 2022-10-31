@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -80,7 +79,7 @@ public class PostChangeOrderTimeCommand implements ICommand {
 
     private void checkOnOrdersPerDay(List<String> errors, LocalDateTime newOrderStart,
                                      LocalDateTime newOrderEnd, User spec) {
-        List<Order> orders = userService.getOrdersForCheck(spec,
+        List<Order> orders = userService.getBookedOrdersPerDay(spec,
                 LocalDate.from(newOrderEnd), LocalDate.from(newOrderEnd).plusDays(1));
         for (Order order : orders) {
             if (newOrderStart.isBefore(order.getTimeEnd()) && newOrderEnd.isAfter(order.getTimeStart())) {

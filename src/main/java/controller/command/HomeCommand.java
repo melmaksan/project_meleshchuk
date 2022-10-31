@@ -22,10 +22,22 @@ public class HomeCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        removeRegStatus(request);
         logger.info("home command");
         request.setAttribute(SERVICES_UNIQUE_TYPE, services.getUniqueServiceTypes(services.findAllService()));
-        request.setAttribute(SERVICES,services.findAllService());
+        request.setAttribute(SERVICES, services.findAllService());
         return HOME_VIEW;
     }
 
+    public static void removeLogStatus(HttpServletRequest request) {
+        if (request.getSession().getAttribute("status") != null) {
+            request.getSession().removeAttribute("status");
+        }
+    }
+
+    public static void removeRegStatus(HttpServletRequest request) {
+        if (request.getSession().getAttribute("register") != null) {
+            request.getSession().removeAttribute("register");
+        }
+    }
 }

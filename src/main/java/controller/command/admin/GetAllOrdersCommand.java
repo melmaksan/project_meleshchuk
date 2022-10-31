@@ -1,5 +1,6 @@
 package controller.command.admin;
 
+import controller.command.HomeCommand;
 import controller.command.ICommand;
 import entity.Order;
 import entity.OrderStatus;
@@ -27,6 +28,7 @@ public class GetAllOrdersCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HomeCommand.removeLogStatus(request);
         List<OrderStatus.StatusIdentifier> orderStatuses = Arrays.asList
                 (OrderStatus.StatusIdentifier.values());
         List<PaymentStatus.PaymentIdentifier> paymentStatuses = Arrays.asList
@@ -44,7 +46,8 @@ public class GetAllOrdersCommand implements ICommand {
         int recordsPerPage = 2;
         if (request.getParameter("page") != null)
             page = Integer.parseInt(request.getParameter("page"));
-        List<Order> list = orderService.findAll(recordsPerPage, (page - 1) * recordsPerPage);
+        List<Order> list = orderService.findAll(recordsPerPage, (page - 1) *
+                recordsPerPage);
         int numberOfRows = orderService.getNumberOfRows();
         int numberOfPages = (int) Math.ceil(numberOfRows * 1.0 / recordsPerPage);
         request.setAttribute(ORDERS, list);

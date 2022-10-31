@@ -1,5 +1,6 @@
 package controller.command.visitor;
 
+import controller.command.HomeCommand;
 import controller.command.ICommand;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,6 +25,8 @@ public class GetSpecialistsCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HomeCommand.removeLogStatus(request);
+        HomeCommand.removeRegStatus(request);
         request.setAttribute(SPECIALISTS, userService.findAllSpecialists());
         logger.info("i am GetSpecialistsCommand");
         return SPECIALISTS_VIEW;

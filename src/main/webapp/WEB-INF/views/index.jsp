@@ -13,12 +13,19 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/includes/navbar.jsp"/>
+<br>
 
 <c:if test="${not empty requestScope.errors}">
     <div class="alert alert-danger">
         <c:forEach items="${requestScope.errors}" var="error">
             <strong><fmt:message key="error"/></strong>${error}<br>
         </c:forEach>
+    </div>
+</c:if>
+
+<c:if test="${not empty sessionScope.status}">
+    <div class="alert alert-success">
+        <strong>${sessionScope.status}</strong><br>
     </div>
 </c:if>
 
@@ -70,7 +77,7 @@
             </div>
             <div class="col-10 offset-2" id="main">
                 <div class="container-fluid">
-                    <div class="card-header mx-auto mt-3 mb-0"><h3><fmt:message key="all"/> <fmt:message key="services"/></h3></div>
+                    <div class="card-header mx-auto my-1"><h3><fmt:message key="all"/> <fmt:message key="services"/></h3></div>
                     <div class="row mx-auto">
                         <c:forEach var="service" items="${requestScope.services}">
                             <div class="col my-4">

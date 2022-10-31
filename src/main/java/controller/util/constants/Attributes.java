@@ -58,4 +58,10 @@ public class Attributes {
     public static final String NO_RATE = "Rating is not specified, please try again";
     public static final String INVALID_CREDENTIALS = "Invalid credentials, please try again";
     public static final String SPEC_IS_BUSY = "The specialist is busy at this time, please try another one";
+
+    public static final String STATUS = "status";
+    public static final String REGISTER = "register";
+    public static final String DATE = "date";
+    public static final String SUCCESS_STATUS = "You have logged in successfully!";
+    public static final String SUCCESS_REGISTER = "You have registered successfully!";
 }

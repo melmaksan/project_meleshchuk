@@ -86,6 +86,12 @@ public class MySqlOrderToService implements OrderToServiceDao {
     }
 
     @Override
+    public void deleteService(long id) {
+        defaultDao.executeUpdate(
+                DELETE + WHERE_SERVICE, id);
+    }
+
+    @Override
     public boolean isServiceExistInBookedOrder(long serviceId) {
         return defaultDao.exist(EXIST_BY_SERVICE, serviceId, OrderStatus.StatusIdentifier.BOOKED.getId());
     }
@@ -132,8 +138,8 @@ public class MySqlOrderToService implements OrderToServiceDao {
             System.out.println(mySqlOrderToService.findAllByService(3));
 
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
 
 

@@ -1,5 +1,6 @@
 package controller.command.user;
 
+import controller.command.HomeCommand;
 import controller.command.ICommand;
 import entity.Service;
 import entity.User;
@@ -30,6 +31,7 @@ public class GetConfirmationCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HomeCommand.removeLogStatus(request);
         List<String> errors = new ArrayList<>();
         Service service = serviceService.findServiceById(
                 Long.parseLong(request.getParameter(SERVICE_ID)));

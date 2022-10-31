@@ -10,7 +10,6 @@
 <c:set var="visitorSpecPage" scope="page" value="/beauty_salon/WEB-INF/views/specialists.jsp"/>
 <c:set var="userSpecPage" scope="page" value="/beauty_salon/WEB-INF/views/user/userSpecialists.jsp"/>
 <c:set var="userOrdersPage" scope="page" value="/beauty_salon/WEB-INF/views/user/userOrders.jsp"/>
-<c:set var="userCreatePage" scope="page" value="/beauty_salon/WEB-INF/views/user/createRespond.jsp"/>
 <c:set var="specialistOrdersPage" scope="page" value="/beauty_salon/WEB-INF/views/specialist/specialistOrders.jsp"/>
 <c:set var="specialistSchedulePage" scope="page" value="/beauty_salon/WEB-INF/views/specialist/specialistSchedule.jsp"/>
 <c:set var="adminSpecPage" scope="page" value="/beauty_salon/WEB-INF/views/admin/adminSpecialists.jsp"/>
@@ -52,13 +51,13 @@
                         <c:when test="${not visitorSpecPage.equals(currPage)}">
                             <li class="nav-item active">
                                 <a class="nav-link" href="${pageContext.request.contextPath}/site/specialists"
-                                   role="button">Specialists</a>
+                                   role="button"><fmt:message key="specialists"/></a>
                             </li>
                         </c:when>
                         <c:otherwise>
                             <li class="nav-item">
                                 <a class="nav-link" href="${pageContext.request.contextPath}/site/specialists"
-                                   role="button">Specialists</a>
+                                   role="button"><fmt:message key="specialists"/></a>
                             </li>
                         </c:otherwise>
                     </c:choose>
@@ -68,13 +67,13 @@
                         <c:when test="${not userSpecPage.equals(currPage)}">
                             <li class="nav-item active">
                                 <a class="nav-link" href="${pageContext.request.contextPath}/site/user/specialists"
-                                   role="button">Specialists</a>
+                                   role="button"><fmt:message key="specialists"/></a>
                             </li>
                         </c:when>
                         <c:otherwise>
                             <li class="nav-item">
                                 <a class="nav-link" href="${pageContext.request.contextPath}/site/user/specialists"
-                                   role="button">Specialists</a>
+                                   role="button"><fmt:message key="specialists"/></a>
                             </li>
                         </c:otherwise>
                     </c:choose>
@@ -84,34 +83,18 @@
                         <c:when test="${not adminSpecPage.equals(currPage)}">
                             <li class="nav-item active">
                                 <a class="nav-link" href="${pageContext.request.contextPath}/site/admin/specialists"
-                                   role="button">Specialists</a>
+                                   role="button"><fmt:message key="specialists"/></a>
                             </li>
                         </c:when>
                         <c:otherwise>
                             <li class="nav-item">
                                 <a class="nav-link" href="${pageContext.request.contextPath}/site/admin/specialists"
-                                   role="button">Specialists</a>
+                                   role="button"><fmt:message key="specialists"/></a>
                             </li>
                         </c:otherwise>
                     </c:choose>
                 </c:if>
                 <%-- Schedule(for specialist) --%>
-                <c:if test="${sessionScope.user.specialist}">
-                    <c:choose>
-                        <c:when test="${not specialistSchedulePage.equals(currPage)}">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/site/specialist/schedule"
-                                   role="button">Schedule</a>
-                            </li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="nav-item">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/site/specialist/schedule"
-                                   role="button">Schedule</a>
-                            </li>
-                        </c:otherwise>
-                    </c:choose>
-                </c:if>
                 <%-- Orders --%>
                 <c:if test="${not empty sessionScope.user}">
                     <c:if test="${ sessionScope.user.user}">
@@ -119,13 +102,13 @@
                             <c:when test="${not userOrdersPage.equals(currPage)}">
                                 <li class="nav-item active">
                                     <a class="nav-link" href="${pageContext.request.contextPath}/site/user/orders"
-                                       role="button"><fmt:message key="user.orders"/></a>
+                                       role="button"><fmt:message key="orders"/></a>
                                 </li>
                             </c:when>
                             <c:otherwise>
                                 <li class="nav-item">
                                     <a class="nav-link" href="${pageContext.request.contextPath}/site/user/orders"
-                                       role="button"><fmt:message key="user.orders"/></a>
+                                       role="button"><fmt:message key="orders"/></a>
                                 </li>
                             </c:otherwise>
                         </c:choose>
@@ -135,13 +118,13 @@
                             <c:when test="${not adminOrdersPage.equals(currPage)}">
                                 <li class="nav-item active">
                                     <a class="nav-link" href="${pageContext.request.contextPath}/site/admin/orders"
-                                       role="button"><fmt:message key="user.orders"/></a>
+                                       role="button"><fmt:message key="orders"/></a>
                                 </li>
                             </c:when>
                             <c:otherwise>
                                 <li class="nav-item">
                                     <a class="nav-link" href="${pageContext.request.contextPath}/site/admin/orders"
-                                       role="button"><fmt:message key="user.orders"/></a>
+                                       role="button"><fmt:message key="orders"/></a>
                                 </li>
                             </c:otherwise>
                         </c:choose>
@@ -151,13 +134,13 @@
                             <c:when test="${not specialistOrdersPage.equals(currPage)}">
                                 <li class="nav-item active">
                                     <a class="nav-link" href="${pageContext.request.contextPath}/site/specialist/orders"
-                                       role="button"><fmt:message key="user.orders"/></a>
+                                       role="button"><fmt:message key="orders"/></a>
                                 </li>
                             </c:when>
                             <c:otherwise>
                                 <li class="nav-item">
                                     <a class="nav-link" href="${pageContext.request.contextPath}/site/specialist/orders"
-                                       role="button"><fmt:message key="user.orders"/></a>
+                                       role="button"><fmt:message key="orders"/></a>
                                 </li>
                             </c:otherwise>
                         </c:choose>
@@ -169,13 +152,13 @@
                         <c:when test="${not adminUsersPage.equals(currPage)}">
                             <li class="nav-item active">
                                 <a class="nav-link" href="${pageContext.request.contextPath}/site/admin/users"
-                                   role="button">Users</a>
+                                   role="button"><fmt:message key="users"/></a>
                             </li>
                         </c:when>
                         <c:otherwise>
                             <li class="nav-item">
                                 <a class="nav-link" href="${pageContext.request.contextPath}/site/admin/users"
-                                   role="button">Users</a>
+                                   role="button"><fmt:message key="users"/></a>
                             </li>
                         </c:otherwise>
                     </c:choose>
@@ -186,13 +169,13 @@
                         <c:when test="${not adminAdminsPage.equals(currPage)}">
                             <li class="nav-item active">
                                 <a class="nav-link" href="${pageContext.request.contextPath}/site/admins"
-                                   role="button">Admins</a>
+                                   role="button"><fmt:message key="admins"/></a>
                             </li>
                         </c:when>
                         <c:otherwise>
                             <li class="nav-item">
                                 <a class="nav-link" href="${pageContext.request.contextPath}/site/admins"
-                                   role="button">Admins</a>
+                                   role="button"><fmt:message key="admins"/></a>
                             </li>
                         </c:otherwise>
                     </c:choose>
@@ -201,13 +184,13 @@
                     <c:when test="${not respondsPage.equals(currPage)}">
                         <li class="nav-item active">
                             <a class="nav-link" href="${pageContext.request.contextPath}/site/responds"
-                               role="button">Responds</a>
+                               role="button"><fmt:message key="responds"/></a>
                         </li>
                     </c:when>
                     <c:otherwise>
                         <li class="nav-item">
                             <a class="nav-link" href="${pageContext.request.contextPath}/site/responds"
-                               role="button">Responds</a>
+                               role="button"><fmt:message key="responds"/></a>
                         </li>
                     </c:otherwise>
                 </c:choose>
@@ -219,13 +202,13 @@
                         <c:when test="${not adminCreatePage.equals(currPage)}">
                             <li class="nav-item active">
                                 <a class="nav-link" href="${pageContext.request.contextPath}/site/create"
-                                   role="button">Create</a>
+                                   role="button"><fmt:message key="create"/></a>
                             </li>
                         </c:when>
                         <c:otherwise>
                             <li class="nav-item">
                                 <a class="nav-link" href="${pageContext.request.contextPath}/site/create"
-                                   role="button">Create</a>
+                                   role="button"><fmt:message key="create"/></a>
                             </li>
                         </c:otherwise>
                     </c:choose>
@@ -288,7 +271,7 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header bg-dark text-white text-center">
-                    <h4 class="modal-title ml-1">User Profile</h4>
+                    <h4 class="modal-title ml-1"><fmt:message key="user.profile"/></h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
@@ -302,19 +285,19 @@
                         <table class="table">
                             <tbody>
                             <tr>
-                                <th scope="row"> Name:</th>
+                                <th scope="row"><fmt:message key="name"/>:</th>
                                 <td>${sessionScope.user.firstName} ${sessionScope.user.lastName}</td>
                             </tr>
                             <tr>
-                                <th scope="row"> Email:</th>
+                                <th scope="row"><fmt:message key="email"/>:</th>
                                 <td>${sessionScope.user.login}</td>
                             </tr>
                             <tr>
-                                <th scope="row"> Phone:</th>
+                                <th scope="row"><fmt:message key="phone"/>:</th>
                                 <td>${sessionScope.user.phoneNumber}</td>
                             </tr>
                             <tr>
-                                <th scope="row"> Role:</th>
+                                <th scope="row"><fmt:message key="role"/>:</th>
                                 <td>${sessionScope.user.role.name}</td>
                             </tr>
                             </tbody>

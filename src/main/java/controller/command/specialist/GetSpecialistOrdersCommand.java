@@ -1,5 +1,6 @@
 package controller.command.specialist;
 
+import controller.command.HomeCommand;
 import controller.command.ICommand;
 import entity.Order;
 import entity.User;
@@ -24,6 +25,7 @@ public class GetSpecialistOrdersCommand implements ICommand {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        HomeCommand.removeLogStatus(request);
         User specialist = getUserFromSession(request.getSession());
         List<Order> orders = userService.getOrders(specialist);
         specialist.setOrders(orders);

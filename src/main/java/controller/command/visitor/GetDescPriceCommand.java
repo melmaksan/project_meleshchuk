@@ -1,5 +1,6 @@
 package controller.command.visitor;
 
+import controller.command.HomeCommand;
 import controller.command.ICommand;
 import service.ServiceFactory;
 import service.ServiceForService;
@@ -20,6 +21,7 @@ public class GetDescPriceCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HomeCommand.removeLogStatus(request);
         request.setAttribute(SERVICES_UNIQUE_TYPE, serviceService.getUniqueServiceTypes(serviceService.findAllService()));
         request.setAttribute(SERVICES, serviceService.descByPriceService());
         return HOME_VIEW;

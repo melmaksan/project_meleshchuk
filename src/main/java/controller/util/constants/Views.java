@@ -26,6 +26,5 @@ public class Views {
     public static final String ADMINS_VIEW = FOLDER + ADMIN_ROLE_FOLDER + "admins.jsp";
 
     public static final String SPECIALIST_ORDERS_VIEW = FOLDER + SPECIALIST_ROLE_FOLDER + "specialistOrders.jsp";
-    public static final String SPECIALIST_SCHEDULE_VIEW = FOLDER + SPECIALIST_ROLE_FOLDER + "specialistSchedule.jsp";
 
 }

@@ -78,6 +78,12 @@ public class MySqlUserToService implements UserToServiceDao {
     }
 
     @Override
+    public void deleteService(long id) {
+        defaultDao.executeUpdate(
+                DELETE + WHERE_SERVICE, id);
+    }
+
+    @Override
     public List<UserToService> findAllByUser(long userId) {
         return defaultDao.findAll(SELECT_ALL + WHERE_USER, userId);
     }

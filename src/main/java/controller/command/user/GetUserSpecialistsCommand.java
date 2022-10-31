@@ -1,5 +1,6 @@
 package controller.command.user;
 
+import controller.command.HomeCommand;
 import controller.command.ICommand;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,6 +23,7 @@ public class GetUserSpecialistsCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HomeCommand.removeLogStatus(request);
         request.setAttribute(SPECIALISTS, userService.findAllSpecialists());
         logger.info("SPECIALISTS ==> " + userService.findAllSpecialists());
         return USER_SPECIALISTS_VIEW;

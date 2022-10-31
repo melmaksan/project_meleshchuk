@@ -4,8 +4,8 @@ import controller.command.DefaultCommand;
 import controller.command.HomeCommand;
 import controller.command.ICommand;
 import controller.command.admin.*;
+import controller.command.specialist.GetFilterPerDayCommand;
 import controller.command.specialist.GetSpecialistOrdersCommand;
-import controller.command.specialist.GetSpecialistScheduleCommand;
 import controller.command.specialist.PostChangeServiceStatusCommand;
 import controller.command.user.*;
 import controller.command.visitor.*;
@@ -106,10 +106,10 @@ public class ControllerHelper {
                 new PostCreateEmployeeCommand());
         commands.put(buildKey(bundle.getString("create"), "create.service"),
                 new PostCreateServiceCommand());
-        commands.put(buildKey(bundle.getString("specialist.schedule"), null),
-                new GetSpecialistScheduleCommand());
         commands.put(buildKey(bundle.getString("specialist.orders"), null),
                 new GetSpecialistOrdersCommand());
+        commands.put(buildKey(bundle.getString("specialist.orders"), "spec.filter"),
+                new GetFilterPerDayCommand());
         commands.put(buildKey(bundle.getString("specialist.orders"), "change.service.status"),
                 new PostChangeServiceStatusCommand());
     }

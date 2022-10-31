@@ -63,14 +63,13 @@ public class ServiceForService {
     public Service findServiceById(long serviceId) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             ServiceDao serviceDao = daoFactory.getServiceDao(connection);
-            Service service = null;
+            Service service = serviceDao.findById(serviceId).orElse(null);
             try {
-                service = serviceDao.findById(serviceId).orElseThrow(NoSuchFieldException::new);
-            } catch (NoSuchFieldException e) {
+                List<User> users = getSpecialists(Objects.requireNonNull(service));
+                service.setUsers(users);
+            } catch (NullPointerException e) {
                 logger.error("There are no services here!", e);
             }
-            List<User> users = getSpecialists(Objects.requireNonNull(service));
-            service.setUsers(users);
             return service;
         }
     }
@@ -182,6 +181,8 @@ public class ServiceForService {
             }
             ServiceDao serviceDao = daoFactory.getServiceDao(connection);
             serviceDao.delete(serviceId);
+            userToService.deleteServiceToUser(serviceId, connection);
+            orderToServiceService.deleteServiceToOrder(serviceId, connection);
             connection.commit();
         }
         return errors;

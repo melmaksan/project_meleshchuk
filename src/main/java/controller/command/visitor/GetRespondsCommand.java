@@ -1,5 +1,6 @@
 package controller.command.visitor;
 
+import controller.command.HomeCommand;
 import controller.command.ICommand;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,6 +23,8 @@ public class GetRespondsCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HomeCommand.removeLogStatus(request);
+        HomeCommand.removeRegStatus(request);
         request.setAttribute(RESPONDS, respondService.findAllRespond());
         logger.info("i am GetRespondsCommand");
         return RESPONDS_VIEW;

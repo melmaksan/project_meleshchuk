@@ -24,7 +24,24 @@
 </c:if>
 
 <section id="section">
-    <h1 class="offset-1 my-3"><fmt:message key="your.orders"/></h1>
+    <div class="row mt-2 mb-1 offset-1 justify-content-between">
+        <h1 class="align-self-end"><fmt:message key="your.orders"/></h1>
+        <div class="col-2 align-self-end" id="datePicker2">
+            <form class="my-0" action="${pageContext.request.contextPath}/site/specialist/orders">
+                <input type="hidden" name="command" value="spec.filter"/>
+                <label class="my-0 text-black-50" for="datetimepicker2"><fmt:message key="date"/>:</label>
+                <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input"
+                           data-toggle="datetimepicker" id="appointment_time"
+                           name="appointment_time" data-target="#datetimepicker2"
+                           value="${requestScope.date}"/>
+                    <div class="input-group-append" data-target="#datetimepicker2">
+                        <button class="btn-outline-light text-black-50"><fmt:message key="find"/></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
     <table class="table offset-1 text-center table-sm table-striped table-bordered" id="sortTable7" style="width: 83%">
         <thead class="thead-dark">
         <tr>
@@ -69,7 +86,7 @@
                                     <input type="hidden" name="orderId" value="${order.id}"/>
                                     <input type="hidden" name="orderStatus" value="2"/>
                                     <button class="dropdown-item py-1" type="submit"
-                                            style="padding: 0.25rem 1.3rem;" >DONE
+                                            style="padding: 0.25rem 1.3rem;">DONE
                                     </button>
                                 </form>
                             </div>

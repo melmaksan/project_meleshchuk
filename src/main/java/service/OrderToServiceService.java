@@ -46,6 +46,11 @@ public class OrderToServiceService {
         orderToServiceDao.delete(orderId);
     }
 
+    public void deleteServiceToOrder(long serviceId, DaoConnection connection) {
+        OrderToServiceDao orderToServiceDao = daoFactory.getOrderToServiceDao(connection);
+        orderToServiceDao.delete(serviceId);
+    }
+
     public boolean isServiceExistsInOrder(long serviceId, DaoConnection connection) {
         OrderToServiceDao orderToServiceDao = daoFactory.getOrderToServiceDao(connection);
         return orderToServiceDao.isServiceExistInBookedOrder(serviceId);

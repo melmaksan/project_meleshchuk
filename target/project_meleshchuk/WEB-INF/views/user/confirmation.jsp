@@ -47,15 +47,13 @@
                                     <table class="table">
                                         <tbody>
                                         <tr>
-                                            <th scope="row" style="vertical-align: inherit"><fmt:message
-                                                    key="spec"/>:
+                                            <th scope="row" style="vertical-align: inherit"><fmt:message key="spec"/>:
                                             </th>
                                             <td class="text-center">
                                                 <c:choose>
                                                     <c:when test="${requestScope.user == null}">
                                                         <select class="selectpicker" name="specId" id="specId" required>
-                                                            <c:forEach var="specialist"
-                                                                       items="${requestScope.specialists}">
+                                                            <c:forEach var="specialist" items="${requestScope.specialists}">
                                                                 <option value="${specialist.id}">${specialist.firstName} ${specialist.lastName}</option>
                                                             </c:forEach>
                                                         </select>
@@ -83,8 +81,7 @@
                                             <td class="text-center">${requestScope.service.price}₴</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row" style="vertical-align: inherit"><fmt:message
-                                                    key="order.time"/>:
+                                            <th scope="row" style="vertical-align: inherit"><fmt:message key="order.time"/>:
                                             </th>
                                             <td class="pl-3 pr-1">
                                                 <!-- time picker   -->

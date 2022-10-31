@@ -1,5 +1,6 @@
 package controller.command.user;
 
+import controller.command.HomeCommand;
 import controller.command.ICommand;
 import entity.Respond;
 import entity.User;
@@ -27,6 +28,7 @@ public class GetRespondsFilterByUserCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HomeCommand.removeLogStatus(request);
         User currentUser = getUserFromSession(request.getSession());
         logger.info("user responds ==> " + currentUser.getResponds());
         List<Respond> responds = userService.getResponds(currentUser);

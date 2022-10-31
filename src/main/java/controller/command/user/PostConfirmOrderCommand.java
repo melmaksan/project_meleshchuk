@@ -82,7 +82,7 @@ public class PostConfirmOrderCommand implements ICommand {
 
     private void checkOnOrdersPerDay(List<String> errors, LocalDateTime newOrderStart,
                                      LocalDateTime newOrderEnd, User spec) {
-        List<Order> orders = userService.getOrdersForCheck(spec,
+        List<Order> orders = userService.getBookedOrdersPerDay(spec,
                 LocalDate.from(newOrderEnd), LocalDate.from(newOrderEnd).plusDays(1));
         logger.info("orders ==> " + orders);
         for (Order order : orders) {

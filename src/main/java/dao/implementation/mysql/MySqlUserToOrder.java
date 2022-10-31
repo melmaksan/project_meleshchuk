@@ -28,7 +28,10 @@ public class MySqlUserToOrder implements UserToOrderDao {
             "SELECT user_to_orders.user_id, user_to_orders.orders_id, orders.time " +
                     "FROM orders " +
                     "JOIN user_to_orders ON user_to_orders.orders_id = orders.id " +
-                    "WHERE user_id = ? AND orders.time >= ? AND orders.time <= ? AND status_id = ? ";
+                    "WHERE user_id = ? AND orders.time >= ? AND orders.time <= ? ";
+
+    private final static String WHERE_STATUS =
+            "AND status_id = ? ";
 
     private final static String WHERE_USER_ORDERS =
             "WHERE user_id = ? AND orders_id = ? ";
@@ -93,6 +96,11 @@ public class MySqlUserToOrder implements UserToOrderDao {
 
     @Override
     public void delete(Long id) {
+        defaultDao.executeUpdate(DELETE + WHERE_ORDER, id);
+    }
+
+    @Override
+    public void deleteUser(long id) {
         defaultDao.executeUpdate(DELETE + WHERE_USER, id);
     }
 
@@ -119,8 +127,13 @@ public class MySqlUserToOrder implements UserToOrderDao {
     }
 
     @Override
-    public List<UserToOrder> findAllBySpec(long userId, LocalDate dateFrom, LocalDate dateTo, int status) {
-        return defaultDao.findAll(SELECT_ALL_FOR_SPEC, userId, dateFrom, dateTo, status);
+    public List<UserToOrder> findAllBookedByDay(long userId, LocalDate dateFrom, LocalDate dateTo, int status) {
+        return defaultDao.findAll(SELECT_ALL_FOR_SPEC + WHERE_STATUS, userId, dateFrom, dateTo, status);
+    }
+
+    @Override
+    public List<UserToOrder> findOrdersByDay(long userId, LocalDate dateFrom, LocalDate dateTo) {
+        return defaultDao.findAll(SELECT_ALL_FOR_SPEC, userId, dateFrom, dateTo);
     }
 
     @Override
@@ -144,7 +157,7 @@ public class MySqlUserToOrder implements UserToOrderDao {
 
             System.out.println("Order TEST");
 
-            mySqlUserToOrder.printAll(mySqlUserToOrder.findAll());
+//            mySqlUserToOrder.printAll(mySqlUserToOrder.findAll());
 
             System.out.println("~~~~~~~~~~~~");
 
@@ -157,12 +170,19 @@ public class MySqlUserToOrder implements UserToOrderDao {
 
             System.out.println("~~~~~~~~~~~~");
 
-            System.out.println(mySqlUserToOrder.findAllByUser(5));
+            System.out.println(mySqlUserToOrder.findAllByUser(9));
 
             System.out.println("~~~~~~~~~~~~");
 
-            System.out.println(mySqlUserToOrder.findAllBySpec(9, LocalDate.now().plusDays(4),
+            System.out.println(mySqlUserToOrder.findAllBookedByDay(2, LocalDate.now(),
                     LocalDate.now().plusDays(6), 1));
+
+            System.out.println("~~~~~~~~~~~~");
+
+            System.out.println(mySqlUserToOrder.findOrdersByDay(2, LocalDate.now(),
+                    LocalDate.now().plusDays(6)));
+
+            System.out.println("~~~~~~~~~~~~");
 
             System.out.println(mySqlUserToOrder.isSpecExistsInOrder(7));
 

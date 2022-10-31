@@ -1,5 +1,6 @@
 package controller.command.admin;
 
+import controller.command.HomeCommand;
 import controller.command.ICommand;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,6 +23,7 @@ public class GetAllUsersCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HomeCommand.removeLogStatus(request);
         logger.info("users ==> " + userService.findAllClients());
         request.setAttribute(USER_LIST, userService.findAllClients());
         return ADMIN_USERS_VIEW;

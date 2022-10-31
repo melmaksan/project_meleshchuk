@@ -1,5 +1,6 @@
 package controller.command.visitor;
 
+import controller.command.HomeCommand;
 import controller.command.ICommand;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,6 +23,7 @@ public class GetAscTitleCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HomeCommand.removeLogStatus(request);
         request.setAttribute(SERVICES_UNIQUE_TYPE, serviceService.getUniqueServiceTypes(serviceService.findAllService()));
         request.setAttribute(SERVICES, serviceService.ascByTitleService());
         logger.info("i am GetAscTitleCommand");

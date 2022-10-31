@@ -21,6 +21,12 @@
     </div>
 </c:if>
 
+<c:if test="${not empty sessionScope.register}">
+    <div class="alert alert-success">
+        <strong>${sessionScope.register}</strong><br>
+    </div>
+</c:if>
+
 <section id="section">
     <div class="container">
         <div class="card w-50 mx-auto my-5">
@@ -48,7 +54,7 @@
 
                     <div class="row py-1">
                         <div class="col-3">
-                            <button type="submit" class="btn btn-primary"><fmt:message key="login"/></button>
+                            <button type="submit" class="btn btn-primary" id="login"><fmt:message key="login"/></button>
                         </div>
                         <div class="col-9 text-right">
                             <a href="${pageContext.request.contextPath}/site/registration">
@@ -61,7 +67,6 @@
         </div>
     </div>
 </section>
-
 
 <jsp:include page="/WEB-INF/views/includes/footer.jsp"/>
 </body>

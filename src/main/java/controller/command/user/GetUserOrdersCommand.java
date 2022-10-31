@@ -1,5 +1,6 @@
 package controller.command.user;
 
+import controller.command.HomeCommand;
 import controller.command.ICommand;
 import entity.Order;
 import entity.User;
@@ -26,6 +27,7 @@ public class GetUserOrdersCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HomeCommand.removeLogStatus(request);
         User currentUser = getUserFromSession(request.getSession());
         List<Order> orders = userService.getOrders(currentUser);
         currentUser.setOrders(orders);

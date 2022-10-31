@@ -1,5 +1,6 @@
 package controller.command.visitor;
 
+import controller.command.HomeCommand;
 import controller.command.ICommand;
 import controller.util.Util;
 import org.apache.logging.log4j.LogManager;
@@ -20,6 +21,7 @@ public class GetRegistrationCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
+        HomeCommand.removeRegStatus(request);
         if(Util.isAlreadyLoggedIn(request.getSession())) {
             Util.redirectTo(request, response, ResourceBundle
                     .getBundle(PAGES_BUNDLE)

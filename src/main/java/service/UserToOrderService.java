@@ -45,10 +45,17 @@ public class UserToOrderService {
         }
     }
 
-    public List<UserToOrder> findAllBySpec(long userId, LocalDate dateFrom, LocalDate dateTo, int status) {
+    public List<UserToOrder> findAllBookedByDay(long userId, LocalDate dateFrom, LocalDate dateTo, int status) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             UserToOrderDao userToOrderDao = daoFactory.getUserToOrderDao(connection);
-            return userToOrderDao.findAllBySpec(userId, dateFrom, dateTo, status);
+            return userToOrderDao.findAllBookedByDay(userId, dateFrom, dateTo, status);
+        }
+    }
+
+    public List<UserToOrder> findOrdersByDay(long userId, LocalDate dateFrom, LocalDate dateTo) {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            UserToOrderDao userToOrderDao = daoFactory.getUserToOrderDao(connection);
+            return userToOrderDao.findOrdersByDay(userId, dateFrom, dateTo);
         }
     }
 
@@ -57,9 +64,14 @@ public class UserToOrderService {
         userToOrderDao.insert(userToOrder);
     }
 
+    public void deleteOrderToUser(long orderId, DaoConnection connection) {
+        UserToOrderDao userToOrderDao = daoFactory.getUserToOrderDao(connection);
+        userToOrderDao.delete(orderId);
+    }
+
     public void deleteUserToOrder(long userId, DaoConnection connection) {
         UserToOrderDao userToOrderDao = daoFactory.getUserToOrderDao(connection);
-        userToOrderDao.delete(userId);
+        userToOrderDao.deleteUser(userId);
     }
 
     public boolean isSpecExistsInOrder(long userId, DaoConnection connection) {

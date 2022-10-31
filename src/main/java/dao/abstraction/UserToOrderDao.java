@@ -29,7 +29,11 @@ public interface UserToOrderDao extends GenericDao<UserToOrder, Long> {
 
     List<UserToOrder> findClientsByOrder(long orderId);
 
-    List<UserToOrder> findAllBySpec(long userId, LocalDate dateFrom, LocalDate dateTo, int status);
+    List<UserToOrder> findOrdersByDay(long userId, LocalDate dateFrom, LocalDate dateTo);
+
+    List<UserToOrder> findAllBookedByDay(long userId, LocalDate dateFrom, LocalDate dateTo, int status);
 
     boolean isSpecExistsInOrder(long userId);
+
+    void deleteUser(long id);
 }

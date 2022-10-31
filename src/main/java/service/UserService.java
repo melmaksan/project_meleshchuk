@@ -4,7 +4,6 @@ import controller.util.Util;
 import controller.util.validator.LoginValidator;
 import controller.util.validator.PasswordValidator;
 import controller.util.validator.PhoneValidator;
-import dao.abstraction.OrderDao;
 import dao.abstraction.UserDao;
 import dao.factory.DaoFactory;
 import dao.factory.connection.DaoConnection;
@@ -136,9 +135,18 @@ public class UserService {
         return orders;
     }
 
-    public List<Order> getOrdersForCheck(User user, LocalDate start, LocalDate end) {
+    public List<Order> getBookedOrdersPerDay(User user, LocalDate start, LocalDate end) {
         List<Order> orders = new ArrayList<>();
-        List<UserToOrder> userToOrders = userToOrderService.findAllBySpec(user.getId(), start, end, STATUS);
+        List<UserToOrder> userToOrders = userToOrderService.findAllBookedByDay(user.getId(), start, end, STATUS);
+        for (UserToOrder userToOrder : userToOrders) {
+            orders.add(orderService.findOrderById(userToOrder.getOrderId()));
+        }
+        return orders;
+    }
+
+    public List<Order> getOrdersPerDay(User user, LocalDate start, LocalDate end) {
+        List<Order> orders = new ArrayList<>();
+        List<UserToOrder> userToOrders = userToOrderService.findOrdersByDay(user.getId(), start, end);
         for (UserToOrder userToOrder : userToOrders) {
             orders.add(orderService.findOrderById(userToOrder.getOrderId()));
         }
@@ -254,6 +262,8 @@ public class UserService {
             }
             UserDao userDao = daoFactory.getUserDao(connection);
             userDao.delete(userId);
+            userToService.deleteUserToService(userId, connection);
+            userToOrderService.deleteUserToOrder(userId, connection);
             connection.commit();
         }
         return errors;

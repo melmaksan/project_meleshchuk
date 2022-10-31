@@ -261,6 +261,8 @@ public class OrderService {
             }
             OrderDao orderDao = daoFactory.getOrderDao(connection);
             orderDao.delete(orderId);
+            userToOrderService.deleteOrderToUser(orderId, connection);
+            orderToServiceService.deleteOrderToService(orderId, connection);
             connection.commit();
         }
         return errors;

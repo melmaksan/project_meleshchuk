@@ -80,6 +80,7 @@ public class PostLoginCommand implements ICommand {
 
     private void addUserToSession(HttpSession session, User user) {
         session.setAttribute(USER, user);
+        session.setAttribute(STATUS, SUCCESS_STATUS);
     }
 
     private void addInvalidDataToRequest(HttpServletRequest request, User user, List<String> errors) {
