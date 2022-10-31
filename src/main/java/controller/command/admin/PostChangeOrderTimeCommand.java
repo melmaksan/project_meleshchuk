@@ -2,18 +2,21 @@ package controller.command.admin;
 
 import controller.command.ICommand;
 import controller.util.Util;
-import entity.Order;
-import entity.OrderStatus;
-import entity.PaymentStatus;
+import entity.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.OrderService;
 import service.ServiceFactory;
+import service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -26,27 +29,67 @@ import static controller.util.constants.Views.PAGES_BUNDLE;
 public class PostChangeOrderTimeCommand implements ICommand {
 
     private final OrderService orderService = ServiceFactory.getOrderService();
-    private static final Logger logger = LogManager.getLogger(GetAllOrdersCommand.class);
+    private static final UserService userService = ServiceFactory.getUserService();
+    private static final Logger logger = LogManager.getLogger(PostChangeOrderTimeCommand.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        List<String> errors = new ArrayList<>();
         Order order = orderService.findOrderById(Long.parseLong(request.getParameter(ORDER_ID)));
-        logger.info("order ==> " + order);
-        logger.info("paymentStatus ==> " + request.getParameter(DATA_TIME));
-        List<String> errors = orderService.changeBookingTime(order, request.getParameter(DATA_TIME));
+        logger.info("DATA_TIME ==> " + request.getParameter(DATA_TIME));
+        String dateTime = request.getParameter(DATA_TIME);
+        checkIfSpecIsFree(dateTime, order, errors);
         if (errors.isEmpty()) {
-            logger.info("Order time has changed successfully!");
-            Util.redirectTo(request, response, ResourceBundle.getBundle(PAGES_BUNDLE)
-                    .getString("admin.orders"));
-            logger.info("redirect to orders");
-            return REDIRECTED;
+            errors.addAll(orderService.changeBookingTime(order, dateTime));
+            if (errors.isEmpty()) {
+                logger.info("Order time has changed successfully!");
+                Util.redirectTo(request, response, ResourceBundle.getBundle(PAGES_BUNDLE)
+                        .getString("admin.orders"));
+                logger.info("redirect to orders");
+                return REDIRECTED;
+            }
+            return getOrdersView(request, errors, "You can't change order time " +
+                    "because order has already done or canceled!");
         }
-        logger.info("You can't change order time because order has already done or canceled!");
+        return getOrdersView(request, errors, "You can't change order time because " +
+                "spec is busy on this time!");
+    }
+
+    private String getOrdersView(HttpServletRequest request, List<String> errors, String s) {
+        logger.info(s);
         addStatuses(request);
         request.setAttribute(ERRORS, errors);
-        request.setAttribute(ORDERS, orderService.findAllOrders());
+        servicePagination(request);
         return ADMIN_ORDERS_VIEW;
+    }
+
+    private void checkIfSpecIsFree(String dateTime, Order order, List<String> errors) {
+        List<Service> services = order.getServices();
+        List<User> specialists = order.getSpecialists();
+        LocalDateTime newOrderStart = LocalDateTime.parse(dateTime);
+        logger.info("newOrderStart ==> " + newOrderStart);
+        for (Service service : services) {
+            LocalDateTime newOrderEnd = newOrderStart.plusMinutes(service.getMinutes());
+            for (User spec : specialists) {
+                checkOnOrdersPerDay(errors, newOrderStart, newOrderEnd, spec);
+            }
+        }
+
+    }
+
+    private void checkOnOrdersPerDay(List<String> errors, LocalDateTime newOrderStart,
+                                     LocalDateTime newOrderEnd, User spec) {
+        List<Order> orders = userService.getOrdersForCheck(spec,
+                LocalDate.from(newOrderEnd), LocalDate.from(newOrderEnd).plusDays(1));
+        for (Order order : orders) {
+            if (newOrderStart.isBefore(order.getTimeEnd()) && newOrderEnd.isAfter(order.getTimeStart())) {
+                logger.info("order check ==> " + (newOrderStart.isBefore(order.getTimeEnd()) &&
+                        newOrderEnd.isAfter(order.getTimeStart())));
+                errors.add(SPEC_IS_BUSY);
+                return;
+            }
+        }
     }
 
     private void addStatuses(HttpServletRequest request) {
@@ -56,5 +99,9 @@ public class PostChangeOrderTimeCommand implements ICommand {
                 (PaymentStatus.PaymentIdentifier.values());
         request.setAttribute(ORDER_STATUSES, orderStatuses);
         request.setAttribute(PAYMENT_STATUSES, paymentStatuses);
+    }
+
+    private void servicePagination(HttpServletRequest request) {
+        GetAllOrdersCommand.pagination(request, orderService);
     }
 }

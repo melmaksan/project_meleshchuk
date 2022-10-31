@@ -32,6 +32,8 @@ public interface OrderDao extends GenericDao<Order, Long> {
      */
     void updatePaymentStatus(Order order, int paymentStatus);
 
+    List<Order> findAll(int limit, int offset);
+
     int getNumberOfRows();
 
     List<Order> findAllWithCredentials(LocalDate dateFrom, LocalDate dateTo, int status);

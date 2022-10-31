@@ -9,6 +9,7 @@ import entity.UserToService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -33,7 +34,6 @@ public class ServiceForService {
 
     private ServiceForService() {
     }
-
 
     public List<Service> findAllService() {
         try (DaoConnection connection = daoFactory.getConnection()) {
@@ -67,7 +67,7 @@ public class ServiceForService {
             try {
                 service = serviceDao.findById(serviceId).orElseThrow(NoSuchFieldException::new);
             } catch (NoSuchFieldException e) {
-                e.printStackTrace();
+                logger.error("There are no services here!", e);
             }
             List<User> users = getSpecialists(Objects.requireNonNull(service));
             service.setUsers(users);
@@ -187,17 +187,29 @@ public class ServiceForService {
         return errors;
     }
 
-    public List<Service> findAll(int limit, int offset) {
-        try (DaoConnection connection = daoFactory.getConnection()) {
-            ServiceDao serviceDao = daoFactory.getServiceDao(connection);
-            return serviceDao.findAll(limit, offset);
-        }
-    }
-
     public Optional<Service> findServiceForOtherEntity(Long id) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             ServiceDao serviceDao = daoFactory.getServiceDao(connection);
             return serviceDao.findById(id);
+        }
+    }
+
+    public List<Service> findAll(int limit, int offset) {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            ServiceDao serviceDao = daoFactory.getServiceDao(connection);
+            List<Service> services = serviceDao.findAll(limit, offset);
+            for (Service service : services) {
+                List<User> specialists = getSpecialists(service);
+                service.setUsers(specialists);
+            }
+            return services;
+        }
+    }
+
+    public int getNumberOfRows() {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            ServiceDao serviceDao = daoFactory.getServiceDao(connection);
+            return serviceDao.getNumberOfRows();
         }
     }
 }

@@ -2,15 +2,20 @@ package entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Time;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class Service implements Serializable {
+
+    DateTimeFormatter formatTimeNow=DateTimeFormatter.ofPattern("HH:mm");
 
     private long id;
     private String title;
     private String description;
     private BigDecimal price;
     private String image;
+    private Time duration;
     private List<User> users;
     private List<Order> orders;
 
@@ -74,6 +79,23 @@ public class Service implements Serializable {
         this.image = image;
     }
 
+    public Time getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Time duration) {
+        this.duration = duration;
+    }
+
+    public int getMinutes() {
+        String duration = getDuration().toString();
+        String[] hourMin = duration.split(":");
+        int hour = Integer.parseInt(hourMin[0]);
+        int minutes = Integer.parseInt(hourMin[1]);
+        int hoursInMinutes = hour * 60;
+        return hoursInMinutes + minutes;
+    }
+
     @Override
     public String toString() {
         return "Service{" +
@@ -82,6 +104,7 @@ public class Service implements Serializable {
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", image='" + image + '\'' +
+                ", duration=" + duration +
                 '}';
     }
 
@@ -136,8 +159,14 @@ public class Service implements Serializable {
             return this;
         }
 
+        public Builder addDuration(Time duration) {
+            service.setDuration(duration);
+            return this;
+        }
+
         public Service build() {
             return service;
         }
     }
+
 }

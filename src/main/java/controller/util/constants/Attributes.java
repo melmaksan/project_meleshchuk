@@ -16,7 +16,6 @@ public class Attributes {
     public static final String USER_LIST  ="users";
     public static final String SPECIALISTS  ="specialists";
     public static final String ADMINS  ="admins";
-    public static final String FAST_BOOK = "fastBookSpecialist";
     public static final String SERVICES = "services";
     public static final String SERVICE = "service";
     public static final String SERVICES_UNIQUE_TYPE = "serviceTypes";
@@ -27,6 +26,8 @@ public class Attributes {
     public static final String USER_PREFIX = "user.prefix";
     public static final String ADMIN_PREFIX = "admin.prefix";
     public static final String SPEC_PREFIX = "specialist.prefix";
+    public static final String NUM_OF_PAGE = "numberOfPages";
+    public static final String CURR_PAGE = "currentPage";
 
     public static final String FIRST_NAME = "first_name";
     public static final String LAST_NAME = "last_name";
@@ -45,6 +46,7 @@ public class Attributes {
     public static final String SERVICE_TYPE = "serviceType";
     public static final String SERVICE_PRICE = "servicePrice";
     public static final String SERVICE_IMAGE = "serviceImage";
+    public static final String DURATION = "duration";
 
     public static final String RESPOND_MESSAGE = "respondMessage";
     public static final String RESPOND_MARK = "respondMark";
@@ -55,4 +57,5 @@ public class Attributes {
     public static final String SERVICE_NOT_EXIST = "There is no service with such id, please try again";
     public static final String NO_RATE = "Rating is not specified, please try again";
     public static final String INVALID_CREDENTIALS = "Invalid credentials, please try again";
+    public static final String SPEC_IS_BUSY = "The specialist is busy at this time, please try another one";
 }

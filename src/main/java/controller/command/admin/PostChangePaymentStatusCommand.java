@@ -25,16 +25,14 @@ import static controller.util.constants.Views.PAGES_BUNDLE;
 public class PostChangePaymentStatusCommand implements ICommand {
 
     private final OrderService orderService = ServiceFactory.getOrderService();
-    private static final Logger logger = LogManager.getLogger(GetAllOrdersCommand.class);
+    private static final Logger logger = LogManager.getLogger(PostChangePaymentStatusCommand.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Order order = orderService.findOrderById(Long.parseLong(request.getParameter(ORDER_ID)));
-        logger.info("order ==> " + order);
-        logger.info("paymentStatus ==> " + Integer.parseInt(request.getParameter(PAYMENT_STATUS)));
-        List<String> errors = orderService.updatePaymentStatus(order, Integer.parseInt
-                (request.getParameter(PAYMENT_STATUS)));
+        List<String> errors = orderService.updatePaymentStatus(order,
+                Integer.parseInt(request.getParameter(PAYMENT_STATUS)));
         if (errors.isEmpty()) {
             logger.info("Payment status has updated successfully!");
             Util.redirectTo(request, response, ResourceBundle.getBundle(PAGES_BUNDLE)
@@ -45,7 +43,7 @@ public class PostChangePaymentStatusCommand implements ICommand {
         logger.info("You can't change payment status because order has already paid!");
         addStatuses(request);
         request.setAttribute(ERRORS, errors);
-        request.setAttribute(ORDERS, orderService.findAllOrders());
+        servicePagination(request);
         return ADMIN_ORDERS_VIEW;
     }
 
@@ -56,5 +54,9 @@ public class PostChangePaymentStatusCommand implements ICommand {
                 (PaymentStatus.PaymentIdentifier.values());
         request.setAttribute(ORDER_STATUSES, orderStatuses);
         request.setAttribute(PAYMENT_STATUSES, paymentStatuses);
+    }
+
+    private void servicePagination(HttpServletRequest request) {
+        GetAllOrdersCommand.pagination(request, orderService);
     }
 }

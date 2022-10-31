@@ -32,10 +32,8 @@ public class PostChangeOrderStatusCommand implements ICommand {
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Order order = orderService.findOrderById(Long.parseLong(request.getParameter(ORDER_ID)));
-        logger.info("order ==> " + order);
-        List<String> errors = orderService.updateOrderStatus(order, Integer.parseInt
-                (request.getParameter(ORDER_STATUS)));
-        logger.info("orderStatus ==> " + Integer.parseInt(request.getParameter(ORDER_STATUS)));
+        List<String> errors = orderService.updateOrderStatus(order,
+                Integer.parseInt(request.getParameter(ORDER_STATUS)));
         if (errors.isEmpty()) {
             logger.info("Order status has updated successfully!");
             Util.redirectTo(request, response, ResourceBundle.getBundle(PAGES_BUNDLE)
@@ -46,18 +44,20 @@ public class PostChangeOrderStatusCommand implements ICommand {
         logger.info("Order can't be canceled because order has paid");
         addStatuses(request);
         request.setAttribute(ERRORS, errors);
-        request.setAttribute(ORDERS, orderService.findAllOrders());
+        servicePagination(request);
         return ADMIN_ORDERS_VIEW;
     }
 
     private void addStatuses(HttpServletRequest request) {
         List<OrderStatus.StatusIdentifier> orderStatuses = Arrays.asList
                 (OrderStatus.StatusIdentifier.values());
-        logger.info("orderStatuses ==> " + orderStatuses);
         List<PaymentStatus.PaymentIdentifier> paymentStatuses = Arrays.asList
                 (PaymentStatus.PaymentIdentifier.values());
-        logger.info("paymentStatuses ==> " + paymentStatuses);
         request.setAttribute(ORDER_STATUSES, orderStatuses);
         request.setAttribute(PAYMENT_STATUSES, paymentStatuses);
+    }
+
+    private void servicePagination(HttpServletRequest request) {
+        GetAllOrdersCommand.pagination(request, orderService);
     }
 }

@@ -5,6 +5,8 @@ import dao.factory.DaoFactory;
 import dao.factory.connection.DaoConnection;
 
 import entity.UserToOrder;
+
+import java.time.LocalDate;
 import java.util.List;
 
 public class UserToOrderService {
@@ -40,6 +42,13 @@ public class UserToOrderService {
         try (DaoConnection connection = daoFactory.getConnection()) {
             UserToOrderDao userToOrderDao = daoFactory.getUserToOrderDao(connection);
             return userToOrderDao.findAllByUser(userId);
+        }
+    }
+
+    public List<UserToOrder> findAllBySpec(long userId, LocalDate dateFrom, LocalDate dateTo, int status) {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            UserToOrderDao userToOrderDao = daoFactory.getUserToOrderDao(connection);
+            return userToOrderDao.findAllBySpec(userId, dateFrom, dateTo, status);
         }
     }
 

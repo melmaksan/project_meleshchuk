@@ -9,7 +9,7 @@
 <html>
 <head>
     <jsp:include page="/WEB-INF/views/includes/head.jsp"/>
-    <title>Schedule Page</title>
+    <title><fmt:message key="schedule.page"/></title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/includes/navbar.jsp"/>
@@ -23,7 +23,9 @@
     </div>
 </c:if>
 
-<h1 class="offset-2 my-3">Schedule</h1>
+<section id="section">
+    <h1 class="offset-2 my-3">Schedule</h1>
+</section>
 
 
 <jsp:include page="/WEB-INF/views/includes/footer.jsp"/>

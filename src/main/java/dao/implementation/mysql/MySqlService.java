@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -19,7 +20,7 @@ public class MySqlService implements ServiceDao {
     private static final String SELECT_ALL =
             "SELECT service.id AS service_id , service.title AS service_title, " +
                     "service.description AS service_description, service.price AS " +
-                    "service_price, service.image " +
+                    "service_price, service.image, service.duration " +
                     "FROM service ";
 
     private static final String WHERE_ID =
@@ -50,11 +51,11 @@ public class MySqlService implements ServiceDao {
             "WHERE service.description = ? ";
 
     private static final String INSERT =
-            "INSERT into service (title, description, price, image)" +
-                    "VALUES(?, ?, ?, ?) ";
+            "INSERT into service (title, description, price, image, duration)" +
+                    "VALUES(?, ?, ?, ?, ?) ";
 
     private static final String UPDATE =
-            "UPDATE service SET title = ?, description = ?, price = ?, image = ? ";
+            "UPDATE service SET title = ?, description = ?, price = ?, image = ?, duration = ? ";
 
     private static final String CHANGE_PRICE =
             "UPDATE service SET price =  ? ";
@@ -95,7 +96,8 @@ public class MySqlService implements ServiceDao {
     public Service insert(Service service) {
         Objects.requireNonNull(service);
         int id = defaultDao.executeInsertWithGeneratedPrimaryKey(INSERT,
-                service.getTitle(), service.getDescription(), service.getPrice(), service.getImage());
+                service.getTitle(), service.getDescription(), service.getPrice(),
+                service.getImage(), service.getDuration());
         service.setId(id);
         return service;
     }
@@ -104,7 +106,8 @@ public class MySqlService implements ServiceDao {
     public void update(Service service) {
         Objects.requireNonNull(service);
         defaultDao.executeUpdate(UPDATE + WHERE_ID, service.getTitle(),
-                service.getDescription(), service.getPrice(), service.getImage(), service.getId());
+                service.getDescription(), service.getPrice(), service.getImage(),
+                service.getId());
     }
 
     @Override
@@ -177,14 +180,14 @@ public class MySqlService implements ServiceDao {
 //
 //            System.out.println("Insert test:");
 //            Service service1 = mySqlService.insert(Service.newBuilder()
-//                    .addServiceName("QWERTY").addDescription("something")
-//                    .addPrice(BigDecimal.TEN).build());
+//                    .addServiceType("w").addServiceTitle("soming").addDuration(Time.valueOf("1:20:00"))
+//                    .addPrice(BigDecimal.TEN).addImage("/image/who_i_am.jpg").build());
 //            mySqlService.printAll(mySqlService.findAll());
 
             System.out.println("~~~~~~~~~~~~");
 
             System.out.println("Find one with id :");
-            System.out.println(mySqlService.findById((long) 1));
+            System.out.println(mySqlService.findById((long) 10));
 
             System.out.println("~~~~~~~~~~~~");
 

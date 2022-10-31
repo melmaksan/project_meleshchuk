@@ -1,6 +1,7 @@
 package controller.command.admin;
 
 import controller.command.ICommand;
+import entity.Order;
 import entity.OrderStatus;
 import entity.PaymentStatus;
 import org.apache.logging.log4j.LogManager;
@@ -26,14 +27,28 @@ public class GetAllOrdersCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<OrderStatus.StatusIdentifier> orderStatuses = Arrays.asList(OrderStatus.StatusIdentifier.values());
-        List<PaymentStatus.PaymentIdentifier> paymentStatuses = Arrays.asList(PaymentStatus.PaymentIdentifier.values());
+        List<OrderStatus.StatusIdentifier> orderStatuses = Arrays.asList
+                (OrderStatus.StatusIdentifier.values());
+        List<PaymentStatus.PaymentIdentifier> paymentStatuses = Arrays.asList
+                (PaymentStatus.PaymentIdentifier.values());
         logger.info("orderStatuses ==> " + orderStatuses);
         request.setAttribute(ORDER_STATUSES, orderStatuses);
         logger.info("paymentStatuses ==> " + paymentStatuses);
         request.setAttribute(PAYMENT_STATUSES, paymentStatuses);
-        logger.info("orders ==> " + orderService.findAllOrders());
-        request.setAttribute(ORDERS, orderService.findAllOrders());
+        pagination(request, orderService);
         return ADMIN_ORDERS_VIEW;
+    }
+
+    static void pagination(HttpServletRequest request, OrderService orderService) {
+        int page = 1;
+        int recordsPerPage = 2;
+        if (request.getParameter("page") != null)
+            page = Integer.parseInt(request.getParameter("page"));
+        List<Order> list = orderService.findAll(recordsPerPage, (page - 1) * recordsPerPage);
+        int numberOfRows = orderService.getNumberOfRows();
+        int numberOfPages = (int) Math.ceil(numberOfRows * 1.0 / recordsPerPage);
+        request.setAttribute(ORDERS, list);
+        request.setAttribute(NUM_OF_PAGE, numberOfPages);
+        request.setAttribute(CURR_PAGE, page);
     }
 }

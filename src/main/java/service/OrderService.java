@@ -47,27 +47,35 @@ public class OrderService {
         try (DaoConnection connection = daoFactory.getConnection()) {
             OrderDao orderDao = daoFactory.getOrderDao(connection);
             List<Order> orders = orderDao.findAll();
-            for (Order order : orders) {
-                User user = getClient(order);
-                List<User> specialists = getSpecialist(order);
-                List<Service> services = getServices(order);
-                order.setUser(user);
-                order.setSpecialists(specialists);
-                order.setServices(services);
-            }
+            setOtherEntities(orders);
             return orders;
         }
     }
 
-    public List<Order> findOrderByForFeedback(LocalDate dateFrom, LocalDate dateTo, int status) {
+    public int getNumberOfRows() {
         try (DaoConnection connection = daoFactory.getConnection()) {
             OrderDao orderDao = daoFactory.getOrderDao(connection);
-            List<Order> orders = orderDao.findAllWithCredentials(dateFrom, dateTo, status);
-            for (Order order : orders) {
-                User user = getClient(order);
-                order.setUser(user);
-            }
+            return orderDao.getNumberOfRows();
+        }
+    }
+
+    public List<Order> findAll(int limit, int offset) {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            OrderDao orderDao = daoFactory.getOrderDao(connection);
+            List<Order> orders = orderDao.findAll(limit, offset);
+            setOtherEntities(orders);
             return orders;
+        }
+    }
+
+    private void setOtherEntities(List<Order> orders) {
+        for (Order order : orders) {
+            User user = getClient(order);
+            List<User> specialists = getSpecialist(order);
+            List<Service> services = getServices(order);
+            order.setUser(user);
+            order.setSpecialists(specialists);
+            order.setServices(services);
         }
     }
 
@@ -109,6 +117,18 @@ public class OrderService {
         return user;
     }
 
+    public List<Order> findOrderByForFeedback(LocalDate dateFrom, LocalDate dateTo, int status) {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            OrderDao orderDao = daoFactory.getOrderDao(connection);
+            List<Order> orders = orderDao.findAllWithCredentials(dateFrom, dateTo, status);
+            for (Order order : orders) {
+                User user = getClient(order);
+                order.setUser(user);
+            }
+            return orders;
+        }
+    }
+
     public Order findOrderById(long orderId) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             OrderDao orderDao = daoFactory.getOrderDao(connection);
@@ -127,7 +147,7 @@ public class OrderService {
         }
     }
 
-    public void createOrder(String dateTime, long userId, long specId, long serviceId) {
+    public void createOrder(String dateTime, long specId, long serviceId, long userId) {
         Order orderDto = getDataFromRequestCreating(dateTime);
         Objects.requireNonNull(orderDto);
         if (orderDto.getOrderStatus() == null) {
@@ -154,7 +174,7 @@ public class OrderService {
     private Order getDataFromRequestCreating(String dateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return Order.newBuilder()
-                .addOrderTime(LocalDateTime.parse(dateTime, formatter))
+                .addOrderTimeStart(LocalDateTime.parse(dateTime, formatter))
                 .addDefaultStatus()
                 .addDefaultPaymentStatus()
                 .build();

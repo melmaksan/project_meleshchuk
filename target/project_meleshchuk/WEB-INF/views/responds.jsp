@@ -10,7 +10,7 @@
 <head>
     <jsp:include page="/WEB-INF/views/includes/head.jsp"/>
     <link rel="stylesheet" type="text/css" href="../../resources/index.css"/>
-    <title>Responds Page</title>
+    <title><fmt:message key="responds.page"/></title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/includes/navbar.jsp"/>
@@ -24,23 +24,24 @@
     </div>
 </c:if>
 
+<section id="section">
 <div class="container-fluid">
     <div class="row">
         <c:if test="${sessionScope.user.user}">
         <div class="col-1 px-1 mx-1 position-fixed">
             <div class="nav flex-column pl-5 mx-1">
                 <a class="btn btn-outline-light mb-1" href="${pageContext.request.contextPath}/site/user/create_respond"
-                   role="button" id="respButton">Create respond</a>
+                   role="button" id="respButton"><fmt:message key="create.respond"/></a>
                 <form class="my-1" action="${pageContext.request.contextPath}/site/responds">
                     <input type="hidden" name="command" value="filter.respond"/>
-                    <button class="btn btn-outline-light" type="submit" id="respButton">Show my responds</button>
+                    <button class="btn btn-outline-light" type="submit" id="respButton"><fmt:message key="show.respond"/></button>
                 </form>
             </div>
         </div>
         </c:if>
         <div class="col-9 offset-2" id="respond">
             <div class="container-fluid">
-                <div class="card-header text-center mx-auto mt-3 mb-0 bg-white"><h2>Responds</h2></div>
+                <div class="card-header text-center mx-auto mt-3 mb-0 bg-white"><h2><fmt:message key="responds"/></h2></div>
                 <div class="row mx-auto">
                     <c:forEach var="respond" items="${requestScope.responds}">
                         <div class="col my-4">
@@ -89,6 +90,7 @@
         </div>
     </div>
 </div>
+</section>
 
 <jsp:include page="/WEB-INF/views/includes/footer.jsp"/>
 </body>

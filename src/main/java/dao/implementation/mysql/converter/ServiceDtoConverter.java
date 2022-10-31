@@ -4,6 +4,7 @@ import entity.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 
 public class ServiceDtoConverter implements DtoConverter<Service> {
 
@@ -12,6 +13,7 @@ public class ServiceDtoConverter implements DtoConverter<Service> {
     private final static String SERVICE_DESCRIPTION = "service_description";
     private final static String PRICE = "service_price";
     private final static String IMAGE = "image";
+    private final static String DURATION = "duration";
 
 
     @Override
@@ -22,6 +24,7 @@ public class ServiceDtoConverter implements DtoConverter<Service> {
                 .addServiceType(resultSet.getString(SERVICE_DESCRIPTION))
                 .addPrice(resultSet.getBigDecimal(PRICE))
                 .addImage(resultSet.getString(IMAGE))
+                .addDuration(Time.valueOf(resultSet.getString(DURATION)))
                 .build();
     }
 }

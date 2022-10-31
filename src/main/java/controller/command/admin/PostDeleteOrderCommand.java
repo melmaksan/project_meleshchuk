@@ -51,6 +51,10 @@ public class PostDeleteOrderCommand implements ICommand {
                 (PaymentStatus.PaymentIdentifier.values());
         request.setAttribute(ORDER_STATUSES, orderStatuses);
         request.setAttribute(PAYMENT_STATUSES, paymentStatuses);
-        request.setAttribute(ORDERS, orderService.findAllOrders());
+        servicePagination(request);
+    }
+
+    private void servicePagination(HttpServletRequest request) {
+        GetAllOrdersCommand.pagination(request, orderService);
     }
 }

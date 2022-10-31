@@ -3,6 +3,7 @@ package controller.command.admin;
 import controller.command.ICommand;
 import controller.util.Util;
 import controller.util.validator.PriceValidator;
+import controller.util.validator.TimeValidator;
 import entity.Service;
 import entity.User;
 import org.apache.logging.log4j.LogManager;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.Time;
 import java.util.*;
 
 import static controller.util.constants.Attributes.*;
@@ -31,7 +33,7 @@ public class PostCreateServiceCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<String> errors = new ArrayList<>(validatePriceFromRequest(request));
+        List<String> errors = new ArrayList<>(validateDataFromRequest(request));
         if (errors.isEmpty()) {
             services.createService(getDataFromRequestCreating(request));
             request.setAttribute(SERVICES_UNIQUE_TYPE, services.getUniqueServiceTypes
@@ -57,6 +59,8 @@ public class PostCreateServiceCommand implements ICommand {
         logger.info("price ==> " + request.getParameter(SERVICE_PRICE));
         String serviceImage = request.getParameter(SERVICE_IMAGE);
         logger.info("serviceImage ==> " + request.getParameter(SERVICE_IMAGE));
+        Time time = Time.valueOf(request.getParameter(DURATION));
+        logger.info("time ==> " + time);
         String[] usersId = request.getParameterValues(SPEC_ID);
         logger.info("users ==> " + Arrays.toString(usersId));
         List<User> specialists = new ArrayList<>();
@@ -70,14 +74,17 @@ public class PostCreateServiceCommand implements ICommand {
                 .addServiceType(serviceType)
                 .addPrice(price)
                 .addImage(serviceImage)
+                .addDuration(time)
                 .addUsers(specialists)
                 .build();
     }
 
-    private List<String> validatePriceFromRequest(HttpServletRequest request) {
+    private List<String> validateDataFromRequest(HttpServletRequest request) {
         List<String> errors = new ArrayList<>();
         Util.validateField(new PriceValidator(),
                 request.getParameter(SERVICE_PRICE), errors);
+        Util.validateField(new TimeValidator(),
+                request.getParameter(DURATION), errors);
         return errors;
     }
 }

@@ -18,11 +18,14 @@ import java.util.Optional;
 public class MySqlOrder implements OrderDao {
 
     private static final String SELECT_ALL =
-            "SELECT orders.id, orders.time, orders.status_id, status.name AS status_name, " +
-                    "orders.payment_status_id, payment_status.name AS payment_status_name " +
+            "SELECT orders.id, orders.time, ADDTIME(orders.time, service.duration) as time_end, " +
+                    "orders.status_id, status.name AS status_name, orders.payment_status_id, " +
+                    "payment_status.name AS payment_status_name " +
                     "FROM orders " +
                     "JOIN status ON orders.status_id = status.id " +
-                    "JOIN payment_status ON orders.payment_status_id = payment_status.id ";
+                    "JOIN payment_status ON orders.payment_status_id = payment_status.id " +
+                    "JOIN orders_to_service ON orders.id = orders_to_service.orders_id " +
+                    "JOIN service ON orders_to_service.service_id = service.id ";
 
     private static final String WHERE_ID =
             "WHERE orders.id = ? ";
@@ -36,6 +39,9 @@ public class MySqlOrder implements OrderDao {
     private static final String DELETE =
             "DELETE FROM orders ";
 
+    private static final String PAGINATION =
+            "limit ? offset ? ";
+
     private static final String UPDATE_STATUS =
             "UPDATE orders SET status_id = ? ";
 
@@ -47,7 +53,7 @@ public class MySqlOrder implements OrderDao {
 
     private static final String NUMBER_OF_ROWS = "SELECT COUNT(*) FROM orders";
 
-    private static final String EMAIL_CREDENTIALS =
+    private static final String CREDENTIALS =
                     "WHERE orders.time >= ? AND orders.time <= ? AND orders.status_id = ? ";
 
     private final DefaultDaoImpl<Order> defaultDao;
@@ -72,14 +78,14 @@ public class MySqlOrder implements OrderDao {
 
     @Override
     public List<Order> findAllWithCredentials(LocalDate dateFrom, LocalDate dateTo, int status) {
-        return defaultDao.findAll(SELECT_ALL + EMAIL_CREDENTIALS, dateFrom, dateTo, status);
+        return defaultDao.findAll(SELECT_ALL + CREDENTIALS, dateFrom, dateTo, status);
     }
 
     @Override
     public Order insert(Order order) {
         Objects.requireNonNull(order);
         long id = defaultDao.executeInsertWithGeneratedPrimaryKey(INSERT,
-                order.getOrderTime(), order.getOrderStatus().getId(), order.getPaymentStatus().getId());
+                order.getTimeStart(), order.getOrderStatus().getId(), order.getPaymentStatus().getId());
         order.setId(id);
         return order;
     }
@@ -87,7 +93,7 @@ public class MySqlOrder implements OrderDao {
     @Override
     public void update(Order order) {
         Objects.requireNonNull(order);
-        defaultDao.executeUpdate(UPDATE + WHERE_ID, order.getOrderTime(),
+        defaultDao.executeUpdate(UPDATE + WHERE_ID, order.getTimeStart(),
                 order.getOrderStatus().getId(), order.getPaymentStatus().getId(), order.getId());
     }
 
@@ -113,6 +119,11 @@ public class MySqlOrder implements OrderDao {
     public void updatePaymentStatus(Order order, int paymentStatus) {
         Objects.requireNonNull(order);
         defaultDao.executeUpdate(UPDATE_PAYMENT_STATUS + WHERE_ID, paymentStatus, order.getId());
+    }
+
+    @Override
+    public List<Order> findAll(int limit, int offset) {
+        return defaultDao.findAll(SELECT_ALL + PAGINATION, limit, offset);
     }
 
     @Override
@@ -144,9 +155,10 @@ public class MySqlOrder implements OrderDao {
 
             System.out.println("~~~~~~~~~~~~");
 
+            System.out.println("find TEST");
             mySqlOrder.printAll(mySqlOrder
-                    .findAllWithCredentials(LocalDate.now().minusDays(1),
-                            LocalDate.now(), 2));
+                    .findAllWithCredentials(LocalDate.now().plusDays(2),
+                            LocalDate.now().plusDays(7),  2));
 
 //            System.out.println("Insert test:");
 //            Order order = mySqlOrder.insert(Order.newBuilder().addOrderTime(LocalDateTime.now())

@@ -4,6 +4,7 @@ import controller.util.Util;
 import controller.util.validator.LoginValidator;
 import controller.util.validator.PasswordValidator;
 import controller.util.validator.PhoneValidator;
+import dao.abstraction.OrderDao;
 import dao.abstraction.UserDao;
 import dao.factory.DaoFactory;
 import dao.factory.connection.DaoConnection;
@@ -12,6 +13,7 @@ import entity.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -25,6 +27,7 @@ public class UserService {
     private static final OrderService orderService = ServiceFactory.getOrderService();
     private static final ServiceForService serviceForService = ServiceFactory.getServiceService();
     private static final RespondService respondService = ServiceFactory.getRespondService();
+    private static final int STATUS = OrderStatus.StatusIdentifier.BOOKED.getId();
     private static final String USER_ALREADY_EXISTS = "Invalid credentials, please try again";
     private static final String SPEC_IS_IN_ORDER = "Specialist is exist in booked order!";
     private static final String LOGIN_IS_EXIST = "There is an account with this email, please " +
@@ -58,6 +61,26 @@ public class UserService {
         }
     }
 
+    public int getNumberOfRows() {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            UserDao userDao = daoFactory.getUserDao(connection);
+            return userDao.getNumberOfRows();
+        }
+    }
+
+    public List<User> findAllClientsWithPagination(int limit, int offset) {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            UserDao userDao = daoFactory.getUserDao(connection);
+            List<User> users = userDao.findAll(limit, offset);
+            for (User user : users) {
+                List<Order> orders = getOrders(user);
+                user.setOrders(orders);
+            }
+            return users;
+        }
+    }
+
+
     public List<User> findAllClients() {
         try (DaoConnection connection = daoFactory.getConnection()) {
             UserDao userDao = daoFactory.getUserDao(connection);
@@ -69,6 +92,7 @@ public class UserService {
             return users;
         }
     }
+
 
     public List<User> findAllSpecialists() {
         try (DaoConnection connection = daoFactory.getConnection()) {
@@ -106,6 +130,15 @@ public class UserService {
     public List<Order> getOrders(User user) {
         List<Order> orders = new ArrayList<>();
         List<UserToOrder> userToOrders = userToOrderService.findAllOrdersByUser(user.getId());
+        for (UserToOrder userToOrder : userToOrders) {
+            orders.add(orderService.findOrderById(userToOrder.getOrderId()));
+        }
+        return orders;
+    }
+
+    public List<Order> getOrdersForCheck(User user, LocalDate start, LocalDate end) {
+        List<Order> orders = new ArrayList<>();
+        List<UserToOrder> userToOrders = userToOrderService.findAllBySpec(user.getId(), start, end, STATUS);
         for (UserToOrder userToOrder : userToOrders) {
             orders.add(orderService.findOrderById(userToOrder.getOrderId()));
         }
@@ -234,4 +267,5 @@ public class UserService {
             connection.commit();
         }
     }
+
 }

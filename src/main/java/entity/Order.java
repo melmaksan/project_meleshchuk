@@ -2,6 +2,7 @@ package entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -18,7 +19,8 @@ public class Order implements Serializable {
     private long id;
     private OrderStatus orderStatus;
     private PaymentStatus paymentStatus;
-    private LocalDateTime orderTime;
+    private LocalDateTime timeStart;
+    private LocalDateTime timeEnd;
     private List<Service> services;
     private User user;
     private List<User> specialists;
@@ -51,12 +53,20 @@ public class Order implements Serializable {
         this.paymentStatus = paymentStatus;
     }
 
-    public String getOrderTime() {
-        return orderTime.format(dateTimeFormatter);
+    public LocalDateTime getTimeStart() {
+        return timeStart;
     }
 
-    public void setOrderTime(LocalDateTime orderTime) {
-        this.orderTime = orderTime;
+    public void setTimeStart(LocalDateTime timeStart) {
+        this.timeStart = timeStart;
+    }
+
+    public LocalDateTime getTimeEnd() {
+        return timeEnd;
+    }
+
+    public void setTimeEnd(LocalDateTime timeEnd) {
+        this.timeEnd = timeEnd;
     }
 
     public List<Service> getServices() {
@@ -111,13 +121,18 @@ public class Order implements Serializable {
         this.paymentStatus = new PaymentStatus(DEFAULT_PAYMENT_STATUS_ID, DEFAULT_PAYMENT_STATUS);
     }
 
+    public String getOrderTime() {
+        return timeStart.format(dateTimeFormatter);
+    }
+
     @Override
     public String toString() {
         return "Order{" +
                 "id=" + id +
                 ", orderStatus=" + orderStatus +
                 ", paymentStatus=" + paymentStatus +
-                ", orderTime=" + orderTime +
+                ", timeStart=" + timeStart +
+                ", timeEnd=" + timeEnd +
                 '}';
     }
 
@@ -153,8 +168,13 @@ public class Order implements Serializable {
             return this;
         }
 
-        public Builder addOrderTime(LocalDateTime orderTime) {
-            order.setOrderTime(orderTime);
+        public Builder addOrderTimeStart(LocalDateTime orderTime) {
+            order.setTimeStart(orderTime);
+            return this;
+        }
+
+        public Builder addOrderTimeEnd(LocalDateTime orderTime) {
+            order.setTimeEnd(orderTime);
             return this;
         }
 

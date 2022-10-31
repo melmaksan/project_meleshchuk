@@ -1,3 +1,11 @@
+#section {
+    min-height: 90vh;
+}
+
+#pagination {
+    margin-right: 8.6%;
+}
+
 #serviceCard {
     width: 21rem
 }
@@ -115,4 +123,3 @@
     font-size: 13px;
     color: #777;
 }
-

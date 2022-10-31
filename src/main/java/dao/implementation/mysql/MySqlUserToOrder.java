@@ -11,6 +11,7 @@ import entity.UserToOrder;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -22,6 +23,12 @@ public class MySqlUserToOrder implements UserToOrderDao {
                     "user.last_name, user_to_orders.orders_id " +
                     "FROM user " +
                     "JOIN user_to_orders ON user_to_orders.user_id = user.id ";
+
+    private final static String SELECT_ALL_FOR_SPEC =
+            "SELECT user_to_orders.user_id, user_to_orders.orders_id, orders.time " +
+                    "FROM orders " +
+                    "JOIN user_to_orders ON user_to_orders.orders_id = orders.id " +
+                    "WHERE user_id = ? AND orders.time >= ? AND orders.time <= ? AND status_id = ? ";
 
     private final static String WHERE_USER_ORDERS =
             "WHERE user_id = ? AND orders_id = ? ";
@@ -112,6 +119,11 @@ public class MySqlUserToOrder implements UserToOrderDao {
     }
 
     @Override
+    public List<UserToOrder> findAllBySpec(long userId, LocalDate dateFrom, LocalDate dateTo, int status) {
+        return defaultDao.findAll(SELECT_ALL_FOR_SPEC, userId, dateFrom, dateTo, status);
+    }
+
+    @Override
     public boolean isSpecExistsInOrder(long userId) {
         return defaultDao.exist(EXIST_BY_SERVICE, userId, OrderStatus.StatusIdentifier.BOOKED.getId());
     }
@@ -149,7 +161,11 @@ public class MySqlUserToOrder implements UserToOrderDao {
 
             System.out.println("~~~~~~~~~~~~");
 
+            System.out.println(mySqlUserToOrder.findAllBySpec(9, LocalDate.now().plusDays(4),
+                    LocalDate.now().plusDays(6), 1));
+
             System.out.println(mySqlUserToOrder.isSpecExistsInOrder(7));
+
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }

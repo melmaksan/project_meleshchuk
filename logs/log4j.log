@@ -158,3 +158,4 @@
 [INFO ] 2022-10-28 16:45:41.362 [main] SendEmail - for user5 rate is 4.5
 [INFO ] 2022-10-28 16:45:41.376 [main] SendEmail - responds ==> [Respond{id=26, userName='Kolya Petroshchuk', dateTime=2022-10-28T16:35, mark=5}, Respond{id=27, userName='Kolya Petroshchuk', dateTime=2022-10-28T16:35, mark=3}]
 [INFO ] 2022-10-28 16:45:41.376 [main] SendEmail - for user6 rate is 4.0
+[ERROR] 2022-10-29 22:24:38.273 [main] DefaultDaoImpl - java.sql.SQLIntegrityConstraintViolationException: Column 'image' cannot be null
