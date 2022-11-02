@@ -6,6 +6,10 @@
     margin-right: 8.6%;
 }
 
+#sortTable3 td {
+    vertical-align: inherit;
+}
+
 #serviceCard {
     width: 21rem
 }

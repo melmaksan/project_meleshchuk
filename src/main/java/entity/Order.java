@@ -2,9 +2,9 @@ package entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.chrono.ChronoLocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 
 public class Order implements Serializable {
 
@@ -144,6 +144,10 @@ public class Order implements Serializable {
         return id == order.id;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
     public static class Builder {
 

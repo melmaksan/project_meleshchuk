@@ -7,8 +7,8 @@ import java.sql.SQLException;
 
 public class OrderToServiceDtoConverter implements DtoConverter<OrderToService> {
 
-    private final static String ORDER_ID = "orders_id";
-    private final static String SERVICE_ID = "service_id";
+    private static final String ORDER_ID = "orders_id";
+    private static final String SERVICE_ID = "service_id";
 
     @Override
     public OrderToService convertToObject(ResultSet resultSet) throws SQLException {

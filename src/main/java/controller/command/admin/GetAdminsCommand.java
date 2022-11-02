@@ -24,8 +24,8 @@ public class GetAdminsCommand implements ICommand {
         public String execute(HttpServletRequest request, HttpServletResponse response)
                 throws ServletException, IOException {
             HomeCommand.removeLogStatus(request);
-            logger.info("admins ==> " + userService.findAdmins());
             request.setAttribute(ADMINS, userService.findAdmins());
+            logger.info("i am GetAdminsCommand");
             return ADMINS_VIEW;
         }
 }

@@ -34,7 +34,7 @@
         <div class="row">
             <div class="col-2 px-1 position-fixed" id="sticky-sidebar">
                 <div class="nav flex-column pl-4 m-1">
-                    <h5 class="pt-3"><fmt:message key="sort"/>:</h5>
+                    <h5 ><fmt:message key="sort"/>:</h5>
                     <h6 class="pb-0 pl-2 mb-0"><fmt:message key="by.price"/></h6>
                     <form class="py-0 pl-3 my-1" action="${pageContext.request.contextPath}/site/home">
                         <input type="hidden" name="command" value="asc.price">

@@ -1,6 +1,7 @@
 package controller.command.admin;
 
 import controller.command.ICommand;
+import controller.command.user.PostConfirmOrderCommand;
 import controller.util.Util;
 import entity.*;
 import org.apache.logging.log4j.LogManager;
@@ -36,7 +37,6 @@ public class PostChangeOrderTimeCommand implements ICommand {
             throws ServletException, IOException {
         List<String> errors = new ArrayList<>();
         Order order = orderService.findOrderById(Long.parseLong(request.getParameter(ORDER_ID)));
-        logger.info("DATA_TIME ==> " + request.getParameter(DATA_TIME));
         String dateTime = request.getParameter(DATA_TIME);
         checkIfSpecIsFree(dateTime, order, errors);
         if (errors.isEmpty()) {
@@ -67,7 +67,7 @@ public class PostChangeOrderTimeCommand implements ICommand {
         List<Service> services = order.getServices();
         List<User> specialists = order.getSpecialists();
         LocalDateTime newOrderStart = LocalDateTime.parse(dateTime);
-        logger.info("newOrderStart ==> " + newOrderStart);
+        logger.info("i set newOrderStart");
         for (Service service : services) {
             LocalDateTime newOrderEnd = newOrderStart.plusMinutes(service.getMinutes());
             for (User spec : specialists) {
@@ -79,16 +79,7 @@ public class PostChangeOrderTimeCommand implements ICommand {
 
     private void checkOnOrdersPerDay(List<String> errors, LocalDateTime newOrderStart,
                                      LocalDateTime newOrderEnd, User spec) {
-        List<Order> orders = userService.getBookedOrdersPerDay(spec,
-                LocalDate.from(newOrderEnd), LocalDate.from(newOrderEnd).plusDays(1));
-        for (Order order : orders) {
-            if (newOrderStart.isBefore(order.getTimeEnd()) && newOrderEnd.isAfter(order.getTimeStart())) {
-                logger.info("order check ==> " + (newOrderStart.isBefore(order.getTimeEnd()) &&
-                        newOrderEnd.isAfter(order.getTimeStart())));
-                errors.add(SPEC_IS_BUSY);
-                return;
-            }
-        }
+        PostConfirmOrderCommand.checkOrders(errors, newOrderStart, newOrderEnd, spec, userService);
     }
 
     private void addStatuses(HttpServletRequest request) {

@@ -15,10 +15,10 @@ import java.sql.SQLException;
 
 public class MySqlDaoFactory extends DaoFactory {
 
-    private final static String NULLABLE_CONNECTION =
+    private static final String NULLABLE_CONNECTION =
             "No connection!";
 
-    private final static String WRONG_TYPE_CONNECTION =
+    private static final String WRONG_TYPE_CONNECTION =
             "Wrong type connection!";
 
     private static final Logger logger = LogManager.getLogger(MySqlDaoFactory.class);

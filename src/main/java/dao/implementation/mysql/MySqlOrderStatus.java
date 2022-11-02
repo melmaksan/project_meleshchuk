@@ -5,9 +5,7 @@ import dao.datasource.PooledConnection;
 import dao.implementation.mysql.converter.DtoConverter;
 import dao.implementation.mysql.converter.OrderStatusDtoConverter;
 
-import entity.Order;
 import entity.OrderStatus;
-import entity.PaymentStatus;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -18,24 +16,24 @@ import java.util.Optional;
 
 public class MySqlOrderStatus implements OrderStatusDao {
 
-    private final static String SELECT_ALL =
+    private static final String SELECT_ALL =
             "SELECT id AS status_id, name AS status_name " +
                     "FROM status ";
 
-    private final static String INSERT =
+    private static final String INSERT =
             "INSERT INTO status (id, name) " +
                     "VALUES(?, ?) ";
 
-    private final static String UPDATE =
+    private static final String UPDATE =
             "UPDATE status SET name = ? ";
 
-    private final static String DELETE =
+    private static final String DELETE =
             "DELETE FROM status ";
 
-    private final static String WHERE_ID =
+    private static final String WHERE_ID =
             "WHERE id = ? ";
 
-    private final static String WHERE_NAME =
+    private static final String WHERE_NAME =
             "WHERE name = ? ";
 
 

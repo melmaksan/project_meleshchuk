@@ -9,8 +9,6 @@ import dao.factory.DaoFactory;
 import dao.factory.connection.DaoConnection;
 import controller.util.passhash.PasswordStorage;
 import entity.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -33,8 +31,6 @@ public class UserService {
             "use another or sign in with it!";
     private final DaoFactory daoFactory = DaoFactory.getInstance();
     private static UserService instance;
-
-    private static final Logger logger = LogManager.getLogger(UserService.class);
 
     public static synchronized UserService getInstance() {
         if (instance == null) {
@@ -120,8 +116,8 @@ public class UserService {
     private List<Service> getServices(User user) {
         List<Service> services = new ArrayList<>();
         List<UserToService> userToServiceList = userToService.findAllServicesByUser(user.getId());
-        for (UserToService userToService : userToServiceList) {
-            services.add(serviceForService.findServiceForOtherEntity(userToService.getServiceId()).orElse(null));
+        for (UserToService us : userToServiceList) {
+            services.add(serviceForService.findServiceForOtherEntity(us.getServiceId()).orElse(null));
         }
         return services;
     }
@@ -210,12 +206,11 @@ public class UserService {
 
     private void checkRole(String role, User userDto) {
         if (role != null) {
-            switch (Role.RoleIdentifier.valueOf(role)) {
-                case ADMIN:
-                    userDto.setAdminRole();
-                    break;
-                case SPECIALIST:
-                    userDto.setSpecialistRole();
+            Role.RoleIdentifier roleIdentifier = Role.RoleIdentifier.valueOf(role);
+            if (roleIdentifier == Role.RoleIdentifier.ADMIN) {
+                userDto.setAdminRole();
+            } else if (roleIdentifier == Role.RoleIdentifier.SPECIALIST) {
+                userDto.setSpecialistRole();
             }
         }
     }

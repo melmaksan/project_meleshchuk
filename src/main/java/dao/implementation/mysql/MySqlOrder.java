@@ -83,7 +83,6 @@ public class MySqlOrder implements OrderDao {
 
     @Override
     public Order insert(Order order) {
-        Objects.requireNonNull(order);
         long id = defaultDao.executeInsertWithGeneratedPrimaryKey(INSERT,
                 order.getTimeStart(), order.getOrderStatus().getId(), order.getPaymentStatus().getId());
         order.setId(id);
@@ -92,7 +91,6 @@ public class MySqlOrder implements OrderDao {
 
     @Override
     public void update(Order order) {
-        Objects.requireNonNull(order);
         defaultDao.executeUpdate(UPDATE + WHERE_ID, order.getTimeStart(),
                 order.getOrderStatus().getId(), order.getPaymentStatus().getId(), order.getId());
     }
@@ -104,20 +102,17 @@ public class MySqlOrder implements OrderDao {
 
     @Override
     public void changeBookingTime(Order order, LocalDateTime localDateTime) {
-        Objects.requireNonNull(order);
         defaultDao.executeUpdate(CHANGE_TIME + WHERE_ID, localDateTime, order.getId());
 
     }
 
     @Override
     public void updateOrderStatus(Order order, int orderStatus) {
-        Objects.requireNonNull(order);
         defaultDao.executeUpdate(UPDATE_STATUS + WHERE_ID, orderStatus, order.getId());
     }
 
     @Override
     public void updatePaymentStatus(Order order, int paymentStatus) {
-        Objects.requireNonNull(order);
         defaultDao.executeUpdate(UPDATE_PAYMENT_STATUS + WHERE_ID, paymentStatus, order.getId());
     }
 
@@ -163,7 +158,7 @@ public class MySqlOrder implements OrderDao {
 
             System.out.println("find id");
             System.out.println(mySqlOrder
-                    .findById(22L));
+                    .findById(5L));
 
 //            System.out.println("Insert test:");
 //            Order order = mySqlOrder.insert(Order.newBuilder().addOrderTime(LocalDateTime.now())

@@ -32,10 +32,8 @@ public class PostChangeServiceStatusCommand implements ICommand {
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Order order = orderService.findOrderById(Long.parseLong(request.getParameter(ORDER_ID)));
-        logger.info("order ==> " + order);
         List<String> errors = orderService.updateOrderStatus(order, Integer.parseInt
                 (request.getParameter(ORDER_STATUS)));
-        logger.info("orderStatus ==> " + Integer.parseInt(request.getParameter(ORDER_STATUS)));
         if (errors.isEmpty()) {
             logger.info("Order status has updated successfully!");
             Util.redirectTo(request, response, ResourceBundle.getBundle(PAGES_BUNDLE)

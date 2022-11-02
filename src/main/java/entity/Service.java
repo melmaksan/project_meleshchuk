@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Time;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 
 public class Service implements Serializable {
 
@@ -88,8 +89,8 @@ public class Service implements Serializable {
     }
 
     public int getMinutes() {
-        String duration = getDuration().toString();
-        String[] hourMin = duration.split(":");
+        String time = getDuration().toString();
+        String[] hourMin = time.split(":");
         int hour = Integer.parseInt(hourMin[0]);
         int minutes = Integer.parseInt(hourMin[1]);
         int hoursInMinutes = hour * 60;
@@ -114,6 +115,11 @@ public class Service implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Service service = (Service) o;
         return id == service.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     public static class Builder {

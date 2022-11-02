@@ -3,7 +3,6 @@ package dao.abstraction;
 import entity.OrderToService;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface OrderToServiceDao extends GenericDao<OrderToService, Long> {
 

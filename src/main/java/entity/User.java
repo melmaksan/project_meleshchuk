@@ -2,9 +2,8 @@ package entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.List;
+import java.util.Objects;
 
 public class User implements Serializable {
 
@@ -165,6 +164,10 @@ public class User implements Serializable {
         return login.equals(user.login);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
     public static class Builder {
 
@@ -225,8 +228,7 @@ public class User implements Serializable {
     }
 
     private static double formatRate(double rate) {
-        MathContext mathContext = new MathContext(15, RoundingMode.HALF_UP); // для double
-        BigDecimal bigDecimal = new BigDecimal(rate, mathContext);
+        BigDecimal bigDecimal = BigDecimal.valueOf(rate);
         bigDecimal = bigDecimal.setScale(1, BigDecimal.ROUND_DOWN);
         return bigDecimal.doubleValue();
     }

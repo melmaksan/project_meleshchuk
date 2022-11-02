@@ -24,7 +24,7 @@
 
 <section id="section">
     <h1 class="offset-1 my-3"><fmt:message key="all"/> <fmt:message key="a.orders"/></h1>
-    <table class="table offset-1 text-center table-sm table-striped table-bordered" id="sortTable3" style="width: 83%">
+    <table class="table offset-1 text-center table-sm table-striped table-bordered " id="sortTable3" style="width: 83%">
         <thead class="thead-dark">
         <tr>
             <th class="col-1 " scope="col" style="max-width: 5%">#id</th>
@@ -54,14 +54,13 @@
                                 <input type="hidden" name="command" value="change.time"/>
                                 <input type="hidden" name="orderId" value="${order.id}"/>
                                 <td class="col-2 py-1">
-                                    <label for="appointment_time"></label>
                                     <input type="datetime-local" id="appointment_time" name="appointment_time"
                                            min="2022-10-30T00:00" max="2022-11-30T00:00" step="1800"
                                            value="${order.timeStart}" required/>
                                 </td>
-                                <td class="col-1 pt-0 pb-1 ">
-                                    <button type="submit" class="btn-sm btn-outline-primary py-0 mt-1 mb-0"
-                                            style="border-radius: 8px"><fmt:message key="change"/>
+                                <td class="col-1 py-1 ">
+                                    <button type="submit" class="btn-sm btn-outline-primary py-0"
+                                            style="border-radius: 4px"><fmt:message key="change"/>
                                     </button>
                                 </td>
                             </form>
@@ -109,8 +108,8 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="col-1 pt-0 pb-1 ">
-                                <form class="mt-1 mb-0" action="${pageContext.request.contextPath}/site/admin/orders"
+                            <td class="col-1 py-1 ">
+                                <form class="my-1" action="${pageContext.request.contextPath}/site/admin/orders"
                                       method="post">
                                     <input type="hidden" name="command" value="delete.order"/>
                                     <input type="hidden" name="orderId" value="${order.id}"/>

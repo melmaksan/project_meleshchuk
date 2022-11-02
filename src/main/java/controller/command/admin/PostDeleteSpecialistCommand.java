@@ -2,7 +2,6 @@ package controller.command.admin;
 
 import controller.command.ICommand;
 import controller.util.Util;
-import controller.util.constants.Attributes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.ServiceFactory;
@@ -31,7 +30,6 @@ public class PostDeleteSpecialistCommand implements ICommand {
         if (errors.isEmpty()) {
             logger.info("DELETE WITHOUT ERRORS!");
             request.setAttribute(SPECIALISTS, userService.findAllSpecialists());
-            logger.info("SPECIALISTS ==> " + userService.findAllSpecialists());
             Util.redirectTo(request, response, ResourceBundle.
                     getBundle(PAGES_BUNDLE).getString("admin.specialists"));
             return REDIRECTED;
@@ -39,7 +37,6 @@ public class PostDeleteSpecialistCommand implements ICommand {
         logger.info("Specialist exist in booked order! Try later please");
         request.setAttribute(ERRORS, errors);
         request.setAttribute(SPECIALISTS, userService.findAllSpecialists());
-        logger.info("SPECIALISTS ==> " + userService.findAllSpecialists());
         return ADMIN_SPECIALISTS_VIEW;
     }
 }

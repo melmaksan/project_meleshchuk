@@ -1,25 +1,20 @@
 package dao.implementation.mysql.converter;
 
-import entity.Order;
 import entity.Role;
-import entity.Service;
 import entity.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class UserDtoConverter implements DtoConverter<User> {
 
-    private final static String ID_FIELD = "user_id";
-    private final static String FIRST_NAME = "first_name";
-    private final static String LAST_NAME = "last_name";
-    private final static String LOGIN = "login";
-    private final static String PASSWORD = "password";
-    private final static String PHONE = "phone_num";
-    private final static String RATING = "rate";
+    private static final String ID_FIELD = "user_id";
+    private static final String FIRST_NAME = "first_name";
+    private static final String LAST_NAME = "last_name";
+    private static final String LOGIN = "login";
+    private static final String PASSWORD = "password";
+    private static final String PHONE = "phone_num";
+    private static final String RATING = "rate";
     private final DtoConverter<Role> roleConverter;
 
     public UserDtoConverter() {

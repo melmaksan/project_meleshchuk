@@ -1,11 +1,17 @@
 package entity;
 
-public abstract class Designation {
+import java.io.Serializable;
+import java.util.Objects;
+
+public abstract class Designation implements Serializable {
 
     private int id;
     private String name;
 
-    public Designation(int id, String name) {
+    protected Designation() {
+    }
+
+    protected Designation(int id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -39,7 +45,11 @@ public abstract class Designation {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Designation that = (Designation) o;
-        return id == that.id;
+        return id == that.id && Objects.equals(name, that.name);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
 }

@@ -7,8 +7,8 @@ import java.sql.SQLException;
 
 public class RoleDtoConverter implements DtoConverter<Role> {
 
-    private final static String ID_FIELD = "role_id";
-    private final static String NAME_FIELD = "role_name";
+    private static final String ID_FIELD = "role_id";
+    private static final String NAME_FIELD = "role_name";
 
     @Override
     public Role convertToObject(ResultSet resultSet) throws SQLException {

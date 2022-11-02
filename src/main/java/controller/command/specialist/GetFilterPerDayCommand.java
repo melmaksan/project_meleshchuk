@@ -29,7 +29,6 @@ public class GetFilterPerDayCommand implements ICommand {
             throws ServletException, IOException {
         User specialist = getUserFromSession(request.getSession());
         LocalDate date =  LocalDate.parse(request.getParameter(DATA_TIME));
-        logger.info("dateTime ==> " + date);
         List<Order> orders = userService.getOrdersPerDay
                 (specialist,  date, date.plusDays(1));
         specialist.setOrders(orders);

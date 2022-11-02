@@ -31,10 +31,4 @@ public class PasswordStorage {
         return passwordHash.equals(checkPassHash);
     }
 
-    public static void main(String[] args) {
-        System.out.println(PasswordStorage.getSecurePassword("user123"));
-    }
-
-    String s = "f6ee94ecb014f74f887b9dcc52daecf73ab3e3333320cadd98bcb59d895c52f5";
-
 }

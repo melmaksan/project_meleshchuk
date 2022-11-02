@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `beauty_salon_db`.`user` (
   `login` VARCHAR(45) NOT NULL,
   `password` VARCHAR(65) NOT NULL,
   `phone_num` VARCHAR(45) NOT NULL,
-  `rate` DOUBLE(5,1) NULL,
+  `rate` DOUBLE(3,1) NULL,
   `role_id` TINYINT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `login_UNIQUE` (`login` ASC) VISIBLE,
@@ -62,6 +62,7 @@ CREATE TABLE IF NOT EXISTS `beauty_salon_db`.`service` (
   `description` VARCHAR(255) NOT NULL,
   `price` DECIMAL(9,2) NOT NULL,
   `image` VARCHAR(255) NOT NULL,
+  `duration` TIME NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -210,6 +211,7 @@ CREATE TABLE IF NOT EXISTS `beauty_salon_db`.`user_to_responds` (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
+
 INSERT into role (id, name) VALUES(1, 'USER');
 INSERT into role (id, name) VALUES(2, 'ADMIN');
 INSERT into role (id, name) VALUES(3, 'SPECIALIST');
@@ -228,15 +230,15 @@ INSERT into user (id, first_name, last_name, login, password, phone_num, rate, r
 INSERT into user (first_name, last_name, login, password, phone_num, role_id) VALUES('Sergiy', 'Sternenko', 'sergiy.user@mma.com', 'e606e38b0d8c19b24cf0ee3808183162ea7cd63ff7912dbb22b5e803286b4446', '+380445566789', 1);
 INSERT into user (first_name, last_name, login, password, phone_num, role_id) VALUES('Kolya', 'Petroshchuk', 'kolya.user@mma.com', 'e606e38b0d8c19b24cf0ee3808183162ea7cd63ff7912dbb22b5e803286b4446', '+380445566789', 1);
 INSERT into user (first_name, last_name, login, password, phone_num, role_id) VALUES('Lena', 'Holowach', 'lena.user@mma.com', 'e606e38b0d8c19b24cf0ee3808183162ea7cd63ff7912dbb22b5e803286b4446', '+380445566789', 1);
-INSERT into service (title, description, price, image) VALUES('Crew Cut', 'Man Military Haircut', 110.00, '/images/service_img/man_hc_1.jpg');
-INSERT into service (title, description, price, image) VALUES('Easy Waves', 'Woman Classic Haircut', 8770.00, '/images/service_img/woman_hc_1.jpg');
-INSERT into service (title, description, price, image) VALUES('Neat Side Fade', 'Kids Haircut', 190.00, '/images/service_img/kid_hc_1.jpg');
-INSERT into service (title, description, price, image) VALUES('Crew Cut', 'Man Haircut', 670.00, '/images/service_img/man_hc_1.jpg');
-INSERT into service (title, description, price, image) VALUES('Easy Waves', 'Woman Haircut', 540.00, '/images/service_img/woman_hc_1.jpg');
-INSERT into service (title, description, price, image) VALUES('Neat Side Fade', 'Kids Haircut', 110.00, '/images/service_img/kid_hc_1.jpg');
-INSERT into service (title, description, price, image) VALUES('Crew Cut', 'Man Military Haircut', 130.00, '/images/service_img/man_hc_1.jpg');
-INSERT into service (title, description, price, image) VALUES('Easy Waves', 'Woman Haircut', 970.00, '/images/service_img/woman_hc_1.jpg');
-INSERT into service (title, description, price, image) VALUES('Neat Side Fade', 'Kids Haircut', 390.00, '/images/service_img/kid_hc_1.jpg');
+INSERT into service (title, description, price, image, duration) VALUES('Crew Cut', 'Man Military Haircut', 110.00, '/images/service_img/man_hc_1.jpg', '01:00:00');
+INSERT into service (title, description, price, image, duration) VALUES('Easy Waves', 'Woman Classic Haircut', 8770.00, '/images/service_img/woman_hc_1.jpg', '01:30:00');
+INSERT into service (title, description, price, image, duration) VALUES('Neat Side Fade', 'Kids Haircut', 190.00, '/images/service_img/kid_hc_1.jpg', '01:00:00');
+INSERT into service (title, description, price, image, duration) VALUES('Crew Cut', 'Man Haircut', 670.00, '/images/service_img/man_hc_1.jpg', '01:30:00');
+INSERT into service (title, description, price, image, duration) VALUES('Easy Waves', 'Woman Haircut', 540.00, '/images/service_img/woman_hc_1.jpg', '01:00:00');
+INSERT into service (title, description, price, image, duration) VALUES('Neat Side Fade', 'Kids Haircut', 110.00, '/images/service_img/kid_hc_1.jpg', '01:30:00');
+INSERT into service (title, description, price, image, duration) VALUES('Crew Cut', 'Man Military Haircut', 130.00, '/images/service_img/man_hc_1.jpg', '01:00:00');
+INSERT into service (title, description, price, image, duration) VALUES('Easy Waves', 'Woman Haircut', 970.00, '/images/service_img/woman_hc_1.jpg', '01:30:00');
+INSERT into service (title, description, price, image, duration) VALUES('Neat Side Fade', 'Kids Haircut', 390.00, '/images/service_img/kid_hc_1.jpg', '01:00:00');
 INSERT into user_to_service (user_id, service_id) VALUES(2, 1);
 INSERT into user_to_service (user_id, service_id) VALUES(2, 8);
 INSERT into user_to_service (user_id, service_id) VALUES(2, 9);

@@ -12,21 +12,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static controller.util.constants.Attributes.ORDERS;
 import static controller.util.constants.Attributes.SPECIALISTS;
 import static controller.util.constants.Views.CREATE_VIEW;
 
 public class GetCreateCommand implements ICommand {
 
     private final UserService userService = ServiceFactory.getUserService();
-    private static final Logger logger = LogManager.getLogger(GetAllOrdersCommand.class);
+    private static final Logger logger = LogManager.getLogger(GetCreateCommand.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HomeCommand.removeLogStatus(request);
         request.setAttribute(SPECIALISTS, userService.findAllSpecialists());
-        logger.info("SPECIALISTS ==> " + userService.findAllSpecialists());
+        logger.info("i am GetCreateCommand");
         return CREATE_VIEW;
     }
 }

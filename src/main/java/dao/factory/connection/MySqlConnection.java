@@ -43,7 +43,6 @@ public class MySqlConnection implements DaoConnection {
     public void commit() {
         try {
             connection.commit();
-//            connection.setAutoCommit(true);
             isTransactionActive = false;
         } catch (SQLException ex) {
             logger.error(ERROR_DURING_COMMIT, ex);
@@ -55,7 +54,6 @@ public class MySqlConnection implements DaoConnection {
     public void rollback() {
         try {
             connection.rollback();
-//            connection.setAutoCommit(true);
             isTransactionActive = false;
         } catch (SQLException ex) {
             logger.error(ERROR_DURING_ROLLBACK, ex);

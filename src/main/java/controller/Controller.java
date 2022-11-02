@@ -30,18 +30,24 @@ public class Controller extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response)
-            throws ServletException, IOException {
+                         HttpServletResponse response) {
         logger.info("Controller.doGet");
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ServletException | IOException e) {
+            logger.error(e);
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response)
-            throws ServletException, IOException {
+                          HttpServletResponse response) {
         logger.info("Controller.doPost");
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ServletException | IOException e) {
+            logger.error(e);
+        }
     }
 
     private void processRequest(HttpServletRequest request,
@@ -50,11 +56,9 @@ public class Controller extends HttpServlet {
         ICommand command = controllerHelper.getCommand(
                 getPath(request), request.getParameter("command"));
 
-        logger.info("command ==>   \n" + command);
 
         String path = command.execute(request, response);
 
-        logger.info("path ==>   " + path);
 
         if (!path.equals(ICommand.REDIRECTED)) {
             logger.info("i am before forward");
@@ -64,7 +68,6 @@ public class Controller extends HttpServlet {
 
     private String getPath(HttpServletRequest request) {
         String uri = request.getRequestURI();
-        logger.info("uri ==>   " + uri);
         return uri.replaceAll(request.getContextPath() + ResourceBundle.
                 getBundle(Views.PAGES_BUNDLE).
                 getString("site.prefix"), "");

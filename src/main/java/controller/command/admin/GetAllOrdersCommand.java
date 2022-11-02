@@ -33,11 +33,10 @@ public class GetAllOrdersCommand implements ICommand {
                 (OrderStatus.StatusIdentifier.values());
         List<PaymentStatus.PaymentIdentifier> paymentStatuses = Arrays.asList
                 (PaymentStatus.PaymentIdentifier.values());
-        logger.info("orderStatuses ==> " + orderStatuses);
         request.setAttribute(ORDER_STATUSES, orderStatuses);
-        logger.info("paymentStatuses ==> " + paymentStatuses);
         request.setAttribute(PAYMENT_STATUSES, paymentStatuses);
         pagination(request, orderService);
+        logger.info("i am GetAllOrdersCommand");
         return ADMIN_ORDERS_VIEW;
     }
 

@@ -3,7 +3,6 @@ package dao.abstraction;
 import entity.UserToService;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserToServiceDao extends GenericDao<UserToService, Long> {
 

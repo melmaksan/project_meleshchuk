@@ -16,27 +16,27 @@ import java.util.Optional;
 
 public class MySqlOrderToService implements OrderToServiceDao {
 
-    private final static String SELECT_ALL =
+    private static final String SELECT_ALL =
             "SELECT orders_to_service.orders_id, " +
                     "orders_to_service.service_id " +
                     "FROM orders_to_service ";
 
-    private final static String WHERE_ORDER_SERVICES =
+    private static final String WHERE_ORDER_SERVICES =
             "WHERE orders_id = ? AND service_id = ? ";
 
-    private final static String WHERE_ORDER =
+    private static final String WHERE_ORDER =
             "WHERE orders_id = ? ";
 
-    private final static String WHERE_SERVICE =
+    private static final String WHERE_SERVICE =
             "WHERE service_id = ? ";
 
-    private final static String INSERT =
+    private static final String INSERT =
             "INSERT into orders_to_service (orders_id, service_id ) VALUES(?, ?) ";
 
-    private final static String UPDATE =
+    private static final String UPDATE =
             "UPDATE orders_to_service SET orders_id = ?, service_id = ? ";
 
-    private final static String DELETE =
+    private static final String DELETE =
             "DELETE FROM orders_to_service ";
 
     private static final String EXIST_BY_SERVICE =

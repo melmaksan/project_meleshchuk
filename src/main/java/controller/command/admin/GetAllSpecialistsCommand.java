@@ -31,11 +31,10 @@ public class GetAllSpecialistsCommand implements ICommand {
         HomeCommand.removeLogStatus(request);
         request.setAttribute(SPECIALISTS, userService.findAllSpecialists());
         List<User> users = userService.findAllSpecialists();
-        logger.info("SPECIALISTS ==> " + userService.findAllSpecialists());
         for (User user : users) {
             request.setAttribute(SERVICES_UNIQUE_TYPE + user.getId(), service.getUniqueServiceTypes(user.getServices()));
-            logger.info("serviceTypes ==> " + user.getId() + service.getUniqueServiceTypes(user.getServices()));
         }
+        logger.info("i am GetAllSpecialistsCommand");
         return ADMIN_SPECIALISTS_VIEW;
     }
 }

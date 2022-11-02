@@ -8,12 +8,12 @@ import java.sql.Time;
 
 public class ServiceDtoConverter implements DtoConverter<Service> {
 
-    private final static String ID_FIELD = "service_id";
-    private final static String SERVICE_NAME = "service_title";
-    private final static String SERVICE_DESCRIPTION = "service_description";
-    private final static String PRICE = "service_price";
-    private final static String IMAGE = "image";
-    private final static String DURATION = "duration";
+    private static final String ID_FIELD = "service_id";
+    private static final String SERVICE_NAME = "service_title";
+    private static final String SERVICE_DESCRIPTION = "service_description";
+    private static final String PRICE = "service_price";
+    private static final String IMAGE = "image";
+    private static final String DURATION = "duration";
 
 
     @Override

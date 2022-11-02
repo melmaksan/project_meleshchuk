@@ -149,7 +149,6 @@ public class DefaultDaoImpl<T> {
      * @throws SQLException if parameters doesn't set to statement
      */
     private void setParamsToStatement(PreparedStatement statement, Object... params) throws SQLException {
-        Objects.requireNonNull(params);
         for (int i = 0; i < params.length; i++) {
             if (params[i] != null) {
                 statement.setObject(i + 1, params[i]);

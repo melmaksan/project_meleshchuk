@@ -25,7 +25,7 @@ public class GetUserSpecialistsCommand implements ICommand {
             throws ServletException, IOException {
         HomeCommand.removeLogStatus(request);
         request.setAttribute(SPECIALISTS, userService.findAllSpecialists());
-        logger.info("SPECIALISTS ==> " + userService.findAllSpecialists());
+        logger.info("i am GetUserSpecialistsCommand");
         return USER_SPECIALISTS_VIEW;
     }
 }

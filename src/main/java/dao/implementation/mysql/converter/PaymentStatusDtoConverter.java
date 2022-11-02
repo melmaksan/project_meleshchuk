@@ -8,8 +8,8 @@ import java.sql.SQLException;
 
 public class PaymentStatusDtoConverter implements DtoConverter<PaymentStatus> {
 
-    private final static String ID_FIELD = "payment_status_id";
-    private final static String NAME_FIELD = "payment_status_name";
+    private static final String ID_FIELD = "payment_status_id";
+    private static final String NAME_FIELD = "payment_status_name";
 
     @Override
     public PaymentStatus convertToObject(ResultSet resultSet) throws SQLException {

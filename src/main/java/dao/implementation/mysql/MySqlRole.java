@@ -15,24 +15,24 @@ import java.util.Optional;
 
 public class MySqlRole implements RoleDao {
 
-    private final static String SELECT_ALL =
+    private static final String SELECT_ALL =
             "SELECT id AS role_id, name AS role_name " +
                     "FROM role ";
 
-    private final static String INSERT =
+    private static final String INSERT =
             "INSERT INTO role (id, name) " +
                     "VALUES(?, ?) ";
 
-    private final static String UPDATE =
+    private static final String UPDATE =
             "UPDATE role SET name = ? ";
 
-    private final static String DELETE =
+    private static final String DELETE =
             "DELETE FROM role ";
 
-    private final static String WHERE_ID =
+    private static final String WHERE_ID =
             "WHERE id = ? ";
 
-    private final static String WHERE_NAME =
+    private static final String WHERE_NAME =
             "WHERE name = ? ";
 
     private final DefaultDaoImpl<Role> defaultDao;

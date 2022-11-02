@@ -21,7 +21,7 @@ import static controller.util.constants.Views.PAGES_BUNDLE;
 public class PostDeleteUserCommand implements ICommand {
 
     private final UserService userService = ServiceFactory.getUserService();
-    private static final Logger logger = LogManager.getLogger(PostDeleteSpecialistCommand.class);
+    private static final Logger logger = LogManager.getLogger(PostDeleteUserCommand.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
@@ -30,7 +30,6 @@ public class PostDeleteUserCommand implements ICommand {
         if (!errors.isEmpty()) {
             logger.info("DELETE WITHOUT ERRORS!");
             request.setAttribute(USER_LIST, userService.findAllClients());
-            logger.info("users ==> " + userService.findAllClients());
             Util.redirectTo(request, response, ResourceBundle.
                     getBundle(PAGES_BUNDLE).getString("admin.users"));
             return REDIRECTED;
@@ -38,7 +37,6 @@ public class PostDeleteUserCommand implements ICommand {
         logger.info("Can`t delete user, he exist in booked order!");
         request.setAttribute(ERRORS, errors);
         request.setAttribute(USER_LIST, userService.findAllClients());
-        logger.info("users ==> " + userService.findAllClients());
         return ADMIN_USERS_VIEW;
     }
 }

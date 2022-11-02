@@ -17,7 +17,7 @@ public abstract class DaoFactory {
     private static final String ERROR_OBTAIN_INSTANCE =
             "Failed to obtain DaoFactory instance";
 
-    private final static Logger logger = LogManager.getLogger(DaoFactory.class);
+    private static final Logger logger = LogManager.getLogger(DaoFactory.class);
 
     private static DaoFactory instance;
 

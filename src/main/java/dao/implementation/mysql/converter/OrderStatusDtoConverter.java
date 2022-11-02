@@ -7,8 +7,8 @@ import java.sql.SQLException;
 
 public class OrderStatusDtoConverter implements DtoConverter<OrderStatus> {
 
-    private final static String ID_FIELD = "status_id";
-    private final static String NAME_FIELD = "status_name";
+    private static final String ID_FIELD = "status_id";
+    private static final String NAME_FIELD = "status_name";
 
     @Override
     public OrderStatus convertToObject(ResultSet resultSet) throws SQLException {

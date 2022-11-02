@@ -12,29 +12,29 @@ import java.util.Optional;
 
 public class MySqlUserToService implements UserToServiceDao {
 
-    private final static String SELECT_ALL =
+    private static final String SELECT_ALL =
             "SELECT user_to_service.user_id, user.first_name, user.last_name, " +
                     "user.rate, user_to_service.service_id, service.title " +
                     "FROM user " +
                     "JOIN user_to_service ON user_to_service.user_id = user.id " +
                     "JOIN service ON user_to_service.service_id = service.id ";
 
-    private final static String WHERE_USER_SERVICES =
+    private static final String WHERE_USER_SERVICES =
             "WHERE user_id = ? AND service_id = ? ";
 
-    private final static String WHERE_USER =
+    private static final String WHERE_USER =
             "WHERE user_id = ? ";
 
-    private final static String WHERE_SERVICE =
+    private static final String WHERE_SERVICE =
             "WHERE service_id = ? ";
 
-    private final static String INSERT =
+    private static final String INSERT =
             "INSERT into user_to_service (user_id, service_id ) VALUES(?, ?) ";
 
-    private final static String UPDATE =
+    private static final String UPDATE =
             "UPDATE user_to_service SET user_id = ?, service_id = ? ";
 
-    private final static String DELETE =
+    private static final String DELETE =
             "DELETE FROM user_to_service ";
 
     private final DefaultDaoImpl<UserToService> defaultDao;

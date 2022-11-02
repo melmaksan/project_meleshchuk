@@ -26,8 +26,6 @@ public class PostCreateEmployeeCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse
             response) throws ServletException, IOException {
-        logger.info("name ==> " + request.getParameter(FIRST_NAME));
-        logger.info("role ==> " + request.getParameter(ROLE));
         List<String> errors = userService.createUser(
                 request.getParameter(FIRST_NAME),
                 request.getParameter(LAST_NAME),

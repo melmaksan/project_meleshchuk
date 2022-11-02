@@ -11,9 +11,9 @@ import java.time.ZonedDateTime;
 
 public class OrderDtoConverter implements DtoConverter<Order> {
 
-    private final static String ID_FIELD = "id";
-    private final static String ORDER_TIME_START = "time";
-    private final static String ORDER_TIME_END = "time_end";
+    private static final String ID_FIELD = "id";
+    private static final String ORDER_TIME_START = "time";
+    private static final String ORDER_TIME_END = "time_end";
     private final DtoConverter<OrderStatus> statusConverter;
     private final DtoConverter<PaymentStatus> paymentStatusDtoConverter;
 

@@ -5,7 +5,6 @@ import dao.datasource.PooledConnection;
 import dao.implementation.mysql.converter.DtoConverter;
 import dao.implementation.mysql.converter.PaymentStatusDtoConverter;
 import entity.PaymentStatus;
-import entity.Role;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -16,24 +15,24 @@ import java.util.Optional;
 
 public class MySqlPaymentStatus implements PaymentStatusDao {
 
-    private final static String SELECT_ALL =
+    private static final String SELECT_ALL =
             "SELECT id AS payment_status_id, name AS payment_status_name " +
                     "FROM payment_status ";
 
-    private final static String INSERT =
+    private static final String INSERT =
             "INSERT INTO payment_status (id, name) " +
                     "VALUES(?, ?) ";
 
-    private final static String UPDATE =
+    private static final String UPDATE =
             "UPDATE payment_status SET name = ? ";
 
-    private final static String DELETE =
+    private static final String DELETE =
             "DELETE FROM payment_status ";
 
-    private final static String WHERE_ID =
+    private static final String WHERE_ID =
             "WHERE id = ? ";
 
-    private final static String WHERE_NAME =
+    private static final String WHERE_NAME =
             "WHERE name = ? ";
 
     private final DefaultDaoImpl<PaymentStatus> defaultDao;

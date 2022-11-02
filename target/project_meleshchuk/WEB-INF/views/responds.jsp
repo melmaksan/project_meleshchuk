@@ -79,7 +79,7 @@
                                 </div>
                                 <div class="card-body row py-1">
                                     <div class="col-12 py-2">
-                                        <p class="card-text">${respond.respond}</p>
+                                        <p class="card-text">${respond.response}</p>
                                     </div>
                                 </div>
                             </div>

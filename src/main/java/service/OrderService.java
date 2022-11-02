@@ -149,7 +149,6 @@ public class OrderService {
 
     public void createOrder(String dateTime, long specId, long serviceId, long userId) {
         Order orderDto = getDataFromRequestCreating(dateTime);
-        Objects.requireNonNull(orderDto);
         if (orderDto.getOrderStatus() == null) {
             orderDto.setDefaultOrderStatus();
         }
@@ -269,14 +268,14 @@ public class OrderService {
     }
 
     private boolean orderCheckPaymentStatus(long orderId) {
-        return (checkPaymentStatus(Objects.requireNonNull(findOrderById(orderId)).getPaymentStatus().getId(),
+        return (checkPaymentStatus((findOrderById(orderId)).getPaymentStatus().getId(),
                 PaymentStatus.PaymentIdentifier.PAID)) &&
-                (checkOrderStatus(Objects.requireNonNull(findOrderById(orderId)).getOrderStatus().getId(),
+                (checkOrderStatus((findOrderById(orderId)).getOrderStatus().getId(),
                         OrderStatus.StatusIdentifier.BOOKED));
     }
 
     private boolean orderCheckStatus(long orderId) {
-        return checkOrderStatus(Objects.requireNonNull(findOrderById(orderId)).getOrderStatus().getId(),
+        return checkOrderStatus((findOrderById(orderId)).getOrderStatus().getId(),
                 OrderStatus.StatusIdentifier.BOOKED);
     }
 

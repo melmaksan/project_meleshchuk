@@ -7,8 +7,8 @@ import java.sql.SQLException;
 
 public class UserToServiceDtoConverter implements DtoConverter<UserToService> {
 
-    private final static String USER_ID = "user_id";
-    private final static String SERVICE_ID = "service_id";
+    private static final String USER_ID = "user_id";
+    private static final String SERVICE_ID = "service_id";
 
     @Override
     public UserToService convertToObject(ResultSet resultSet) throws SQLException {

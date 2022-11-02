@@ -2,9 +2,9 @@ package controller.util.validator;
 
 public class LoginValidator extends RegexValidator {
 
-    private final static String INVALID_EMAIL_KEY = "Invalid email, please try again";
+    private static final String INVALID_EMAIL_KEY = "Invalid email, please try again";
 
-    private final static int MAX_LENGTH = 30;
+    private static final int MAX_LENGTH = 30;
     /**
      * Regex used to perform validation of data.
      */

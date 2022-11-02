@@ -1,6 +1,5 @@
 package dao.abstraction;
 
-import entity.UserToOrder;
 import entity.UserToRespond;
 
 import java.util.List;

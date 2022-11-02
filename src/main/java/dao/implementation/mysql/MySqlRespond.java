@@ -9,28 +9,27 @@ import entity.Respond;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 public class MySqlRespond implements RespondDao {
 
-    private final static String SELECT_ALL =
+    private static final String SELECT_ALL =
             "SELECT respond.id, respond.username, respond.datetime, respond.mark, respond.respond " +
                     "FROM respond ";
 
-    private final static String WHERE_ID =
+    private static final String WHERE_ID =
             "WHERE respond.id = ? ";
 
-    private final static String INSERT =
+    private static final String INSERT =
             "INSERT into respond (username, datetime, mark, respond)" +
                     "VALUES(?, ?, ?, ?) ";
 
-    private final static String UPDATE =
+    private static final String UPDATE =
             "UPDATE respond SET respond = ? ";
 
-    private final static String DELETE =
+    private static final String DELETE =
             "DELETE FROM respond ";
 
     private final DefaultDaoImpl<Respond> defaultDao;
@@ -57,7 +56,7 @@ public class MySqlRespond implements RespondDao {
     public Respond insert(Respond respond) {
         Objects.requireNonNull(respond);
         long id = defaultDao.executeInsertWithGeneratedPrimaryKey(
-                INSERT, respond.getUserName(), respond.getDateTime(), respond.getMark(), respond.getRespond());
+                INSERT, respond.getUserName(), respond.getDateTime(), respond.getMark(), respond.getResponse());
         respond.setId(id);
         return respond;
     }
@@ -66,7 +65,7 @@ public class MySqlRespond implements RespondDao {
     public void update(Respond respond) {
         Objects.requireNonNull(respond);
         defaultDao.executeUpdate(UPDATE + WHERE_ID,
-                respond.getRespond(), respond.getId());
+                respond.getResponse(), respond.getId());
     }
 
     @Override

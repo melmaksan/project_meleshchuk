@@ -1,0 +1,27 @@
+
+o
+java:S1192e"MDefine a constant instead of duplicating this literal "~~~~~~~~~~~~" 3 times.(§ü³üÿÿÿÿ8Äâ¬ƒÃ0
+N	java:S106T"9Replace this use of System.out or System.err by a logger.(·‚‰
+S	java:S106V"9Replace this use of System.out or System.err by a logger.(ŒÎ¬Àÿÿÿÿÿ
+[
+java:S1854h"9Remove this useless assignment to local variable "role1".(šíÊşüÿÿÿÿ8íâ¬ƒÃ0
+V
+java:S1854k"9Remove this useless assignment to local variable "role2".( Àè³8íâ¬ƒÃ0
+V
+java:S1854n"9Remove this useless assignment to local variable "role3".(ªèñ8íâ¬ƒÃ0
+N	java:S106a"9Replace this use of System.out or System.err by a logger.(çÔê¹
+S	java:S106e"9Replace this use of System.out or System.err by a logger.(§ü³üÿÿÿÿ
+N	java:S106g"9Replace this use of System.out or System.err by a logger.(±µùû
+L
+java:S1481h"*Remove this unused "role1" local variable.(šíÊşüÿÿÿÿ8ã¬ƒÃ0
+G
+java:S1481k"*Remove this unused "role2" local variable.( Àè³8ã¬ƒÃ0
+G
+java:S1481n"*Remove this unused "role3" local variable.(ªèñ8ã¬ƒÃ0
+S	java:S106s"9Replace this use of System.out or System.err by a logger.(§ü³üÿÿÿÿ
+N	java:S106u"9Replace this use of System.out or System.err by a logger.(äÂÊ±
+N	java:S106v"9Replace this use of System.out or System.err by a logger.(ş¦¾Ä
+S	java:S106x"9Replace this use of System.out or System.err by a logger.(§ü³üÿÿÿÿ
+U	java:S106z"9Replace this use of System.out or System.err by a logger.(È²ÄÃ8ã¬ƒÃ0
+U	java:S106{"9Replace this use of System.out or System.err by a logger.(üíşÜ8ã¬ƒÃ0
+X	java:S125}"<This block of commented-out lines of code should be removed.(Ì’áÛ8ã¬ƒÃ0

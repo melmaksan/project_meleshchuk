@@ -14,7 +14,7 @@ public class Respond implements Serializable {
     private String userName;
     private LocalDateTime dateTime;
     private int mark;
-    private String respond;
+    private String response;
     private List<User> users;
     private List<User> specialists;
 
@@ -38,12 +38,12 @@ public class Respond implements Serializable {
         this.id = id;
     }
 
-    public String getRespond() {
-        return respond;
+    public String getResponse() {
+        return response;
     }
 
-    public void setRespond(String respond) {
-        this.respond = respond;
+    public void setResponse(String response) {
+        this.response = response;
     }
 
     public String getDateTime() {
@@ -97,6 +97,11 @@ public class Respond implements Serializable {
         return id == respond.id;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
     public static class Builder {
 
         private final Respond respond;
@@ -116,7 +121,7 @@ public class Respond implements Serializable {
         }
 
         public Builder addRespond(String response) {
-            respond.setRespond(response);
+            respond.setResponse(response);
             return this;
         }
 

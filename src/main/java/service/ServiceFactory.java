@@ -2,7 +2,7 @@ package service;
 
 public class ServiceFactory {
 
-    private static volatile ServiceFactory instance;
+    private static ServiceFactory instance;
 
     private ServiceFactory() {
     }

@@ -18,14 +18,14 @@ import static controller.util.constants.Views.ADMIN_USERS_VIEW;
 public class GetAllUsersCommand implements ICommand {
 
     private final UserService userService = ServiceFactory.getUserService();
-    private static final Logger logger = LogManager.getLogger(GetAllOrdersCommand.class);
+    private static final Logger logger = LogManager.getLogger(GetAllUsersCommand.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HomeCommand.removeLogStatus(request);
-        logger.info("users ==> " + userService.findAllClients());
         request.setAttribute(USER_LIST, userService.findAllClients());
+        logger.info("i am GetAllUsersCommand");
         return ADMIN_USERS_VIEW;
     }
 }

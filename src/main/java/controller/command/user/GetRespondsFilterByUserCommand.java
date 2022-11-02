@@ -30,11 +30,8 @@ public class GetRespondsFilterByUserCommand implements ICommand {
             throws ServletException, IOException {
         HomeCommand.removeLogStatus(request);
         User currentUser = getUserFromSession(request.getSession());
-        logger.info("user responds ==> " + currentUser.getResponds());
         List<Respond> responds = userService.getResponds(currentUser);
-        logger.info("responds ==> " + responds);
         currentUser.setResponds(responds);
-        logger.info("user responds ==> " + currentUser.getResponds());
         request.setAttribute(RESPONDS, responds);
         logger.info("I am GetUserRespondsCommand");
         return RESPONDS_VIEW;

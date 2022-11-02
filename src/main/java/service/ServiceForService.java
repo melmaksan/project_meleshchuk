@@ -9,7 +9,6 @@ import entity.UserToService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -50,9 +49,9 @@ public class ServiceForService {
     public List<User> getSpecialists(Service service) {
         List<User> users = new ArrayList<>();
         List<UserToService> userToServiceList = userToService.findAllUsersByService(service.getId());
-        for (UserToService userToService : userToServiceList) {
+        for (UserToService us : userToServiceList) {
             try {
-                users.add((userService.findUserById(userToService.getUserId())).orElse(null));
+                users.add((userService.findUserById(us.getUserId())).orElse(null));
             } catch (RuntimeException ex) {
                 logger.error("There are no users here!", ex);
             }

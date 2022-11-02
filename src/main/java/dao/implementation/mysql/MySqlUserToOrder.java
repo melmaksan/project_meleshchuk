@@ -18,40 +18,40 @@ import java.util.Optional;
 
 public class MySqlUserToOrder implements UserToOrderDao {
 
-    private final static String SELECT_ALL =
+    private static final String SELECT_ALL =
             "SELECT user_to_orders.user_id, user.first_name, " +
                     "user.last_name, user_to_orders.orders_id " +
                     "FROM user " +
                     "JOIN user_to_orders ON user_to_orders.user_id = user.id ";
 
-    private final static String SELECT_ALL_FOR_SPEC =
+    private static final String SELECT_ALL_FOR_SPEC =
             "SELECT user_to_orders.user_id, user_to_orders.orders_id, orders.time " +
                     "FROM orders " +
                     "JOIN user_to_orders ON user_to_orders.orders_id = orders.id " +
                     "WHERE user_id = ? AND orders.time >= ? AND orders.time <= ? ";
 
-    private final static String WHERE_STATUS =
+    private static final String WHERE_STATUS =
             "AND status_id = ? ";
 
-    private final static String WHERE_USER_ORDERS =
+    private static final String WHERE_USER_ORDERS =
             "WHERE user_id = ? AND orders_id = ? ";
 
-    private final static String WHERE_USER_IS_SPECIALIST =
+    private static final String WHERE_USER_IS_SPECIALIST =
             "WHERE orders_id = ? AND user.role_id = ? ";
 
-    private final static String WHERE_USER =
+    private static final String WHERE_USER =
             "WHERE user_id = ? ";
 
-    private final static String WHERE_ORDER =
+    private static final String WHERE_ORDER =
             "WHERE orders_id = ? ";
 
-    private final static String INSERT =
+    private static final String INSERT =
             "INSERT into user_to_orders (user_id, orders_id ) VALUES(?, ?) ";
 
-    private final static String UPDATE =
+    private static final String UPDATE =
             "UPDATE user_to_orders SET user_id = ?, orders_id = ? ";
 
-    private final static String DELETE =
+    private static final String DELETE =
             "DELETE FROM user_to_orders ";
 
     private static final String EXIST_BY_SERVICE =
@@ -157,7 +157,7 @@ public class MySqlUserToOrder implements UserToOrderDao {
 
             System.out.println("Order TEST");
 
-//            mySqlUserToOrder.printAll(mySqlUserToOrder.findAll());
+            mySqlUserToOrder.printAll(mySqlUserToOrder.findAll());
 
             System.out.println("~~~~~~~~~~~~");
 

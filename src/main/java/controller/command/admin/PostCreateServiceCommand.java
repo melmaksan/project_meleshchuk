@@ -35,6 +35,7 @@ public class PostCreateServiceCommand implements ICommand {
             throws ServletException, IOException {
         List<String> errors = new ArrayList<>(validateDataFromRequest(request));
         if (errors.isEmpty()) {
+            logger.info("creating service without errors");
             services.createService(getDataFromRequestCreating(request));
             request.setAttribute(SERVICES_UNIQUE_TYPE, services.getUniqueServiceTypes
                     (services.findAllService()));
@@ -46,29 +47,21 @@ public class PostCreateServiceCommand implements ICommand {
         logger.info("creating service has errors");
         request.setAttribute(ERRORS, errors);
         request.setAttribute(SPECIALISTS, userService.findAllSpecialists());
-        logger.info("SPECIALISTS ==> " + userService.findAllSpecialists());
         return CREATE_VIEW;
     }
 
     private Service getDataFromRequestCreating(HttpServletRequest request) {
         String serviceTitle = request.getParameter(SERVICE_TITLE);
-        logger.info("title ==> " + request.getParameter(SERVICE_TITLE));
         String serviceType = request.getParameter(SERVICE_TYPE);
-        logger.info("serviceType ==> " + request.getParameter(SERVICE_TYPE));
         BigDecimal price = new BigDecimal(request.getParameter(SERVICE_PRICE));
-        logger.info("price ==> " + request.getParameter(SERVICE_PRICE));
         String serviceImage = request.getParameter(SERVICE_IMAGE);
-        logger.info("serviceImage ==> " + request.getParameter(SERVICE_IMAGE));
         Time time = Time.valueOf(request.getParameter(DURATION));
-        logger.info("time ==> " + time);
         String[] usersId = request.getParameterValues(SPEC_ID);
-        logger.info("users ==> " + Arrays.toString(usersId));
         List<User> specialists = new ArrayList<>();
         for (String specId : usersId) {
             Optional<User> specialist = userService.findUserById(Long.parseLong(specId));
             specialist.ifPresent(specialists::add);
         }
-        logger.info("specialists ==> " + specialists);
         return Service.newBuilder()
                 .addServiceTitle(serviceTitle)
                 .addServiceType(serviceType)

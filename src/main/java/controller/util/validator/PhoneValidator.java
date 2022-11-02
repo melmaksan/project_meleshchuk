@@ -2,9 +2,9 @@ package controller.util.validator;
 
 public class PhoneValidator extends RegexValidator {
 
-    private final static String INVALID_NUMBER = "Invalid phone number, please try again";
+    private static final String INVALID_NUMBER = "Invalid phone number, please try again";
 
-    private final static int MAX_LENGTH = 15;
+    private static final int MAX_LENGTH = 15;
     /**
      * Regex used to perform validation of data.
      */

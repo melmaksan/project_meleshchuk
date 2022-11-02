@@ -10,7 +10,7 @@ public enum SupportedLocale {
     EN(new Locale("en", "EN")),
     UK(new Locale("uk", "UA"));
 
-    private final static Locale DEFAULT_LOCALE = EN.getLocale();
+    private static final Locale DEFAULT_LOCALE = EN.getLocale();
 
     private final Locale locale;
 

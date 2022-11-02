@@ -18,9 +18,9 @@ import static controller.util.constants.Views.PAGES_BUNDLE;
 
 public class ControllerHelper {
 
-    private final static String DELIMITER = ":";
+    private static final String DELIMITER = ":";
     private static final ResourceBundle bundle = ResourceBundle.getBundle(PAGES_BUNDLE);
-    private final DefaultCommand DEFAULT_COMMAND = new DefaultCommand();
+    private final DefaultCommand defaultCommand = new DefaultCommand();
     private final Map<String, ICommand> commands = new HashMap<>();
     private static ControllerHelper instance;
 
@@ -115,7 +115,7 @@ public class ControllerHelper {
     }
 
     public ICommand getCommand(String path, String command) {
-        return commands.getOrDefault(buildKey(path, command), DEFAULT_COMMAND);
+        return commands.getOrDefault(buildKey(path, command), defaultCommand);
     }
 
     private String buildKey(String path, String command) {

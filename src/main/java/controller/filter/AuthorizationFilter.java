@@ -1,6 +1,5 @@
 package controller.filter;
 
-import controller.command.HomeCommand;
 import controller.util.Util;
 import controller.util.constants.Attributes;
 import entity.Role;
@@ -39,7 +38,7 @@ public class AuthorizationFilter implements Filter {
 
         if (isUserLoggedIn(request)) {
             Util.redirectTo(request, (HttpServletResponse) servletResponse, bundle.getString(LOGIN_PATH));
-            logInfoAboutAccessDenied(request.getRequestURI());
+            logger.info(ACCESS_DENIED);
             return;
         }
 
@@ -48,7 +47,7 @@ public class AuthorizationFilter implements Filter {
         if (isUserRoleInvalidForRequestedPage(request, user)) {
             Util.redirectTo(request, (HttpServletResponse) servletResponse,
                     bundle.getString(HOME_PATH));
-            logInfoAboutAccessDenied(request.getRequestURI());
+            logger.info(ACCESS_DENIED);
             return;
         }
 
@@ -78,9 +77,5 @@ public class AuthorizationFilter implements Filter {
     private boolean isSpecialistPage(HttpServletRequest request) {
         return request.getRequestURI().startsWith(request.getContextPath() + bundle.getString(SITE_PREFIX) +
                 bundle.getString(SPEC_PREFIX));
-    }
-
-    private void logInfoAboutAccessDenied(String uri) {
-        logger.info(ACCESS_DENIED + uri);
     }
 }

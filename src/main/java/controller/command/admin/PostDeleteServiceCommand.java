@@ -27,7 +27,6 @@ public class PostDeleteServiceCommand implements ICommand {
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<String> errors = services.deleteService(Long.parseLong(request.getParameter(SERVICE_ID)));
-        logger.info("errors ==> " + errors);
         if (errors.isEmpty()) {
             logger.info("DELETE WITHOUT ERRORS!");
             setAttribute(request);

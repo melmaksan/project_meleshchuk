@@ -12,11 +12,11 @@ import java.time.ZonedDateTime;
 
 public class RespondDtoConverter implements DtoConverter<Respond>{
 
-    private final static String ID_FIELD = "id";
-    private final static String USER_NAME = "username";
-    private final static String RESPONSE = "respond";
-    private final static String RESPOND_TIME = "datetime";
-    private final static String RESPOND_MARK = "mark";
+    private static final String ID_FIELD = "id";
+    private static final String USER_NAME = "username";
+    private static final String RESPONSE = "respond";
+    private static final String RESPOND_TIME = "datetime";
+    private static final String RESPOND_MARK = "mark";
 
     @Override
     public Respond convertToObject(ResultSet resultSet) throws SQLException {
@@ -32,7 +32,7 @@ public class RespondDtoConverter implements DtoConverter<Respond>{
     private LocalDateTime convertTime(Timestamp timestamp) {
         LocalDateTime localDateTime = timestamp.toLocalDateTime();
         ZonedDateTime zonedUTC = localDateTime.atZone(ZoneId.of("UTC"));
-        ZonedDateTime zonedIST = zonedUTC.withZoneSameInstant(ZoneId.of("GMT-3"));
+        ZonedDateTime zonedIST = zonedUTC.withZoneSameInstant(ZoneId.of("GMT-2"));
         return zonedIST.toLocalDateTime();
     }
 }

@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class MailUtil {
 
-    private static final String FROM = "beauty_salon@beauty.com";  // sender email;
+    private static final String FROM = "beauty_salon@beauty.com";  //sender email
     private static final String USERNAME = "3d87a8cd215766"; //Mailtrap's username
     private static final String PASSWORD = "4da69804c88df1"; //Mailtrap's password
     private static final String HOST = "smtp.mailtrap.io";
@@ -27,12 +27,12 @@ public class MailUtil {
         //create the Session object
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
+                    @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(USERNAME, PASSWORD);
                     }
                 });
 
-        logger.info("session ==> " + session);
 
         //create a MimeMessage object
         Message message = new MimeMessage(session);

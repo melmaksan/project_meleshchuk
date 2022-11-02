@@ -21,7 +21,7 @@ import static controller.util.constants.Views.PAGES_BUNDLE;
 public class PostDeleteAdminCommand implements ICommand {
 
     private final UserService userService = ServiceFactory.getUserService();
-    private static final Logger logger = LogManager.getLogger(PostDeleteSpecialistCommand.class);
+    private static final Logger logger = LogManager.getLogger(PostDeleteAdminCommand.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
@@ -37,7 +37,6 @@ public class PostDeleteAdminCommand implements ICommand {
         logger.info("Admin is exist in booked order! Please fix the problem and try again");
         request.setAttribute(ERRORS, errors);
         request.setAttribute(ADMINS, userService.findAdmins());
-        logger.info("ADMINS ==> " + userService.findAdmins());
         return ADMINS_VIEW;
     }
 }

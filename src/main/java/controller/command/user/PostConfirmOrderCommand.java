@@ -74,21 +74,20 @@ public class PostConfirmOrderCommand implements ICommand {
                                    Service service, User spec, List<String> errors) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime newOrderStart = LocalDateTime.parse(dateTime, formatter);
-        logger.info("newOrderStart ==> " + newOrderStart);
         LocalDateTime newOrderEnd = newOrderStart.plusMinutes(service.getMinutes());
-        logger.info("newOrderEnd ==> " + newOrderEnd);
         checkOnOrdersPerDay(errors, newOrderStart, newOrderEnd, spec);
     }
 
     private void checkOnOrdersPerDay(List<String> errors, LocalDateTime newOrderStart,
                                      LocalDateTime newOrderEnd, User spec) {
+        checkOrders(errors, newOrderStart, newOrderEnd, spec, userService);
+    }
+
+    public static void checkOrders(List<String> errors, LocalDateTime newOrderStart, LocalDateTime newOrderEnd, User spec, UserService userService) {
         List<Order> orders = userService.getBookedOrdersPerDay(spec,
                 LocalDate.from(newOrderEnd), LocalDate.from(newOrderEnd).plusDays(1));
-        logger.info("orders ==> " + orders);
         for (Order order : orders) {
             if (newOrderStart.isBefore(order.getTimeEnd()) && newOrderEnd.isAfter(order.getTimeStart())) {
-                logger.info("order check ==> " + (newOrderStart.isBefore(order.getTimeEnd()) &&
-                        newOrderEnd.isAfter(order.getTimeStart())));
                 errors.add(SPEC_IS_BUSY);
                 return;
             }

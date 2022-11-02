@@ -16,31 +16,31 @@ import java.util.Optional;
 
 public class MySqlUserToRespond implements UserToRespondDao {
 
-    private final static String SELECT_ALL =
+    private static final String SELECT_ALL =
             "SELECT user_to_responds.user_id, user.first_name, user.last_name, " +
                     "user_to_responds.respond_id " +
                     "FROM user " +
                     "JOIN user_to_responds ON user_to_responds.user_id = user.id ";
 
-    private final static String WHERE_USER_RESPONDS =
+    private static final String WHERE_USER_RESPONDS =
             "WHERE user_id = ? AND respond_id = ? ";
 
-    private final static String WHERE_USER_IS_SPECIALIST =
+    private static final String WHERE_USER_IS_SPECIALIST =
             "WHERE respond_id = ? AND user.role_id = ? ";
 
-    private final static String WHERE_USER =
+    private static final String WHERE_USER =
             "WHERE user_id = ? ";
 
-    private final static String WHERE_RESPOND =
+    private static final String WHERE_RESPOND =
             "WHERE respond_id = ? ";
 
-    private final static String INSERT =
+    private static final String INSERT =
             "INSERT into user_to_responds (user_id, respond_id ) VALUES(?, ?) ";
 
-    private final static String UPDATE =
+    private static final String UPDATE =
             "UPDATE user_to_responds SET user_id = ?, respond_id = ? ";
 
-    private final static String DELETE =
+    private static final String DELETE =
             "DELETE FROM user_to_responds ";
 
 

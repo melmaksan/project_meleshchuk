@@ -25,7 +25,7 @@ public class GetCreateRespondCommand implements ICommand {
             throws ServletException, IOException {
         HomeCommand.removeLogStatus(request);
         request.setAttribute(SPECIALISTS, userService.findAllSpecialists());
-        logger.info("SPECIALISTS ==> " + userService.findAllSpecialists());
+        logger.info("i am GetCreateRespondCommand");
         return CREATE_RESPOND_VIEW;
     }
 }

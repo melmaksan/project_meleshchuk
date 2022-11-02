@@ -7,8 +7,8 @@ import java.sql.SQLException;
 
 public class UserToRespondDtoConverter implements DtoConverter<UserToRespond>{
 
-    private final static String RESPOND_ID = "respond_id";
-    private final static String USER_ID = "user_id";
+    private static final String RESPOND_ID = "respond_id";
+    private static final String USER_ID = "user_id";
 
     @Override
     public UserToRespond convertToObject(ResultSet resultSet) throws SQLException {

@@ -23,7 +23,7 @@
 </c:if>
 
 <section id="section">
-    <h1 class="offset-2 mt-3 mb-4"><fmt:message key="admins"/></h1>
+    <h1 class="offset-2 my-2"><fmt:message key="admins"/></h1>
     <table class="table offset-2 text-center table-sm table-striped table-bordered" id="sortTable6" style="width: 66%">
         <thead class="thead-dark">
         <tr>

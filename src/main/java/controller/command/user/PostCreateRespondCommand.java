@@ -2,7 +2,6 @@ package controller.command.user;
 
 import controller.command.ICommand;
 import controller.util.Util;
-import controller.util.constants.Attributes;
 import controller.util.validator.LoginValidator;
 import entity.User;
 import org.apache.logging.log4j.LogManager;
@@ -35,16 +34,17 @@ public class PostCreateRespondCommand implements ICommand {
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<String> errors = new ArrayList<>(validateEmailFromRequest(request));
-        User user = checkIfUserExist(request, errors);
-        logger.info("user ==> " + user);
+        User user = userService.findByLogin(request.getParameter(LOGIN_PARAM));
+        try {
+            Objects.requireNonNull(user);
+        } catch (NumberFormatException ex) {
+            logger.error("There is no user", ex);
+            errors.add(USER_NOT_EXIST);
+            return returnToCreate(request, errors);
+        }
         int rate = checkRate(request, errors);
-        logger.info("rate ==> " + rate);
         if (errors.isEmpty()) {
             checkUserName(request, user);
-            logger.info("respondName ==> " + user.getFirstName());
-            logger.info("userId ==> " + user.getId());
-            logger.info("specId ==> " + request.getParameter(SPEC_ID));
-            logger.info("respondMessage ==> " + request.getParameter(RESPOND_MESSAGE));
             respondService.createRespond(user.getFirstName(),
                     LocalDateTime.now(), rate,
                     request.getParameter(RESPOND_MESSAGE),
@@ -56,7 +56,11 @@ public class PostCreateRespondCommand implements ICommand {
             logger.info("redirect to responds");
             return REDIRECTED;
         }
-        logger.info("creating respond has errors ==>" + errors);
+        return returnToCreate(request, errors);
+    }
+
+    private String returnToCreate(HttpServletRequest request, List<String> errors) {
+        logger.info("creating respond has errors");
         request.setAttribute(ERRORS, errors);
         request.setAttribute(SPECIALISTS, userService.findAllSpecialists());
         return CREATE_RESPOND_VIEW;
@@ -82,13 +86,7 @@ public class PostCreateRespondCommand implements ICommand {
         }
     }
 
-    private User checkIfUserExist(HttpServletRequest request, List<String> errors) {
-        User user = userService.findByLogin(request.getParameter(LOGIN_PARAM));
-        if (user == null) {
-            errors.add(USER_NOT_EXIST);
-        }
-        return user;
-    }
+
 
     private List<String> validateEmailFromRequest(HttpServletRequest request) {
         List<String> errors = new ArrayList<>();

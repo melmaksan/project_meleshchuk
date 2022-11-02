@@ -10,9 +10,8 @@ import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Time;
+
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class MySqlService implements ServiceDao {
@@ -72,8 +71,7 @@ public class MySqlService implements ServiceDao {
         this(connection, new ServiceDtoConverter());
     }
 
-    public MySqlService(Connection connection,
-                        DtoConverter<Service> converter) {
+    public MySqlService(Connection connection, DtoConverter<Service> converter) {
         this.defaultDao = new DefaultDaoImpl<>(connection, converter);
     }
 
@@ -94,7 +92,6 @@ public class MySqlService implements ServiceDao {
 
     @Override
     public Service insert(Service service) {
-        Objects.requireNonNull(service);
         int id = defaultDao.executeInsertWithGeneratedPrimaryKey(INSERT,
                 service.getTitle(), service.getDescription(), service.getPrice(),
                 service.getImage(), service.getDuration());
@@ -104,7 +101,6 @@ public class MySqlService implements ServiceDao {
 
     @Override
     public void update(Service service) {
-        Objects.requireNonNull(service);
         defaultDao.executeUpdate(UPDATE + WHERE_ID, service.getTitle(),
                 service.getDescription(), service.getPrice(), service.getImage(),
                 service.getId());
@@ -117,7 +113,6 @@ public class MySqlService implements ServiceDao {
 
     @Override
     public void changePrice(Service service, BigDecimal price) {
-        Objects.requireNonNull(service);
         defaultDao.executeUpdate(CHANGE_PRICE + WHERE_ID, price,
                 service.getId());
     }
