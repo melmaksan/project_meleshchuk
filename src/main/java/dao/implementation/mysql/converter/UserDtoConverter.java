@@ -29,7 +29,7 @@ public class UserDtoConverter implements DtoConverter<User> {
     public User convertToObject(ResultSet resultSet) throws SQLException {
         Role role = roleConverter.convertToObject(resultSet);
         return User.newBuilder()
-                .addId(resultSet.getInt(ID_FIELD))
+                .addId(resultSet.getLong(ID_FIELD))
                 .addFirstName(resultSet.getString(FIRST_NAME))
                 .addLastName(resultSet.getString(LAST_NAME))
                 .addLogin(resultSet.getString(LOGIN))

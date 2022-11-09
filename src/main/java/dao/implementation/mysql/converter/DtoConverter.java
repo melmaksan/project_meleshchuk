@@ -22,11 +22,9 @@ public interface DtoConverter<T> {
     default List<T> convertToObjectList(ResultSet resultSet)
             throws SQLException {
         List<T> convertedObjects = new ArrayList<>();
-
         while (resultSet.next()) {
             convertedObjects.add(convertToObject(resultSet));
         }
-
         return convertedObjects;
     }
 

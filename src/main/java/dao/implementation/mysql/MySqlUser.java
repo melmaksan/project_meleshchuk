@@ -37,9 +37,6 @@ public class MySqlUser implements UserDao {
     private static final String WHERE_LOGIN =
             "WHERE user.login = ? ";
 
-    private static final String WHERE_USER_NAME =
-            "WHERE user.first_name = ? AND user.last_name = ? ";
-
     private static final String ASC_BY_NAME =
             "ORDER BY first_name ASC ";
 
@@ -98,8 +95,7 @@ public class MySqlUser implements UserDao {
 
     @Override
     public User insert(User user) {
-        Objects.requireNonNull(user);
-        int id = defaultDao.executeInsertWithGeneratedPrimaryKey(INSERT,
+        long id = defaultDao.executeInsertWithGeneratedPrimaryKey(INSERT,
                 user.getFirstName(), user.getLastName(), user.getLogin(),
                 user.getPassword(), user.getPhoneNumber(),
                 user.getRating(), user.getRole().getId());
@@ -109,7 +105,6 @@ public class MySqlUser implements UserDao {
 
     @Override
     public void update(User user) {
-        Objects.requireNonNull(user);
         defaultDao.executeUpdate(UPDATE + WHERE_ID, user.getFirstName(),
                 user.getLastName(), user.getLogin(), user.getPassword(),
                 user.getPhoneNumber(), user.getId());
@@ -123,11 +118,6 @@ public class MySqlUser implements UserDao {
     @Override
     public Optional<User> findByLogin(String login) {
         return defaultDao.findOne(SELECT_ALL + WHERE_LOGIN, login);
-    }
-
-    @Override
-    public Optional<User> findByName(String firstName, String lastName) {
-        return defaultDao.findOne(SELECT_ALL + WHERE_USER_NAME, firstName, lastName);
     }
 
     @Override

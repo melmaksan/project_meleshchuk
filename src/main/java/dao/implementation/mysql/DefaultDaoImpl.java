@@ -32,10 +32,6 @@ public class DefaultDaoImpl<T> {
         this.converter = converter;
     }
 
-    public Connection getConnection() {
-        return connection;
-    }
-
     /**
      * Retrieve one object from database which matches given query.
      *
@@ -49,7 +45,7 @@ public class DefaultDaoImpl<T> {
     }
 
     /**
-     * Retrieve all objects from table which matches given query.
+     * Retrieve all objects from table which matches given query.private static final String SQL_LIMIT_ONE = " LIMIT 1";
      *
      * @param query  raw sql syntax for objects selecting. Can contains ? wildcard.
      * @param params parameters to substitute wildcards in query
@@ -114,7 +110,7 @@ public class DefaultDaoImpl<T> {
      * @param params parameters to substitute wildcards in query
      * @return generated id
      */
-    public int executeInsertWithGeneratedPrimaryKey(String query, Object... params) {
+    public long executeInsertWithGeneratedPrimaryKey(String query, Object... params) {
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             setParamsToStatement(statement, params);
             statement.executeUpdate();
@@ -167,10 +163,10 @@ public class DefaultDaoImpl<T> {
      * @return generated key
      * @throws SQLException if statement doesn't generates key
      */
-    private int getGeneratedPrimaryKey(PreparedStatement statement) throws SQLException {
+    private long getGeneratedPrimaryKey(PreparedStatement statement) throws SQLException {
         ResultSet rs = statement.getGeneratedKeys();
         if (rs.next()) {
-            return rs.getInt(1);
+            return rs.getLong(1);
         } else {
             throw new DaoException(ERROR_GENERATE_KEY);
         }

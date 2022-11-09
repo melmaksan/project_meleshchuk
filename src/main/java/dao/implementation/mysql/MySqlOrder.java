@@ -103,7 +103,6 @@ public class MySqlOrder implements OrderDao {
     @Override
     public void changeBookingTime(Order order, LocalDateTime localDateTime) {
         defaultDao.executeUpdate(CHANGE_TIME + WHERE_ID, localDateTime, order.getId());
-
     }
 
     @Override

@@ -92,7 +92,7 @@ public class MySqlService implements ServiceDao {
 
     @Override
     public Service insert(Service service) {
-        int id = defaultDao.executeInsertWithGeneratedPrimaryKey(INSERT,
+        long id = defaultDao.executeInsertWithGeneratedPrimaryKey(INSERT,
                 service.getTitle(), service.getDescription(), service.getPrice(),
                 service.getImage(), service.getDuration());
         service.setId(id);

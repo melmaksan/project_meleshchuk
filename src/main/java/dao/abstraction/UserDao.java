@@ -15,15 +15,6 @@ public interface UserDao extends GenericDao<User, Long> {
     Optional<User> findByLogin(String login);
 
     /**
-     * Retrieve user from database identified by name.
-     *
-     * @param firstName firstName of user
-     * @param lastName  lastName of user
-     * @return optional, which contains retrieved object or null
-     */
-    Optional<User> findByName(String firstName, String lastName);
-
-    /**
      * Retrieves object data from database.
      *
      * @return list of objects which represent one row in database.
