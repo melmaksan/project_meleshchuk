@@ -193,7 +193,7 @@ public class MySqlUserTest {
     public void delete() throws SQLException {
         when(mockDataSource.getConnection()).thenReturn(mockConn);
         when(mockConn.prepareStatement(anyString())).thenReturn(mockPsmnt);
-        doNothing().when(mockPsmnt).setObject(anyInt(),any());
+        doNothing().when(mockPsmnt).setObject(anyInt(), any());
         when(mockPsmnt.executeUpdate()).thenReturn(1);
 
         MySqlUser mock = getMySqlUser();

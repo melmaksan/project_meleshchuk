@@ -41,8 +41,7 @@ public class MySqlRole implements RoleDao {
         this(connection, new RoleDtoConverter());
     }
 
-    public MySqlRole(Connection connection,
-                     DtoConverter<Role> converter) {
+    public MySqlRole(Connection connection, DtoConverter<Role> converter) {
         this.defaultDao = new DefaultDaoImpl<>(connection, converter);
     }
 
@@ -58,15 +57,12 @@ public class MySqlRole implements RoleDao {
 
     @Override
     public Role insert(Role role) {
-        Objects.requireNonNull(role);
-        defaultDao.executeInsert(INSERT,
-                role.getId(), role.getName());
+        defaultDao.executeInsert(INSERT, role.getId(), role.getName());
         return role;
     }
 
     @Override
     public void update(Role role) {
-        Objects.requireNonNull(role);
         defaultDao.executeUpdate(UPDATE + WHERE_ID, role.getName(), role.getId());
     }
 

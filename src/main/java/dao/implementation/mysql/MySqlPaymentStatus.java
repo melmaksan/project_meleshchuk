@@ -57,14 +57,12 @@ public class MySqlPaymentStatus implements PaymentStatusDao {
 
     @Override
     public PaymentStatus insert(PaymentStatus paymentStatus) {
-        Objects.requireNonNull(paymentStatus);
         defaultDao.executeInsert(INSERT, paymentStatus.getId(), paymentStatus.getName());
         return paymentStatus;
     }
 
     @Override
     public void update(PaymentStatus paymentStatus) {
-        Objects.requireNonNull(paymentStatus);
         defaultDao.executeUpdate(UPDATE + WHERE_ID, paymentStatus.getName(), paymentStatus.getId());
     }
 

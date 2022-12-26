@@ -78,8 +78,7 @@ public class MySqlUser implements UserDao {
         this(connection, new UserDtoConverter());
     }
 
-    public MySqlUser(Connection connection,
-                     DtoConverter<User> converter) {
+    public MySqlUser(Connection connection, DtoConverter<User> converter) {
         this.defaultDao = new DefaultDaoImpl<>(connection, converter);
     }
 

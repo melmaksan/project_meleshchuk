@@ -23,12 +23,6 @@
     </div>
 </c:if>
 
-<c:if test="${not empty sessionScope.status}">
-    <div class="alert alert-success">
-        <strong>${sessionScope.status}</strong><br>
-    </div>
-</c:if>
-
 <section id="section">
     <div class="container-fluid">
         <div class="row">
@@ -76,6 +70,11 @@
                 </div>
             </div>
             <div class="col-10 offset-2" id="main">
+                <c:if test="${not empty sessionScope.status}">
+                    <div class="alert alert-success">
+                        <strong>${sessionScope.status}</strong><br>
+                    </div>
+                </c:if>
                 <div class="container-fluid">
                     <div class="card-header mx-auto my-1"><h3><fmt:message key="all"/> <fmt:message key="services"/></h3></div>
                     <div class="row mx-auto">

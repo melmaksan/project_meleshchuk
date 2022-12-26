@@ -67,14 +67,12 @@ public class MySqlOrderToService implements OrderToServiceDao {
 
     @Override
     public OrderToService insert(OrderToService orderToService) {
-        Objects.requireNonNull(orderToService);
         defaultDao.executeInsert(INSERT, orderToService.getOrderId(), orderToService.getServiceId());
         return orderToService;
     }
 
     @Override
     public void update(OrderToService orderToService) {
-        Objects.requireNonNull(orderToService);
         defaultDao.executeUpdate(UPDATE + WHERE_ORDER_SERVICES,
                 orderToService.getOrderId(), orderToService.getServiceId());
     }
