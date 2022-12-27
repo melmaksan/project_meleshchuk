@@ -70,8 +70,8 @@ public class MySqlServiceTest {
         verify(mockPsmnt, times(1)).setObject(anyInt(), any());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, service.getId());
+        Assert.assertFalse("Services were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("Service id is not equal to 1", 1, service.getId());
     }
 
     @Test
@@ -92,8 +92,8 @@ public class MySqlServiceTest {
         verify(mockPsmnt, times(1)).setObject(anyInt(), any());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee title is not equal to Service", "Service", service.getTitle());
+        Assert.assertFalse("Services were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("Title is not equal to Service", "Service", service.getTitle());
     }
 
     @Test
@@ -112,8 +112,8 @@ public class MySqlServiceTest {
         verify(mockConn, times(1)).prepareStatement(anyString());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, service.getId());
+        Assert.assertFalse("Services were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("Service id is not equal to 1", 1, service.getId());
     }
 
     private void createServiceResultSet() throws SQLException {
@@ -144,8 +144,8 @@ public class MySqlServiceTest {
         verify(mockPsmnt, times(2)).setObject(anyInt(), any());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, service.getId());
+        Assert.assertFalse("Services were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("Service id is not equal to 1", 1, service.getId());
     }
 
     @Test
@@ -233,8 +233,8 @@ public class MySqlServiceTest {
         verify(mockPsmnt, times(1)).setObject(anyInt(), any());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee description is not equal to Description",
+        Assert.assertFalse("Services were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("Service description is not equal to Description",
                 "Description", service.getDescription());
     }
 
@@ -254,8 +254,8 @@ public class MySqlServiceTest {
         verify(mockConn, times(1)).prepareStatement(anyString());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, service.getId());
+        Assert.assertFalse("Services were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("Service id is not equal to 1", 1, service.getId());
     }
 
     @Test
@@ -274,8 +274,8 @@ public class MySqlServiceTest {
         verify(mockConn, times(1)).prepareStatement(anyString());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, service.getId());
+        Assert.assertFalse("Services were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("Service id is not equal to 1", 1, service.getId());
     }
 
     @Test
@@ -294,8 +294,8 @@ public class MySqlServiceTest {
         verify(mockConn, times(1)).prepareStatement(anyString());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, service.getId());
+        Assert.assertFalse("Services were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("Service id is not equal to 1", 1, service.getId());
     }
 
     @Test
@@ -314,8 +314,8 @@ public class MySqlServiceTest {
         verify(mockConn, times(1)).prepareStatement(anyString());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, service.getId());
+        Assert.assertFalse("Services were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("Service id is not equal to 1", 1, service.getId());
     }
 
     @Test

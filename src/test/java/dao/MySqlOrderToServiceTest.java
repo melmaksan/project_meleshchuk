@@ -1,14 +1,9 @@
 package dao;
 
 import dao.implementation.mysql.MySqlOrderToService;
-import dao.implementation.mysql.MySqlRole;
-import dao.implementation.mysql.MySqlUser;
 import dao.implementation.mysql.converter.DtoConverter;
 import dao.implementation.mysql.converter.OrderToServiceDtoConverter;
-import dao.implementation.mysql.converter.UserDtoConverter;
 import entity.OrderToService;
-import entity.Role;
-import entity.User;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +17,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -93,8 +87,8 @@ public class MySqlOrderToServiceTest {
         verify(mockPsmnt, times(1)).setObject(anyInt(), any());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, orderToService.getOrderId());
+        Assert.assertFalse("OrderToServices were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("Order id is not equal to 1", 1, orderToService.getOrderId());
     }
 
     @Test
@@ -115,8 +109,8 @@ public class MySqlOrderToServiceTest {
         verify(mockPsmnt, times(1)).setObject(anyInt(), any());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 2, orderToService.getServiceId());
+        Assert.assertFalse("OrderToServices were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("Service id is not equal to 2", 2, orderToService.getServiceId());
     }
 
     @Test

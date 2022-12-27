@@ -71,8 +71,8 @@ public class MySqlOrderTest {
         verify(mockPsmnt, times(1)).setObject(anyInt(), any());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, order.getId());
+        Assert.assertFalse("Orders were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("Order id is not equal to 1", 1, order.getId());
     }
 
     @Test
@@ -91,8 +91,8 @@ public class MySqlOrderTest {
         verify(mockConn, times(1)).prepareStatement(anyString());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, order.getId());
+        Assert.assertFalse("Orders were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("Order id is not equal to 1", 1, order.getId());
 
     }
 
@@ -122,8 +122,8 @@ public class MySqlOrderTest {
         verify(mockPsmnt, times(3)).setObject(anyInt(), any());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, order.getId());
+        Assert.assertFalse("Orders were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("Order id is not equal to 1", 1, order.getId());
     }
 
     @Test
@@ -144,8 +144,8 @@ public class MySqlOrderTest {
         verify(mockPsmnt, times(2)).setObject(anyInt(), any());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, order.getId());
+        Assert.assertFalse("Orders were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("Order id is not equal to 1", 1, order.getId());
     }
 
     @Test

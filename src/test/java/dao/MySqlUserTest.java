@@ -1,11 +1,9 @@
 package dao;
 
-import dao.implementation.mysql.MySqlService;
 import dao.implementation.mysql.MySqlUser;
 import dao.implementation.mysql.converter.DtoConverter;
 import dao.implementation.mysql.converter.UserDtoConverter;
 import entity.Role;
-import entity.Service;
 import entity.User;
 import org.junit.Assert;
 import org.junit.Test;
@@ -73,8 +71,8 @@ public class MySqlUserTest {
         verify(mockPsmnt, times(1)).setObject(anyInt(), any());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, user.getId());
+        Assert.assertFalse("Users were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("User id is not equal to 1", 1, user.getId());
     }
 
     @Test
@@ -95,8 +93,8 @@ public class MySqlUserTest {
         verify(mockPsmnt, times(1)).setObject(anyInt(), any());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee login is not equal to Login", "Login", user.getLogin());
+        Assert.assertFalse("Users were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("User login is not equal to Login", "Login", user.getLogin());
     }
 
     @Test
@@ -115,8 +113,8 @@ public class MySqlUserTest {
         verify(mockConn, times(1)).prepareStatement(anyString());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, user.getId());
+        Assert.assertFalse("Users were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("User id is not equal to 1", 1, user.getId());
     }
 
     private void createUserResultSet() throws SQLException {
@@ -148,8 +146,8 @@ public class MySqlUserTest {
         verify(mockPsmnt, times(2)).setObject(anyInt(), any());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, user.getId());
+        Assert.assertFalse("Users were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("User id is not equal to 1", 1, user.getId());
     }
 
     @Test
@@ -222,8 +220,8 @@ public class MySqlUserTest {
         verify(mockPsmnt, times(1)).setObject(anyInt(), any());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, user.getId());
+        Assert.assertFalse("Users were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("User id is not equal to 1", 1, user.getId());
     }
 
     @Test
@@ -244,8 +242,8 @@ public class MySqlUserTest {
         verify(mockPsmnt, times(1)).setObject(anyInt(), any());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, user.getId());
+        Assert.assertFalse("Users were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("User id is not equal to 1", 1, user.getId());
     }
 
     @Test
@@ -266,8 +264,8 @@ public class MySqlUserTest {
         verify(mockPsmnt, times(1)).setObject(anyInt(), any());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, user.getId());
+        Assert.assertFalse("Users were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("User id is not equal to 1", 1, user.getId());
     }
 
     @Test
@@ -286,8 +284,8 @@ public class MySqlUserTest {
         verify(mockConn, times(1)).prepareStatement(anyString());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, user.getId());
+        Assert.assertFalse("Users were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("User id is not equal to 1", 1, user.getId());
     }
 
     @Test
@@ -306,8 +304,8 @@ public class MySqlUserTest {
         verify(mockConn, times(1)).prepareStatement(anyString());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, user.getId());
+        Assert.assertFalse("Users were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("User id is not equal to 1", 1, user.getId());
     }
 
     @Test
@@ -326,8 +324,8 @@ public class MySqlUserTest {
         verify(mockConn, times(1)).prepareStatement(anyString());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, user.getId());
+        Assert.assertFalse("Users were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("User id is not equal to 1", 1, user.getId());
     }
 
     @Test
@@ -346,8 +344,8 @@ public class MySqlUserTest {
         verify(mockConn, times(1)).prepareStatement(anyString());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, user.getId());
+        Assert.assertFalse("Users were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("User id is not equal to 1", 1, user.getId());
     }
 
     @Test

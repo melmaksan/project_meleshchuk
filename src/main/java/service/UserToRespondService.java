@@ -25,7 +25,7 @@ public class UserToRespondService {
     public List<UserToRespond> findSpecialistByRespond(long respondId) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             UserToRespondDao userToOrderDao = daoFactory.getUserToRespondDao(connection);
-            return userToOrderDao.findSpecialistByRespond(respondId);
+            return userToOrderDao.findSpecialistsByRespond(respondId);
         }
     }
 

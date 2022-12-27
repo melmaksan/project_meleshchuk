@@ -62,8 +62,8 @@ public class MySqlRoleTest {
         verify(mockPsmnt, times(1)).setObject(anyInt(), any());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, role.getId());
+        Assert.assertFalse("Roles were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("Role id is not equal to 1", 1, role.getId());
     }
 
     @Test
@@ -84,8 +84,8 @@ public class MySqlRoleTest {
         verify(mockPsmnt, times(1)).setObject(anyInt(), any());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, role.getId());
+        Assert.assertFalse("Roles were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("Role id is not equal to 1", 1, role.getId());
     }
 
     @Test
@@ -104,8 +104,8 @@ public class MySqlRoleTest {
         verify(mockConn, times(1)).prepareStatement(anyString());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, role.getId());
+        Assert.assertFalse("Roles were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("Role id is not equal to 1", 1, role.getId());
     }
 
     private void createRoleResultSet() throws SQLException {

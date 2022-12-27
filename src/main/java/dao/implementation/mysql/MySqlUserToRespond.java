@@ -93,7 +93,7 @@ public class MySqlUserToRespond implements UserToRespondDao {
     }
 
     @Override
-    public List<UserToRespond> findSpecialistByRespond(long respondId) {
+    public List<UserToRespond> findSpecialistsByRespond(long respondId) {
         return defaultDao.findAll(SELECT_ALL + WHERE_USER_IS_SPECIALIST, respondId,
                 Role.RoleIdentifier.SPECIALIST.getId());
     }
@@ -166,7 +166,7 @@ public class MySqlUserToRespond implements UserToRespondDao {
             System.out.println("~~~~~~~~~~~~");
 
             System.out.println("find spec: ");
-            System.out.println(mySqlUserToRespond.findSpecialistByRespond(5));
+            System.out.println(mySqlUserToRespond.findSpecialistsByRespond(5));
 
         } catch (SQLException throwable) {
             throwable.printStackTrace();

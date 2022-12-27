@@ -1,12 +1,9 @@
 package dao;
 
 import dao.implementation.mysql.MySqlOrderStatus;
-import dao.implementation.mysql.MySqlRole;
 import dao.implementation.mysql.converter.DtoConverter;
 import dao.implementation.mysql.converter.OrderStatusDtoConverter;
-import dao.implementation.mysql.converter.RoleDtoConverter;
 import entity.OrderStatus;
-import entity.Role;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +17,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -70,8 +66,8 @@ public class MySqlOrderStatusTest {
         verify(mockPsmnt, times(1)).setObject(anyInt(), any());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, orderStatus.getId());
+        Assert.assertFalse("Statuses were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("Status id is not equal to 1", 1, orderStatus.getId());
     }
 
     @Test
@@ -92,8 +88,8 @@ public class MySqlOrderStatusTest {
         verify(mockPsmnt, times(1)).setObject(anyInt(), any());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, orderStatus.getId());
+        Assert.assertFalse("Statuses were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("Status id is not equal to 1", 1, orderStatus.getId());
     }
 
     @Test
@@ -112,8 +108,8 @@ public class MySqlOrderStatusTest {
         verify(mockConn, times(1)).prepareStatement(anyString());
         verify(mockPsmnt, times(1)).executeQuery();
 
-        Assert.assertFalse("Employees were not parsed.", convertedObjects.isEmpty());
-        Assert.assertEquals("Employee id is not equal to 1", 1, orderStatus.getId());
+        Assert.assertFalse("Statuses were not parsed.", convertedObjects.isEmpty());
+        Assert.assertEquals("Status id is not equal to 1", 1, orderStatus.getId());
     }
 
     private void createOrderStatusResultSet() throws SQLException {

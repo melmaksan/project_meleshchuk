@@ -22,7 +22,7 @@ public interface UserToRespondDao extends GenericDao<UserToRespond, Long>{
      */
     List<UserToRespond> findAllByRespond(long respondId);
 
-    List<UserToRespond> findSpecialistByRespond(long orderId);
+    List<UserToRespond> findSpecialistsByRespond(long orderId);
 
     List<UserToRespond> findClientsByRespond(long orderId);
 }
