@@ -1,17 +1,13 @@
 package dao.implementation.mysql;
 
 import dao.abstraction.OrderToServiceDao;
-import dao.datasource.PooledConnection;
 import dao.implementation.mysql.converter.DtoConverter;
 import dao.implementation.mysql.converter.OrderToServiceDtoConverter;
 import entity.OrderStatus;
 import entity.OrderToService;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class MySqlOrderToService implements OrderToServiceDao {
@@ -102,44 +98,5 @@ public class MySqlOrderToService implements OrderToServiceDao {
     @Override
     public List<OrderToService> findAllByService(long serviceId) {
         return defaultDao.findAll(SELECT_ALL + WHERE_SERVICE, serviceId);
-    }
-
-    private void printAll(List<OrderToService> list) {
-        System.out.println("Find all:");
-        for (OrderToService type : list) {
-            System.out.println(type);
-        }
-    }
-
-    public static void main(String[] args) {
-        DataSource dataSource = PooledConnection.getInstance();
-        MySqlOrderToService mySqlOrderToService;
-
-        try {
-            mySqlOrderToService = new MySqlOrderToService(dataSource.getConnection());
-
-            System.out.println("Order TEST");
-
-            mySqlOrderToService.printAll(mySqlOrderToService.findAll());
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("3 serviceExistInBookedOrder :");
-            System.out.println(mySqlOrderToService.isServiceExistInBookedOrder(3));
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println(mySqlOrderToService.findAllByOrder(3));
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println(mySqlOrderToService.findAllByService(3));
-
-
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        }
-
-
     }
 }

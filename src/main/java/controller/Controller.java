@@ -29,8 +29,7 @@ public class Controller extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response) {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         logger.info("Controller.doGet");
         try {
             processRequest(request, response);
@@ -40,8 +39,7 @@ public class Controller extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response) {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         logger.info("Controller.doPost");
         try {
             processRequest(request, response);
@@ -50,15 +48,12 @@ public class Controller extends HttpServlet {
         }
     }
 
-    private void processRequest(HttpServletRequest request,
-                                HttpServletResponse response)
+    private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ICommand command = controllerHelper.getCommand(
                 getPath(request), request.getParameter("command"));
 
-
         String path = command.execute(request, response);
-
 
         if (!path.equals(ICommand.REDIRECTED)) {
             logger.info("i am before forward");

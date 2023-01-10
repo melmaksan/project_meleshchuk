@@ -1,16 +1,13 @@
 package dao.implementation.mysql;
 
 import dao.abstraction.UserToOrderDao;
-import dao.datasource.PooledConnection;
 import dao.implementation.mysql.converter.DtoConverter;
 import dao.implementation.mysql.converter.UserToOrderDtoConverter;
 import entity.OrderStatus;
 import entity.Role;
 import entity.UserToOrder;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -139,55 +136,5 @@ public class MySqlUserToOrder implements UserToOrderDao {
     @Override
     public boolean isSpecExistsInOrder(long userId) {
         return defaultDao.exist(EXIST_BY_SERVICE, userId, OrderStatus.StatusIdentifier.BOOKED.getId());
-    }
-
-    private void printAll(List<UserToOrder> list) {
-        System.out.println("Find all:");
-        for (UserToOrder type : list) {
-            System.out.println(type);
-        }
-    }
-
-    public static void main(String[] args) {
-        DataSource dataSource = PooledConnection.getInstance();
-        MySqlUserToOrder mySqlUserToOrder;
-
-        try {
-            mySqlUserToOrder = new MySqlUserToOrder(dataSource.getConnection());
-
-            System.out.println("Order TEST");
-
-            mySqlUserToOrder.printAll(mySqlUserToOrder.findAll());
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("find spec: ");
-            System.out.println(mySqlUserToOrder.findSpecialistsByOrder(10));
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println(mySqlUserToOrder.findAllByOrder(11));
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println(mySqlUserToOrder.findAllByUser(9));
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println(mySqlUserToOrder.findAllBookedByDay(2, LocalDate.now(),
-                    LocalDate.now().plusDays(6), 1));
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println(mySqlUserToOrder.findOrdersByDay(2, LocalDate.now(),
-                    LocalDate.now().plusDays(6)));
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println(mySqlUserToOrder.isSpecExistsInOrder(7));
-
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        }
     }
 }

@@ -8,9 +8,6 @@ public abstract class Designation implements Serializable {
     private int id;
     private String name;
 
-    protected Designation() {
-    }
-
     protected Designation(int id, String name) {
         this.id = id;
         this.name = name;

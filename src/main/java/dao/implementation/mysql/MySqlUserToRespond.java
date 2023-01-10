@@ -1,15 +1,12 @@
 package dao.implementation.mysql;
 
 import dao.abstraction.UserToRespondDao;
-import dao.datasource.PooledConnection;
 import dao.implementation.mysql.converter.DtoConverter;
 import dao.implementation.mysql.converter.UserToRespondDtoConverter;
 import entity.Role;
 import entity.UserToRespond;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -102,74 +99,5 @@ public class MySqlUserToRespond implements UserToRespondDao {
     public List<UserToRespond> findClientsByRespond(long respondId) {
         return defaultDao.findAll(SELECT_ALL + WHERE_USER_IS_SPECIALIST, respondId,
                 Role.RoleIdentifier.USER.getId());
-    }
-
-    private void printAll(List<UserToRespond> list) {
-        System.out.println("Find all:");
-        for (UserToRespond type : list) {
-            System.out.println(type);
-        }
-    }
-
-    public static void main(String[] args) {
-        DataSource dataSource = PooledConnection.getInstance();
-        MySqlUserToRespond mySqlUserToRespond;
-
-        try {
-            mySqlUserToRespond = new MySqlUserToRespond(dataSource.getConnection());
-
-            System.out.println("UserToRespond TEST");
-
-            mySqlUserToRespond.printAll(mySqlUserToRespond.findAll());
-
-            System.out.println("~~~~~~~~~~~~");
-//
-//            System.out.println("Insert test:");
-//            mySqlUserToRespond.insert(UserToRespond.newBuilder()
-//                    .addUserId(4)
-//                    .addRespondId(5)
-//                    .build());
-//            mySqlUserToRespond.insert(UserToRespond.newBuilder()
-//                    .addUserId(9)
-//                    .addRespondId(5)
-//                    .build());
-//            mySqlUserToRespond.insert(UserToRespond.newBuilder()
-//                    .addUserId(5)
-//                    .addRespondId(6)
-//                    .build());
-//            mySqlUserToRespond.insert(UserToRespond.newBuilder()
-//                    .addUserId(8)
-//                    .addRespondId(6)
-//                    .build());
-//            mySqlUserToRespond.insert(UserToRespond.newBuilder()
-//                    .addUserId(2)
-//                    .addRespondId(3)
-//                    .build());
-//            mySqlUserToRespond.insert(UserToRespond.newBuilder()
-//                    .addUserId(10)
-//                    .addRespondId(3)
-//                    .build());
-//
-//
-//            mySqlUserToRespond.printAll(mySqlUserToRespond.findAll());
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("find user: ");
-            System.out.println(mySqlUserToRespond.findClientsByRespond(5));
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("findAllByRespond: ");
-            System.out.println(mySqlUserToRespond.findAllByRespond(3));
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("find spec: ");
-            System.out.println(mySqlUserToRespond.findSpecialistsByRespond(5));
-
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        }
     }
 }

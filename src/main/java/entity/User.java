@@ -149,10 +149,10 @@ public class User implements Serializable {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-//                ", login='" + login + '\'' +
-//                ", phoneNumber='" + phoneNumber + '\'' +
-//                ", rating=" + rating +
-//                ", role=" + role +
+                ", login='" + login + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", rating=" + rating +
+                ", role=" + role +
                 '}';
     }
 

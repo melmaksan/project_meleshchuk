@@ -18,12 +18,12 @@ public class ContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ScheduledExecutorService emailScheduler = Executors.newSingleThreadScheduledExecutor();
-        emailScheduler.scheduleAtFixedRate(new SendEmail(), 0, 1, TimeUnit.DAYS);
+        emailScheduler.scheduleAtFixedRate(new SendEmail(), 1, 1, TimeUnit.DAYS);
 
         logger.info("set emailScheduler");
 
         ScheduledExecutorService ratingScheduler = Executors.newSingleThreadScheduledExecutor();
-        ratingScheduler.scheduleAtFixedRate(new UpdateSpecRating(), 0, 7, TimeUnit.DAYS);
+        ratingScheduler.scheduleAtFixedRate(new UpdateSpecRating(), 1, 7, TimeUnit.DAYS);
 
         logger.info("update specialists rating");
     }

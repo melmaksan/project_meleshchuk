@@ -1,18 +1,14 @@
 package dao.implementation.mysql;
 
 import dao.abstraction.OrderDao;
-import dao.datasource.PooledConnection;
 import dao.implementation.mysql.converter.DtoConverter;
 import dao.implementation.mysql.converter.OrderDtoConverter;
 import entity.*;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class MySqlOrder implements OrderDao {
@@ -123,75 +119,5 @@ public class MySqlOrder implements OrderDao {
     @Override
     public int getNumberOfRows() {
         return defaultDao.getNumberOfRows(NUMBER_OF_ROWS);
-    }
-
-    private void printAll(List<Order> list) {
-        System.out.println("Find all:");
-        for (Order type : list) {
-            System.out.println(type);
-        }
-    }
-
-    public static void main(String[] args) {
-        DataSource dataSource = PooledConnection.getInstance();
-        MySqlOrder mySqlOrder;
-//        MySqlOrderStatus mySqlOrderStatus;
-//        MySqlPaymentStatus mySqlPaymentStatus;
-
-        try {
-            mySqlOrder = new MySqlOrder(dataSource.getConnection());
-//            mySqlOrderStatus = new MySqlOrderStatus(dataSource.getConnection());
-//            mySqlPaymentStatus = new MySqlPaymentStatus(dataSource.getConnection());
-
-            System.out.println("Order TEST");
-
-            mySqlOrder.printAll(mySqlOrder.findAll());
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("find TEST");
-            mySqlOrder.printAll(mySqlOrder
-                    .findAllWithCredentials(LocalDate.now().plusDays(2),
-                            LocalDate.now().plusDays(7),  2));
-
-
-            System.out.println("find id");
-            System.out.println(mySqlOrder
-                    .findById(5L));
-
-//            System.out.println("Insert test:");
-//            Order order = mySqlOrder.insert(Order.newBuilder().addOrderTime(LocalDateTime.now())
-//                    .addDefaultStatus().addDefaultPaymentStatus().build());
-//            mySqlOrder.printAll(mySqlOrder.findAll());
-//
-//            System.out.println("~~~~~~~~~~~~");
-//
-//            System.out.println("Change day:");
-//            mySqlOrder.changeBookingTime(order, LocalDateTime.of(2022, 8, 26, 13, 45));
-//            mySqlOrder.printAll(mySqlOrder.findAll());
-
-//            System.out.println("~~~~~~~~~~~~");
-//
-//            System.out.println("Change status:");
-//            mySqlOrder.updateOrderStatus(order, OrderStatus.StatusIdentifier.DONE_STATUS.getId());
-//            mySqlOrder.printAll(mySqlOrder.findAll());
-//
-//            System.out.println("~~~~~~~~~~~~");
-//
-//            System.out.println("Change status:");
-//            mySqlOrder.updatePaymentStatus(order, PaymentStatus.PaymentIdentifier.PAID_STATUS.getId());
-//            mySqlOrder.printAll(mySqlOrder.findAll());
-
-//            System.out.println("~~~~~~~~~~~~");
-//
-//            System.out.println("Delete:");
-//            mySqlOrder.delete(order.getId());
-//            mySqlOrder.printAll(mySqlOrder.findAll());
-
-
-
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        }
     }
 }

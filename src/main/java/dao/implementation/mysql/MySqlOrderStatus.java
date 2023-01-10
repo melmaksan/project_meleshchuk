@@ -1,15 +1,12 @@
 package dao.implementation.mysql;
 
 import dao.abstraction.OrderStatusDao;
-import dao.datasource.PooledConnection;
 import dao.implementation.mysql.converter.DtoConverter;
 import dao.implementation.mysql.converter.OrderStatusDtoConverter;
 
 import entity.OrderStatus;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -78,58 +75,5 @@ public class MySqlOrderStatus implements OrderStatusDao {
     @Override
     public Optional<OrderStatus> findByName(String name) {
         return defaultDao.findOne(SELECT_ALL + WHERE_NAME, name);
-    }
-
-    private void printAll(List<OrderStatus> list) {
-        System.out.println("Find all:");
-        for (OrderStatus type : list) {
-            System.out.println(type);
-        }
-    }
-
-    public static void main(String[] args) {
-        DataSource dataSource = PooledConnection.getInstance();
-        MySqlOrderStatus mySqlOrderStatus;
-
-        try {
-            mySqlOrderStatus = new MySqlOrderStatus(dataSource.getConnection());
-
-            System.out.println("OrderStatus TEST");
-
-            mySqlOrderStatus.printAll(mySqlOrderStatus.findAll());
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("Insert test:");
-            OrderStatus ps = mySqlOrderStatus.insert(new OrderStatus(11, "AAA"));
-            mySqlOrderStatus.printAll(mySqlOrderStatus.findAll());
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("Find one with id 11:");
-            System.out.println(mySqlOrderStatus.findById(11));
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("Find one by name AAA:");
-            System.out.println(mySqlOrderStatus.findByName("AAA"));
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("Update:");
-            ps.setName("I am BBB");
-            mySqlOrderStatus.update(ps);
-            mySqlOrderStatus.printAll(mySqlOrderStatus.findAll());
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("Delete:");
-            mySqlOrderStatus.delete(ps.getId());
-            mySqlOrderStatus.printAll(mySqlOrderStatus.findAll());
-
-
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        }
     }
 }

@@ -1,14 +1,11 @@
 package dao.implementation.mysql;
 
 import dao.abstraction.RespondDao;
-import dao.datasource.PooledConnection;
 import dao.implementation.mysql.converter.DtoConverter;
 import dao.implementation.mysql.converter.RespondDtoConverter;
 import entity.Respond;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -71,57 +68,5 @@ public class MySqlRespond implements RespondDao {
     @Override
     public void delete(Long id) {
         defaultDao.executeUpdate(DELETE + WHERE_ID, id);
-    }
-
-    private void printAll(List<Respond> list) {
-        System.out.println("Find all:");
-        for (Respond type : list) {
-            System.out.println(type);
-        }
-    }
-
-    public static void main(String[] args) {
-        DataSource dataSource = PooledConnection.getInstance();
-        MySqlRespond mySqlRespond;
-
-        try {
-            mySqlRespond = new MySqlRespond(dataSource.getConnection());
-
-            System.out.println("Respond TEST");
-
-            mySqlRespond.printAll(mySqlRespond.findAll());
-
-//            System.out.println("~~~~~~~~~~~~");
-//
-//            System.out.println("Insert test:");
-//            for (int i = 1; i < 10; i++) {
-//                mySqlRespond.insert(Respond.newBuilder().addName("user" + i)
-//                        .addRespond("bla bla").addRespondTime(LocalDateTime.now()).addMark(i).build());
-//            }
-
-            mySqlRespond.printAll(mySqlRespond.findAll());
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("Find one with id 1:");
-            System.out.println(mySqlRespond.findById((long) 3));
-
-            System.out.println("~~~~~~~~~~~~");
-
-//            System.out.println("Update:");
-//            account1.setRespond("12345");
-//            mySqlRespond.update(account1);
-//            mySqlRespond.printAll(mySqlRespond.findAll());
-//
-//            System.out.println("~~~~~~~~~~~~");
-//
-//            System.out.println("Delete:");
-//            mySqlRespond.delete(account1.getId());
-//            mySqlRespond.printAll(mySqlRespond.findAll());
-
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
     }
 }

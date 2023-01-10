@@ -1,16 +1,12 @@
 package dao.implementation.mysql;
 
 import dao.abstraction.RoleDao;
-import dao.datasource.PooledConnection;
 import dao.implementation.mysql.converter.DtoConverter;
 import dao.implementation.mysql.converter.RoleDtoConverter;
 import entity.Role;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class MySqlRole implements RoleDao {
@@ -74,67 +70,5 @@ public class MySqlRole implements RoleDao {
     @Override
     public Optional<Role> findByName(String name) {
         return defaultDao.findOne(SELECT_ALL + WHERE_NAME, name);
-    }
-
-    private void printAll(List<Role> list) {
-        System.out.println("Find all:");
-        for (Role type : list) {
-            System.out.println(type);
-        }
-    }
-
-    public static void main(String[] args) {
-        DataSource dataSource = PooledConnection.getInstance();
-        MySqlRole mySqlRoleDao;
-
-        try {
-            mySqlRoleDao = new MySqlRole(dataSource.getConnection());
-
-            System.out.println("Role TEST");
-
-            mySqlRoleDao.printAll(mySqlRoleDao.findAll());
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("Insert test:");
-            Role role1 = mySqlRoleDao.insert(new Role(
-                    Role.RoleIdentifier.USER.getId(),
-                    Role.RoleIdentifier.USER.name()));
-            Role role2 = mySqlRoleDao.insert(new Role(
-                    Role.RoleIdentifier.ADMIN.getId(),
-                    Role.RoleIdentifier.ADMIN.name()));
-            Role role3 = mySqlRoleDao.insert(new Role(
-                    Role.RoleIdentifier.SPECIALIST.getId(),
-                    Role.RoleIdentifier.SPECIALIST.name()));
-            mySqlRoleDao.printAll(mySqlRoleDao.findAll());
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("Find one with id 1:");
-            System.out.println(mySqlRoleDao.findById(1));
-
-            System.out.println("~~~~~~~~~~~~");
-
-            System.out.println("Find one by role:");
-            System.out.println(mySqlRoleDao.findByName("ADMIN_ROLE"));
-
-//            System.out.println("~~~~~~~~~~~~");
-//
-//            System.out.println("Update:");
-//            role3.setName("TEST@222");
-//            mySqlRoleDao.update(role3);
-//            mySqlRoleDao.printAll(mySqlRoleDao.findAll());
-//
-//            System.out.println("~~~~~~~~~~~~");
-//
-//            System.out.println("Delete:");
-//            mySqlRoleDao.delete(role1.getId());
-//            mySqlRoleDao.delete(role2.getId());
-//            mySqlRoleDao.delete(role3.getId());
-            mySqlRoleDao.printAll(mySqlRoleDao.findAll());
-
-        } catch (SQLException  ex) {
-            ex.printStackTrace();
-        }
     }
 }

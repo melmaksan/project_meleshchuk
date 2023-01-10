@@ -93,28 +93,8 @@ public class Order implements Serializable {
         this.specialists = specialists;
     }
 
-    public boolean isBooked() {
-        return orderStatus.getId() == OrderStatus.StatusIdentifier.BOOKED.getId();
-    }
-
-    public boolean isDone() {
-        return orderStatus.getId() == OrderStatus.StatusIdentifier.DONE.getId();
-    }
-
-    public boolean isCanceled() {
-        return orderStatus.getId() == OrderStatus.StatusIdentifier.CANCELED.getId();
-    }
-
     public void setDefaultOrderStatus() {
         this.orderStatus = new OrderStatus(DEFAULT_STATUS_ID, DEFAULT_STATUS);
-    }
-
-    public boolean isPaid() {
-        return paymentStatus.getId() == PaymentStatus.PaymentIdentifier.PAID.getId();
-    }
-
-    public boolean isUnpaid() {
-        return paymentStatus.getId() == PaymentStatus.PaymentIdentifier.UNPAID.getId();
     }
 
     public void setDefaultPaymentStatus() {

@@ -3,13 +3,10 @@ package entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Time;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 
 public class Service implements Serializable {
-
-    DateTimeFormatter formatTimeNow=DateTimeFormatter.ofPattern("HH:mm");
 
     private long id;
     private String title;
